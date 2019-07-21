@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { ContractDetail } from '../../Components/ContractDetail'
 import { connect } from 'react-redux'
+import { View, Button } from 'react-native'
+import Style from './ContractDetailScreenStyle'
 
 class ContractDetailScreen extends Component {
   render() {
@@ -11,7 +13,28 @@ class ContractDetailScreen extends Component {
       return null
     }
 
-    return <ContractDetail data={contract} />
+    return (
+      <View style={Style.container}>
+        <View style={Style.buttonContainer}>
+          <Button
+            title="Accept"
+            color="green"
+            accessibilityLabel="Learn more about this purple button"
+          />
+          <Button
+            title="Negotiate"
+            color="blue"
+            accessibilityLabel="Learn more about this purple button"
+          />
+          <Button
+            title="Decline"
+            color="red"
+            accessibilityLabel="Learn more about this purple button"
+          />
+        </View>
+        <ContractDetail data={contract} />
+      </View>
+    )
   }
 }
 

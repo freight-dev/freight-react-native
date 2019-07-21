@@ -23,10 +23,10 @@ const style = {
   },
   selected: {
     fontWeight: 'bold',
-    tintColor: 'black',
+    color: 'black',
   },
   notSelected: {
-    tintColor: 'grey',
+    color: 'grey',
   },
 }
 

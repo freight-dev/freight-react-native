@@ -6,6 +6,7 @@ import { Badge } from 'react-native-elements'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText } from './StyledText'
 import moment from 'moment'
+import Colors from '../Theme/Colors'
 
 export const CargoCard = (props) => {
   return (
@@ -13,7 +14,7 @@ export const CargoCard = (props) => {
       <View style={Style.card}>
         <View style={Style.cargoOriginDestination}>
           <View style={Style.flowLineIcon}>
-            <Entypo name="flow-line" size={90} color="#00b7d2" />
+            <Entypo name="flow-line" size={90} color={Colors.main} />
           </View>
           <View style={Style.cargoOriginDestinationText}>
             <View>
