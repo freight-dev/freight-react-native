@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { FlatList, View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import { FlatList, View, Text, ScrollView, TouchableOpacity, StatusBar } from 'react-native'
 import { PropTypes } from 'prop-types'
 import ContractActions from '../../Stores/Contract/Actions'
 import { ContractCard } from '../../Components/ContractCard'
 import { connect } from 'react-redux'
 import Style from './CargoContractScreenStyle'
+import Colors from '../../Theme/Colors'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText } from '../../Components/StyledText'
-import { Badge } from 'react-native-elements'
 import moment from 'moment'
 
 class CargoContractScreen extends Component {
@@ -33,6 +33,7 @@ class CargoContractScreen extends Component {
 
     return (
       <View style={Style.container}>
+        <StatusBar backgroundColor={Colors.main} barStyle="light-content" />
         <View style={Style.cargo}>
           <View style={Style.cargoOriginDestination}>
             <View style={Style.cargoOriginDestinationText}>
@@ -93,7 +94,7 @@ const statusSearchTab = (action, statusSearchCurState, statusSearch, displayText
   return (
     <TouchableOpacity style={[Style.statusSearch, statusSearchCurState === statusSearch ? Style.statusSearchSelected : null]}
                       onPress={action}>
-      <OpenSansText style={[Style.statusSearchText, statusSearchCurState === statusSearch ? Style.statusSearchTextSelected : null]}>
+      <OpenSansText style={Style.statusSearchText, statusSearchCurState === statusSearch ? Style.statusSearchTextSelected : null}>
         {displayText}
       </OpenSansText>
     </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FlatList, View, Text } from 'react-native'
+import { FlatList, View, Text, StatusBar } from 'react-native'
 import { PropTypes } from 'prop-types'
 import CargoActions from '../../Stores/Cargo/Actions'
 import { CargoCard } from '../../Components/CargoCard'
@@ -22,12 +22,14 @@ class InquiryActiveScreen extends Component {
       return null
     }
     return (
-      <FlatList
-        style={Style.container}
-        data={this.props.activeCargos}
-        keyExtractor={this._keyExtractor}
-        renderItem={this._renderItem}
-      />
+      <View style={Style.container}>
+        <StatusBar backgroundColor='white' barStyle="dark-content" />
+        <FlatList
+          data={this.props.activeCargos}
+          keyExtractor={this._keyExtractor}
+          renderItem={this._renderItem}
+        />
+      </View>
     )
   }
 }

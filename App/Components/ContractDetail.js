@@ -1,10 +1,11 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { PropTypes } from 'prop-types'
+import Style from './ContractDetailStyle'
 
 export const ContractDetail = (props) => {
   return (
-    <View>
+    <View style={Style.card}>
       <Text>{props.data.ship.name}</Text>
       <Text>{props.data.ship.company.name}</Text>
       <Text>{props.data.ship.yearBuilt}</Text>
