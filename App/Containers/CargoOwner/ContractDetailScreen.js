@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import { ContractDetail } from '../../Components/ContractDetail'
 import { connect } from 'react-redux'
-import { View, Button } from 'react-native'
+import { View, TouchableOpacity, ScrollView } from 'react-native'
 import Style from './ContractDetailScreenStyle'
+import { OpenSansBoldText, OpenSansText } from '../../Components/StyledText'
 
 class ContractDetailScreen extends Component {
   render() {
@@ -15,24 +16,18 @@ class ContractDetailScreen extends Component {
 
     return (
       <View style={Style.container}>
-        <View style={Style.buttonContainer}>
-          <Button
-            title="Accept"
-            color="green"
-            accessibilityLabel="Learn more about this purple button"
-          />
-          <Button
-            title="Negotiate"
-            color="blue"
-            accessibilityLabel="Learn more about this purple button"
-          />
-          <Button
-            title="Decline"
-            color="red"
-            accessibilityLabel="Learn more about this purple button"
-          />
-        </View>
         <ContractDetail data={contract} />
+        <View style={Style.buttonContainer}>
+          <TouchableOpacity style={[Style.decline, Style.button]}>
+            <OpenSansText style={Style.buttonText}>Decline</OpenSansText>
+          </TouchableOpacity>
+          <TouchableOpacity style={[Style.negotiate, Style.button]}>
+            <OpenSansText style={Style.buttonText}>Negotiate</OpenSansText>
+          </TouchableOpacity>
+          <TouchableOpacity style={[Style.accept, Style.button]}>
+            <OpenSansText style={Style.buttonText}>Accept</OpenSansText>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
