@@ -30,5 +30,13 @@ export default {
       justifyContent: 'space-between',
       flex: 1,
     },
+    buttonShadow: {
+      shadowOffset: {
+        width: 0,
+        height: 2,
+      },
+      shadowColor: 'black',
+      shadowOpacity: 0.8,
+    },
   },
 }

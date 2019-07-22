@@ -4,23 +4,40 @@ import Colors from '../../Theme/Colors'
 
 export default StyleSheet.create({
   container: {
-    ...ApplicationStyles.container,
+    ...ApplicationStyles.screen.container,
     flex: 1,
     backgroundColor: Colors.main,
     padding: 5,
     paddingBottom: 0,
   },
   buttonContainer: {
-    flex: 1,
     flexDirection: 'row',
-    padding: 10,
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
+    right: 0,
     justifyContent: 'space-around',
-    backgroundColor: 'yellow',
+    alignItems: 'center'
   },
   button: {
-    padding: 15,
-    borderRadius: 15,
-    flex: 1,
+    borderRadius: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    width: '30%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  accept: {
+    backgroundColor: 'green',
+  },
+  negotiate: {
+    backgroundColor: 'blue',
+  },
+  decline: {
     backgroundColor: 'red',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 15,
   },
 })

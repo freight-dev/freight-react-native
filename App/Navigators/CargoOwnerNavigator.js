@@ -65,6 +65,15 @@ const InquiryNavigator = createStackNavigator(
   }
 )
 
+InquiryNavigator.navigationOptions = ({navigation})=>{
+  let { routeName } = navigation.state.routes[navigation.state.index];
+  let navigationOptions = {};
+  if (routeName === 'ContractDetailScreen') {
+    navigationOptions.tabBarVisible = false;
+  }
+  return navigationOptions;
+}
+
 export default createBottomTabNavigator({
   PostScreen: PostFormNavigator,
   InquiryScreen: InquiryNavigator,
