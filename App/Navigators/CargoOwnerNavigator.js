@@ -12,6 +12,7 @@ import InquiryActiveScreen from 'App/Containers/CargoOwner/InquiryActiveScreen'
 import InquiryHistoryScreen from 'App/Containers/CargoOwner/InquiryHistoryScreen'
 import GiftedFormModal from '../Containers/CargoOwner/GiftedFormModal'
 import Style from './CargoOwnerNavigatorStyle'
+import Colors from '../Theme/Colors'
 
 const PostFormNavigator = createStackNavigator(
   {
@@ -42,7 +43,7 @@ const InquiryTopNavigator = createMaterialTopTabNavigator(
   {
     // mode: 'modal',
     // headerMode: 'screen',
-    headerMode: null,
+    headerMode: 'none',
     tabBarOptions: {
       activeTintColor: 'black',
       inactiveTintColor: 'grey',
@@ -54,14 +55,37 @@ const InquiryTopNavigator = createMaterialTopTabNavigator(
 
 const InquiryNavigator = createStackNavigator(
   {
-    InquiryScreen: InquiryTopNavigator,
-    CargoContractScreen: CargoContractScreen,
+    InquiryScreen: {
+      screen: InquiryTopNavigator,
+      navigationOptions: {
+        header: null,
+      },
+    },
+    CargoContractScreen: {
+      screen: CargoContractScreen,
+      navigationOptions: {
+        headerTransparent: true,
+        headerTintColor: Colors.main,
+        headerBackTitleStyle: {
+          backgroundColor: 'white',
+        },
+        headerLeftContainerStyle: {
+          backgroundColor: 'white',
+          width: 30,
+          height: 30,
+          borderRadius: 15,
+          justifyContent: 'center',
+          alignItems: 'center',
+          left: 10,
+          top: 10,
+        }
+      },
+    },
     ContractDetailScreen: ContractDetailScreen,
   },
   {
     // mode: 'modal',
-    // headerMode: 'screen',
-    headerMode: 'none',
+    // headerMode: 'none',
   }
 )
 

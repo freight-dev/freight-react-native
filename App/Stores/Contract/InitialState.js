@@ -5,4 +5,5 @@ export const INITIAL_STATE = {
   contracts: [],
   contractsIsLoading: false,
   contractsErrorMessage: null,
+  contractsStatusSearch: [],
 }

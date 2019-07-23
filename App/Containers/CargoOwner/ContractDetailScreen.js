@@ -9,14 +9,15 @@ import { OpenSansBoldText, OpenSansText } from '../../Components/StyledText'
 class ContractDetailScreen extends Component {
   render() {
     const contract = this.props.navigation.getParam('contract')
+    const cargo = this.props.navigation.getParam('cargo')
 
-    if (!contract) {
+    if (contract === undefined || cargo === undefined) {
       return null
     }
 
     return (
       <View style={Style.container}>
-        <ContractDetail data={contract} />
+        <ContractDetail contract={contract} cargo={cargo}/>
         <View style={Style.buttonContainer}>
           <TouchableOpacity style={[Style.decline, Style.button]}>
             <OpenSansText style={Style.buttonText}>Decline</OpenSansText>

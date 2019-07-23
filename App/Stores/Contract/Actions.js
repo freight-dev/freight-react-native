@@ -6,6 +6,8 @@ const { Types, Creators } = createActions({
   getContractsLoading: null,
   getContractsSuccess: ['contracts'],
   getContractsFailure: ['error'],
+  setContractsStatusSearch: ['status'],
+  setContractsStatusSearchSuccess: ['status']
 })
 
 export const ContractTypes = Types

@@ -9,7 +9,7 @@ import { fetchUser } from './ExampleSaga'
 import { getConfig } from './ConfigSaga'
 import { getPort } from './PortSaga'
 import { postCargo, getActiveCargos } from './CargoSaga'
-import { getContracts } from './ContractSaga'
+import { getContracts, setContractsStatusSearch } from './ContractSaga'
 import { startup } from './StartupSaga'
 
 export default function* root() {
@@ -29,7 +29,9 @@ export default function* root() {
     takeLatest(CargoTypes.POST_CARGO, postCargo),
     // Call `getActiveCargos()`
     takeLatest(CargoTypes.GET_ACTIVE_CARGOS, getActiveCargos),
-    // Call `getActiveCargos()`
+    // Call `getContracts()`
     takeLatest(ContractTypes.GET_CONTRACTS, getContracts),
+    // Call `setContractStatusSearch()`
+    takeLatest(ContractTypes.SET_CONTRACTS_STATUS_SEARCH, setContractsStatusSearch),
   ])
 }

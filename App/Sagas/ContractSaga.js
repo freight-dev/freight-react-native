@@ -14,3 +14,7 @@ export function* getContracts(action) {
     yield put(ContractActions.getContractsFailure('There was an error while getting contracts'))
   }
 }
+
+export function* setContractsStatusSearch(status) {
+  yield put(ContractActions.setContractsStatusSearchSuccess(status.type))
+}
