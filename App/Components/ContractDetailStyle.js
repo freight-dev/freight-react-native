@@ -6,10 +6,39 @@ export default StyleSheet.create({
   card: {
     ...ApplicationStyles.component.card,
     backgroundColor: 'white',
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
+  },
+  contractGroup: {
+    flexDirection: 'column',
+    padding: 5,
+    borderBottomColor: 'grey',
+    borderStyle: 'solid',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+  },
+  contractGroupWithoutBorder: {
+    flexDirection: 'column',
+    padding: 5,
+  },
+  contractInfo: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    flex: 1,
+    padding: 2,
+  },
+  contractInfoTitle: {
+    justifyContent: 'flex-start',
+    flex: 3,
+  },
+  contractInfoData: {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    flex: 9
+  },
+  emptySpace: {
+    height: 70,
   },
   // cargoOriginDestination: {
   //   ...ApplicationStyles.component.cardLeftInfo,

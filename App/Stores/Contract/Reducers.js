@@ -25,8 +25,14 @@ export const getContractsFailure = (state, { error }) => ({
   contractsErrorMessage: error.error.description,
 })
 
+export const setContractsStatusSearchSuccess = (state, { status }) => ({
+  ...state,
+  contractsStatusSearch: status,
+})
+
 export const reducer = createReducer(INITIAL_STATE, {
   [ContractTypes.GET_CONTRACTS_LOADING]: getContractsLoading,
   [ContractTypes.GET_CONTRACTS_SUCCESS]: getContractsSuccess,
   [ContractTypes.GET_CONTRACTS_FAILURE]: getContractsFailure,
+  [ContractTypes.SET_CONTRACTS_STATUS_SEARCH]: setContractsStatusSearchSuccess,
 })

@@ -2,16 +2,19 @@ import React from 'react'
 import { TouchableHighlight, View, Text, StyleSheet } from 'react-native'
 import { PropTypes } from 'prop-types'
 import Style from './ContractCardStyle'
-import Entypo from 'react-native-vector-icons/Entypo'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText } from './StyledText'
 import { formatNumber } from '../Helper/NumberHelper'
 import moment from 'moment'
 import { Badge } from 'react-native-elements'
 
 export const ContractCard = (props) => {
-  const contract = props.data
+  const contract = props.contract.item
+  const cargo = props.cargo
+  if (contract === undefined || cargo === undefined) {
+    return null
+  }
   return (
-    <TouchableHighlight onPress={() => navigateToContract(props.navigation, props.data)}>
+    <TouchableHighlight onPress={() => navigateToContract(props.navigation, contract, cargo)}>
       <View style={Style.contract}>
         <View style={Style.cargoOriginDestination}>
           <View style={Style.contractOriginDestinationText}>
@@ -56,9 +59,10 @@ export const ContractCard = (props) => {
   )
 }
 
-const navigateToContract = (navigation, contract) => {
+const navigateToContract = (navigation, contract, cargo) => {
   navigation.navigate('ContractDetailScreen', {
     contract: contract,
+    cargo: cargo,
   })
 }
 
