@@ -1,38 +1,55 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { FlatList, StatusBar, Text, View } from 'react-native'
 import { PropTypes } from 'prop-types'
 import CargoActions from '../../Stores/Cargo/Actions'
 import { connect } from 'react-redux'
+import { CargoHistoryCard } from '../../Components/CargoHistoryCard'
+import Style from './InquiryHistoryScreenStyle'
 
-class InquiryActiveScreen extends Component {
+class InquiryHistoryScreen extends Component {
   componentDidMount() {
-    // Run the startup saga when the application is starting
-    // this.props.startup()
-    this.props.getActiveCargos()
+    this.props.getHistoryCargos()
   }
 
+  _keyExtractor = (item) => item.id
+
+  _renderItem = ({item}) => (
+    <CargoHistoryCard data={item} navigation={this.props.navigation} />
+  );
+
   render() {
+    if (this.props.historyCargosIsLoading) {
+      return null
+    }
     return (
-      <View>
-        <Text>This is the history page</Text>
+      <View style={Style.container}>
+        <StatusBar backgroundColor='white' barStyle="dark-content" />
+        <FlatList
+          data={this.props.historyCargos}
+          keyExtractor={this._keyExtractor}
+          renderItem={this._renderItem}
+        />
       </View>
     )
   }
 }
 
-InquiryActiveScreen.propTypes = {
-  getActiveCargos: PropTypes.func,
+InquiryHistoryScreen.propTypes = {
+  getHistoryCargos: PropTypes.func,
+  historyCargos: PropTypes.array,
+  historyCargosIsLoading: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => ({
-  activeCargos: state.cargo.activeCargos,
+  historyCargos: state.cargo.historyCargos,
+  historyCargosIsLoading: state.cargo.historyCargosIsLoading,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  getActiveCargos: () => dispatch(CargoActions.getActiveCargos()),
+  getHistoryCargos: () => dispatch(CargoActions.getHistoryCargos()),
 })
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(InquiryActiveScreen)
+)(InquiryHistoryScreen)

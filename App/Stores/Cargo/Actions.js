@@ -7,11 +7,17 @@ const { Types, Creators } = createActions({
   postCargoSuccess: ['cargo'],
   postCargoFailure: ['error'],
 
-  // Get cargo
+  // Get active cargo
   getActiveCargos: [],
   getActiveCargosLoading: null,
   getActiveCargosSuccess: ['cargos'],
   getActiveCargosFailure: ['error'],
+
+  // Get history cargo
+  getHistoryCargos: [],
+  getHistoryCargosLoading: null,
+  getHistoryCargosSuccess: ['cargos'],
+  getHistoryCargosFailure: ['error'],
 })
 
 export const CargoTypes = Types

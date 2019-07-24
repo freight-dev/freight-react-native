@@ -27,3 +27,16 @@ export function* getActiveCargos() {
     yield put(CargoActions.getActiveCargosFailure('There was an error while getting active cargos'))
   }
 }
+
+export function* getHistoryCargos() {
+  yield put(CargoActions.getHistoryCargosLoading())
+
+  const cargos = yield call(cargoService.getHistoryCargos)
+  if (!cargos.error) {
+    yield put(CargoActions.getHistoryCargosSuccess(cargos))
+  } else if (cargos.error) {
+    yield put(CargoActions.getHistoryCargosFailure(cargos.error))
+  } else {
+    yield put(CargoActions.getHistoryCargosFailure('There was an error while getting cargos history'))
+  }
+}

@@ -28,7 +28,6 @@ export const postCargoFailure = (state, { error }) => ({
 /**
  * Get active cargo list
  */
-
 export const getActiveCargosLoading = (state) => ({
   ...state,
   activeCargosIsLoading: true,
@@ -49,6 +48,29 @@ export const getActiveCargosFailure = (state, { error }) => ({
   activeCargosErrorMessage: error.error.description,
 })
 
+/**
+ * Get history cargo list
+ */
+export const getHistoryCargosLoading = (state) => ({
+  ...state,
+  historyCargosIsLoading: true,
+  historyCargosErrorMessage: null,
+})
+
+export const getHistoryCargosSuccess = (state, { cargos }) => ({
+  ...state,
+  historyCargos: cargos.cargos,
+  historyCargosIsLoading: false,
+  historyCargosErrorMessage: null,
+})
+
+export const getHistoryCargosFailure = (state, { error }) => ({
+  ...state,
+  historyCargos: [],
+  historyCargosIsLoading: false,
+  historyCargosErrorMessage: error.error.description,
+})
+
 export const reducer = createReducer(INITIAL_STATE, {
   [CargoTypes.POST_CARGO_LOADING]: postCargoLoading,
   [CargoTypes.POST_CARGO_SUCCESS]: postCargoSuccess,
@@ -56,4 +78,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [CargoTypes.GET_ACTIVE_CARGOS_LOADING]: getActiveCargosLoading,
   [CargoTypes.GET_ACTIVE_CARGOS_SUCCESS]: getActiveCargosSuccess,
   [CargoTypes.GET_ACTIVE_CARGOS_FAILURE]: getActiveCargosFailure,
+  [CargoTypes.GET_HISTORY_CARGOS_LOADING]: getHistoryCargosLoading,
+  [CargoTypes.GET_HISTORY_CARGOS_SUCCESS]: getHistoryCargosSuccess,
+  [CargoTypes.GET_HISTORY_CARGOS_FAILURE]: getHistoryCargosFailure,
 })

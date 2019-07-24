@@ -1,6 +1,6 @@
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 
-import CargoOwnerNavigator from 'App/Navigators/CargoOwnerNavigator'
+import CargoOwnerNavigator from 'App/Navigators/CargoOwnerNavigator/CargoOwnerNavigator'
 // import ExampleScreen from 'App/Containers/Example/ExampleScreen'
 import SplashScreen from 'App/Containers/SplashScreen/SplashScreen'
 

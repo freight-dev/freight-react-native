@@ -8,4 +8,7 @@ export const INITIAL_STATE = {
   activeCargos: [],
   activeCargosIsLoading: false,
   activeCargosErrorMessage: null,
+  historyCargos: [],
+  historyCargosIsLoading: false,
+  historyCargosErrorMessage: null,
 }
