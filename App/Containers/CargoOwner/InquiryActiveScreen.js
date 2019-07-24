@@ -11,7 +11,7 @@ class InquiryActiveScreen extends Component {
     this.props.getActiveCargos()
   }
 
-  _keyExtractor = (item, index) => item.id
+  _keyExtractor = (item) => item.id
 
   _renderItem = ({item}) => (
     <CargoCard data={item} navigation={this.props.navigation} />

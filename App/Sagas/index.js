@@ -8,7 +8,7 @@ import { ContractTypes } from '../Stores/Contract/Actions'
 import { fetchUser } from './ExampleSaga'
 import { getConfig } from './ConfigSaga'
 import { getPort } from './PortSaga'
-import { postCargo, getActiveCargos } from './CargoSaga'
+import { postCargo, getActiveCargos, getHistoryCargos } from './CargoSaga'
 import { getContracts, setContractsStatusSearch } from './ContractSaga'
 import { startup } from './StartupSaga'
 
@@ -29,6 +29,8 @@ export default function* root() {
     takeLatest(CargoTypes.POST_CARGO, postCargo),
     // Call `getActiveCargos()`
     takeLatest(CargoTypes.GET_ACTIVE_CARGOS, getActiveCargos),
+    // Call `getHistoryCargos()`
+    takeLatest(CargoTypes.GET_HISTORY_CARGOS, getHistoryCargos),
     // Call `getContracts()`
     takeLatest(ContractTypes.GET_CONTRACTS, getContracts),
     // Call `setContractStatusSearch()`

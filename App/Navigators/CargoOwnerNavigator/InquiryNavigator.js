@@ -1,29 +1,14 @@
 import {
-  createBottomTabNavigator,
   createStackNavigator,
   createMaterialTopTabNavigator,
 } from 'react-navigation'
 
-import PostScreen from 'App/Containers/CargoOwner/PostScreen'
 import CargoContractScreen from 'App/Containers/CargoOwner/CargoContractScreen'
 import ContractDetailScreen from 'App/Containers/CargoOwner/ContractDetailScreen'
-import SplashScreen from 'App/Containers/SplashScreen/SplashScreen'
 import InquiryActiveScreen from 'App/Containers/CargoOwner/InquiryActiveScreen'
 import InquiryHistoryScreen from 'App/Containers/CargoOwner/InquiryHistoryScreen'
-import GiftedFormModal from '../Containers/CargoOwner/GiftedFormModal'
 import Style from './CargoOwnerNavigatorStyle'
-import Colors from '../Theme/Colors'
-
-const PostFormNavigator = createStackNavigator(
-  {
-    PostScreen: { screen: PostScreen },
-    Modal: { screen: GiftedFormModal },
-  },
-  {
-    // mode: 'modal',
-    headerMode: 'screen',
-  }
-)
+import Colors from '../../Theme/Colors'
 
 const InquiryTopNavigator = createMaterialTopTabNavigator(
   {
@@ -98,8 +83,4 @@ InquiryNavigator.navigationOptions = ({navigation})=>{
   return navigationOptions;
 }
 
-export default createBottomTabNavigator({
-  PostScreen: PostFormNavigator,
-  InquiryScreen: InquiryNavigator,
-  SplashScreen: SplashScreen,
-})
+export default InquiryNavigator
