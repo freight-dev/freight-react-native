@@ -12,16 +12,16 @@ import Colors from '../../Theme/Colors'
 
 const ShipmentTopNavigator = createMaterialTopTabNavigator(
   {
-    ShipmentUpcomingScreen: {
-      screen: ShipmentUpcomingScreen,
-      navigationOptions: {
-        title: 'Upcoming',
-      },
-    },
     ShipmentInProgressScreen: {
       screen: ShipmentInProgressScreen,
       navigationOptions: {
         title: 'In Progress',
+      },
+    },
+    ShipmentUpcomingScreen: {
+      screen: ShipmentUpcomingScreen,
+      navigationOptions: {
+        title: 'Upcoming',
       },
     },
     ShipmentCompletedScreen: {

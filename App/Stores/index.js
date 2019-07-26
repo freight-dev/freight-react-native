@@ -6,6 +6,7 @@ import { reducer as ConfigReducer } from './Config/Reducers'
 import { reducer as PortReducer } from './Port/Reducers'
 import { reducer as CargoReducer } from './Cargo/Reducers'
 import { reducer as ContractReducer } from './Contract/Reducers'
+import { reducer as ShipmentReducer } from './Shipment/Reducers'
 
 export default () => {
   const rootReducer = combineReducers({
@@ -18,6 +19,7 @@ export default () => {
     port: PortReducer,
     cargo: CargoReducer,
     contract: ContractReducer,
+    shipment: ShipmentReducer,
   })
 
   return configureStore(rootReducer, rootSaga)
