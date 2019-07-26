@@ -1,22 +1,21 @@
 import React from 'react'
 import { TouchableHighlight, View, Text } from 'react-native'
 import { PropTypes } from 'prop-types'
-import Style from './CargoCardStyle'
-import { Badge } from 'react-native-elements'
+import Style from './UpcomingShipmentCardStyle'
 import Entypo from 'react-native-vector-icons/Entypo'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText } from './StyledText'
 import moment from 'moment'
 import Colors from '../Theme/Colors'
 
-export const CargoCard = (props) => {
+export const UpcomingShipmentCard = (props) => {
   return (
-    <TouchableHighlight onPress={() => navigateToCargoContract(props.navigation, props.data)}>
+    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, props.shipment)}>
       <View style={Style.card}>
-        <View style={Style.cargoOriginDestination}>
+        <View style={Style.shipmentOriginDestination}>
           <View style={Style.flowLineIcon}>
             <Entypo name="flow-line" size={90} color={Colors.main} />
           </View>
-          <View style={Style.cargoOriginDestinationText}>
+          <View style={Style.shipmentOriginDestinationText}>
             <View>
               <OpenSansBoldText>Tanjung Priok</OpenSansBoldText>
               <OpenSansItalicText>Jakarta, DKI Jakarta</OpenSansItalicText>
@@ -27,57 +26,58 @@ export const CargoCard = (props) => {
             </View>
           </View>
         </View>
-        <View>{renderCargoInformation(props.data)}</View>
+        <View>{renderShipmentInformation(props.shipment, props.cargo)}</View>
       </View>
     </TouchableHighlight>
   )
 }
 
-const navigateToCargoContract = (navigation, cargo) => {
-  navigation.navigate('CargoContractScreen', {
-    cargo: cargo,
+const navigateToShipmentDetail = (navigation, shipment) => {
+  navigation.navigate('ShipmentDetailScreen', {
+    shipment: shipment,
   })
 }
 
-const renderCargoInformation = (cargo) => {
+const renderShipmentInformation = (shipment, cargo) => {
   switch (cargo.cargoType.type) {
     case 'FCL':
-      return FCL(cargo)
+      return FCL(shipment, cargo)
     case 'LCL':
-      return LCL(cargo)
+      return LCL(shipment, cargo)
     case 'Bulk':
-      return Bulk(cargo)
+      return Bulk(shipment, cargo)
     default:
       return null
   }
 }
 
-const FCL = (cargo) => {
+const FCL = (shipment, cargo) => {
   return <Text>{cargo.containerType.displayName}</Text>
 }
 
-const LCL = (cargo) => {
+const LCL = (shipment, cargo) => {
   return <Text>{cargo.quantity}</Text>
 }
 
-const Bulk = (cargo) => {
+const Bulk = (shipment, cargo) => {
   return (
-    <View style={Style.cargoInfo}>
-      <View style={Style.badgeContainer}>
-        <Badge status="success" value={<OpenSansText style={Style.badgeText}>2</OpenSansText>} />
-      </View>
-      <View style={Style.cargoInfoField}>
+    <View style={Style.shipmentInfo}>
+      <View style={Style.shipmentInfoField}>
         <OpenSansLightText>Departure</OpenSansLightText>
-        <OpenSansBoldText>{moment(cargo.departure).format('D MMM YYYY')}</OpenSansBoldText>
+        <OpenSansBoldText>{moment(shipment.departure).format('D MMM YYYY')}</OpenSansBoldText>
       </View>
-      <View style={Style.cargoInfoField}>
+      <View style={Style.shipmentInfoField}>
+        <OpenSansLightText>Estimated Arrival</OpenSansLightText>
+        <OpenSansBoldText>{moment(shipment.arrival).format('D MMM YYYY')}</OpenSansBoldText>
+      </View>
+      <View style={Style.shipmentInfoField}>
         <OpenSansBoldText>{cargo.bulkType.displayName}</OpenSansBoldText>
       </View>
     </View>
   )
 }
 
-CargoCard.propTypes = {
+UpcomingShipmentCard.propTypes = {
   navigation: PropTypes.object,
   data: PropTypes.object,
 }

@@ -1,53 +1,52 @@
 import React, { Component } from 'react'
-import { FlatList, View, Text, StatusBar } from 'react-native'
+import { FlatList, View, StatusBar } from 'react-native'
 import { PropTypes } from 'prop-types'
-import CargoActions from '../../Stores/Cargo/Actions'
-import { CargoCard } from '../../Components/CargoCard'
 import { connect } from 'react-redux'
+import ShipmentActions from '../../Stores/Shipment/Actions'
 import Style from './ShipmentInProgressScreenStyle'
+import { InProgressShipmentCard } from '../../Components/InProgressShipmentCard'
 
 class ShipmentInProgressScreen extends Component {
   componentDidMount() {
-    // this.props.getActiveCargos()
+    this.props.getInProgressShipments()
   }
 
   _keyExtractor = (item) => item.id
 
   _renderItem = ({item}) => (
-    {/*<CargoCard data={item} navigation={this.props.navigation} />*/}
+    <InProgressShipmentCard shipment={item.shipment} cargo={item.cargo} navigation={this.props.navigation} />
   );
 
   render() {
-    return null
-    // if (this.props.activeCargosIsLoading) {
-    //   return null
-    // }
-    // return (
-    //   <View style={Style.container}>
-    //     <StatusBar backgroundColor='white' barStyle="dark-content" />
-    //     <FlatList
-    //       data={this.props.activeCargos}
-    //       keyExtractor={this._keyExtractor}
-    //       renderItem={this._renderItem}
-    //     />
-    //   </View>
-    // )
+    if (this.props.inProgressShipmentsIsLoading) {
+      return null
+    }
+    return (
+      <View style={Style.container}>
+        <StatusBar backgroundColor='white' barStyle="dark-content" />
+        <FlatList
+          data={this.props.inProgressShipments}
+          keyExtractor={this._keyExtractor}
+          renderItem={this._renderItem}
+        />
+      </View>
+    )
   }
 }
 
 ShipmentInProgressScreen.propTypes = {
-  // getActiveCargos: PropTypes.func,
-  // activeCargos: PropTypes.array,
-  // activeCargosIsLoading: PropTypes.bool,
+  getInProgressShipments: PropTypes.func,
+  inProgressShipments: PropTypes.array,
+  inProgressShipmentsIsLoading: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => ({
-  // activeCargos: state.cargo.activeCargos,
-  // activeCargosIsLoading: state.cargo.activeCargosIsLoading,
+  inProgressShipments: state.shipment.inProgressShipments,
+  inProgressShipmentsIsLoading: state.shipment.inProgressShipmentsIsLoading,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  // getActiveCargos: () => dispatch(CargoActions.getActiveCargos()),
+  getInProgressShipments: () => dispatch(ShipmentActions.getInProgressShipments()),
 })
 
 export default connect(

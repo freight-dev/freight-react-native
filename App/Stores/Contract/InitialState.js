@@ -5,5 +5,11 @@ export const INITIAL_STATE = {
   contracts: [],
   contractsIsLoading: false,
   contractsErrorMessage: null,
-  contractsStatusSearch: [],
+  contractsStatusSearch: [
+    'TRANSPORTER_OFFERED',
+    'CUSTOMER_NEGOTIATE',
+    'CUSTOMER_ACCEPTED',
+    'CUSTOMER_DECLINED',
+    'CUSTOMER_EXPIRED',
+    'TRANSPORTER_EXPIRED'],
 }

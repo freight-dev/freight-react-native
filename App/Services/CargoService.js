@@ -58,7 +58,7 @@ function getActiveCargos() {
 }
 
 function getHistoryCargos() {
-  return cargoApiClient.get(Config.API_URL + '/cargo?status=canceled,expired').then((response) => {
+  return cargoApiClient.get(Config.API_URL + '/cargo?status=reserved,expired,canceled').then((response) => {
     if (in200s(response.status)) {
       return response.data
     }
