@@ -3,7 +3,7 @@ import { TouchableHighlight, View, Text } from 'react-native'
 import { PropTypes } from 'prop-types'
 import Style from './UpcomingShipmentCardStyle'
 import Entypo from 'react-native-vector-icons/Entypo'
-import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText } from './StyledText'
+import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText } from './StyledText'
 import moment from 'moment'
 import Colors from '../Theme/Colors'
 

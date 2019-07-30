@@ -4,7 +4,7 @@ const { Types, Creators } = createActions({
   // Get contracts
   getContracts: ['param'],
   getContractsLoading: null,
-  getContractsSuccess: ['contracts'],
+  getContractsSuccess: ['contracts', 'start'],
   getContractsFailure: ['error'],
   setContractsStatusSearch: ['status'],
   setContractsStatusSearchSuccess: ['status']

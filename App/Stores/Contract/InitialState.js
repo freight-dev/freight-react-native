@@ -1,15 +1,9 @@
-/**
- * The initial values for the redux state.
- */
+import { ALL } from '../../Helper/ContractHelper'
+
 export const INITIAL_STATE = {
   contracts: [],
   contractsIsLoading: false,
+  contractsStart: 0,
   contractsErrorMessage: null,
-  contractsStatusSearch: [
-    'TRANSPORTER_OFFERED',
-    'CUSTOMER_NEGOTIATE',
-    'CUSTOMER_ACCEPTED',
-    'CUSTOMER_DECLINED',
-    'CUSTOMER_EXPIRED',
-    'TRANSPORTER_EXPIRED'],
+  contractsStatusSearch: ALL,
 }
