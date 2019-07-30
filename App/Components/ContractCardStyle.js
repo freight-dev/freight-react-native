@@ -34,14 +34,9 @@ export default StyleSheet.create({
     alignItems: 'flex-end',
     justifyContent: 'flex-end',
   },
-
   badgeContainer: {
     justifyContent: 'flex-end',
     flexDirection: 'row',
-  },
-  badgeText: {
-    color: 'white',
-    padding: 5,
   },
   flowLineIcon: {
     alignItems: 'flex-start',

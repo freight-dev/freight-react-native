@@ -1,1 +1,1 @@
-This directory contains the application's images.
+xThis directory contains the application's images.

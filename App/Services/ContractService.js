@@ -20,7 +20,7 @@ const contractApiClient = axios.create({
 
 function getContracts(param) {
   return contractApiClient
-    .get(Config.API_URL + '/contract?cargoId=' + param.cargoId)
+    .get(Config.API_URL + '/contract?cargoId=' + param.cargoId + '&start=' + param.start + '&limit=' + param.limit)
     .then((response) => {
       if (in200s(response.status)) {
         return response.data

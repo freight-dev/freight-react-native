@@ -9,15 +9,25 @@ export default StyleSheet.create({
   },
   card: {
     ...ApplicationStyles.component.card,
+    flexDirection: 'column',
   },
-  shipmentOriginDestination: {
+  topCard: {
+    flexDirection: 'row',
+  },
+  shipStatus:{
+    flexDirection: 'column',
+    paddingTop: 25,
+  },
+  shipmentOriginDestinationContainer: {
     ...ApplicationStyles.component.cardLeftInfo,
     flex: 7,
   },
-  shipmentOriginDestinationText: {
+  shipmentOriginDestination: {
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    marginTop: 10,
+  },
+  shipmentOrigin: {
+    paddingBottom: 5,
   },
   shipmentInfo: {
     ...ApplicationStyles.component.cardRightInfo,

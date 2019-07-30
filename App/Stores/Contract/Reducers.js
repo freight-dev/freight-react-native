@@ -11,10 +11,11 @@ export const getContractsLoading = (state) => ({
   contractsErrorMessage: null,
 })
 
-export const getContractsSuccess = (state, { contracts }) => ({
+export const getContractsSuccess = (state, { contracts, start }) => ({
   ...state,
   contracts: contracts.contracts,
   contractsIsLoading: false,
+  contractsStart: start,
   contractsErrorMessage: null,
 })
 

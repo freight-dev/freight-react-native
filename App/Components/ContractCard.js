@@ -6,6 +6,7 @@ import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText }
 import { formatNumber } from '../Helper/NumberHelper'
 import moment from 'moment'
 import { Badge } from 'react-native-elements'
+import { contractStatusBadge, mapContractStatus } from '../Helper/ContractHelper'
 
 export const ContractCard = (props) => {
   const contract = props.contract.item
@@ -30,10 +31,7 @@ export const ContractCard = (props) => {
         </View>
         <View style={Style.contractInfo}>
           <View style={Style.badgeContainer}>
-            <Badge
-              status="success"
-              value={<OpenSansText style={Style.badgeText}>Action Required</OpenSansText>}
-            />
+            {contractStatusBadge(contract.status)}
           </View>
           <View style={Style.contractInfoDetailField}>
             <OpenSansBoldText>

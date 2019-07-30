@@ -7,7 +7,7 @@ export function* getContracts(action) {
 
   const contracts = yield call(contractService.getContracts, action.param)
   if (!contracts.error) {
-    yield put(ContractActions.getContractsSuccess(contracts))
+    yield put(ContractActions.getContractsSuccess(contracts, action.param.start))
   } else if (contracts.error) {
     yield put(ContractActions.getContractsFailure(contracts.error))
   } else {

@@ -9,20 +9,23 @@ import Colors from '../../Theme/Colors'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText } from '../../Components/StyledText'
 import moment from 'moment'
 import * as _ from 'lodash'
-
-const allStatus = [
-  'TRANSPORTER_OFFERED',
-  'CUSTOMER_NEGOTIATE',
-  'CUSTOMER_ACCEPTED',
-  'CUSTOMER_DECLINED',
-  'CUSTOMER_EXPIRED',
-  'TRANSPORTER_EXPIRED'
-]
+import {
+  ACCEPTED,
+  ACTION_REQUIRED,
+  ALL,
+  DECLINED,
+  EXPIRED, mapContractStatus,
+  WAITING_REPLY,
+} from '../../Helper/ContractHelper'
 
 class CargoContractScreen extends Component {
   componentDidMount() {
-    this.props.getContracts({ cargoId: this.props.navigation.getParam('cargo').id})
-    this.props.setContractsStatusSearch(allStatus)
+    this.props.getContracts({
+      cargoId: this.props.navigation.getParam('cargo').id,
+      start: 0,
+      limit: 20,
+    })
+    this.props.setContractsStatusSearch(ALL)
   }
 
   _keyExtractor = (item) => item.id
@@ -33,10 +36,6 @@ class CargoContractScreen extends Component {
 
   render() {
     const cargo = this.props.navigation.getParam('cargo')
-    if (this.props.contractsIsLoading) {
-      return null
-    }
-
     return (
       <View style={Style.container}>
         <StatusBar backgroundColor={Colors.main} barStyle="light-content" />
@@ -61,30 +60,12 @@ class CargoContractScreen extends Component {
         <View style={Style.contracts}>
           <View style={Style.statusSearchContainer}>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={Style.statusSearchBar}>
-              { statusSearchTab(() => this.props.setContractsStatusSearch(allStatus),
-                this.props.contractsStatusSearch,
-                allStatus,
-                'All') }
-              { statusSearchTab(() => this.props.setContractsStatusSearch(['TRANSPORTER_OFFERED']),
-                this.props.contractsStatusSearch,
-                ['TRANSPORTER_OFFERED'],
-                'Action Required') }
-              { statusSearchTab(() => this.props.setContractsStatusSearch(['CUSTOMER_NEGOTIATE']),
-                this.props.contractsStatusSearch,
-                ['CUSTOMER_NEGOTIATE'],
-                'Waiting Reply') }
-              { statusSearchTab(() => this.props.setContractsStatusSearch(['CUSTOMER_ACCEPTED']),
-                this.props.contractsStatusSearch,
-                ['CUSTOMER_ACCEPTED'],
-                'Accepted') }
-              { statusSearchTab(() => this.props.setContractsStatusSearch(['CUSTOMER_DECLINED']),
-                this.props.contractsStatusSearch,
-                ['CUSTOMER_DECLINED'],
-                'Declined') }
-              { statusSearchTab(() => this.props.setContractsStatusSearch(['CUSTOMER_EXPIRED','TRANSPORTER_EXPIRED']),
-                this.props.contractsStatusSearch,
-                ['CUSTOMER_EXPIRED','TRANSPORTER_EXPIRED'],
-                'Expired') }
+              { statusSearchTab(this.props, ALL) }
+              { statusSearchTab(this.props, ACTION_REQUIRED) }
+              { statusSearchTab(this.props, WAITING_REPLY) }
+              { statusSearchTab(this.props, ACCEPTED) }
+              { statusSearchTab(this.props, DECLINED) }
+              { statusSearchTab(this.props, EXPIRED) }
             </ScrollView>
           </View>
 
@@ -92,6 +73,25 @@ class CargoContractScreen extends Component {
             data={_filterContract(this.props.contractsStatusSearch, this.props.contracts)}
             keyExtractor={this._keyExtractor}
             renderItem={(contract) => this._renderItem(contract, cargo)}
+            onEndReached={() => this.props.getContracts({
+              cargoId: this.props.navigation.getParam('cargo').id,
+              start: this.props.contractsStart,
+              limit: 20,
+            })}
+            onEndReachedThreshold={0.5}
+            onRefresh={() => this.props.getContracts({
+              cargoId: this.props.navigation.getParam('cargo').id,
+              start: this.props.contractsStart,
+              limit: 20,
+            })}
+            refreshing={this.props.contractsIsLoading}
+            ref={ref => this.flatList = ref}
+            onContentSizeChange={() => {
+              if (this.contracts) this.flatList.scrollToIndex({ animated: true, index: 0 });
+            }}
+            onLayout={() => {
+              if (this.contracts) this.flatList.scrollToIndex({ animated: true, index: 0 });
+            }}
           />
         </View>
       </View>
@@ -100,17 +100,20 @@ class CargoContractScreen extends Component {
 }
 
 const _filterContract = (contractsStatusSearch, contracts) => {
+  if (contractsStatusSearch === ALL) {
+    return contracts
+  }
   return _.filter(contracts, function(contract) {
-    return contractsStatusSearch.includes(contract.status);
+    return contractsStatusSearch.includes(mapContractStatus(contract.status));
   });
 }
 
-const statusSearchTab = (action, statusSearchCurState, statusSearch, displayText) => {
+const statusSearchTab = (props, statusSearch) => {
   return (
-    <TouchableOpacity style={[Style.statusSearch, _.isEqual(statusSearch.sort(), statusSearchCurState.sort()) ? Style.statusSearchSelected : null]}
-                      onPress={action}>
-      <OpenSansText style={Style.statusSearchText, _.isEqual(statusSearch.sort(), statusSearchCurState.sort()) ? Style.statusSearchTextSelected : null}>
-        {displayText}
+    <TouchableOpacity style={[Style.statusSearch, _.isEqual(statusSearch, props.contractsStatusSearch) ? Style.statusSearchSelected : null]}
+                      onPress={() => props.setContractsStatusSearch(statusSearch)}>
+      <OpenSansText style={Style.statusSearchText, _.isEqual(statusSearch, props.contractsStatusSearch) ? Style.statusSearchTextSelected : null}>
+        {statusSearch}
       </OpenSansText>
     </TouchableOpacity>
   )
@@ -160,6 +163,7 @@ CargoContractScreen.propTypes = {
   getContracts: PropTypes.func,
   contracts: PropTypes.array,
   contractsIsLoading: PropTypes.bool,
+  contractsStart: PropTypes.number,
   setContractsStatusSearch: PropTypes.func,
   contractsStatusSearch: PropTypes.array,
 }
@@ -167,6 +171,7 @@ CargoContractScreen.propTypes = {
 const mapStateToProps = (state) => ({
   contracts: state.contract.contracts,
   contractsIsLoading: state.contract.contractsIsLoading,
+  contractsStart: state.contract.contractsStart,
   contractsStatusSearch: state.contract.contractsStatusSearch,
 })
 
