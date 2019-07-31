@@ -11,6 +11,11 @@ const { Types, Creators } = createActions({
   getInProgressShipmentsLoading: null,
   getInProgressShipmentsSuccess: ['cargoShipment'],
   getInProgressShipmentsFailure: ['error'],
+  // Get completed shipment
+  getCompletedShipments: [],
+  getCompletedShipmentsLoading: null,
+  getCompletedShipmentsSuccess: ['cargoShipment'],
+  getCompletedShipmentsFailure: ['error'],
 })
 
 export const ShipmentTypes = Types

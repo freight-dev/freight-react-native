@@ -27,3 +27,16 @@ export function* getInProgressShipments() {
     yield put(ShipmentActions.getInProgressShipmentsFailure('There was an error while getting in progress shipments'))
   }
 }
+
+export function* getCompletedShipments() {
+  yield put(ShipmentActions.getCompletedShipmentsLoading())
+
+  const cargoShipment = yield call(shipmentService.getCompletedShipments)
+  if (!cargoShipment.error) {
+    yield put(ShipmentActions.getCompletedShipmentsSuccess(cargoShipment))
+  } else if (cargoShipment.error) {
+    yield put(ShipmentActions.getCompletedShipmentsFailure(cargoShipment.error))
+  } else {
+    yield put(ShipmentActions.getCompletedShipmentsFailure('There was an error while getting completed shipments'))
+  }
+}

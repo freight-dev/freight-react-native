@@ -34,7 +34,7 @@ const ShipmentTopNavigator = createMaterialTopTabNavigator(
   {
     headerMode: 'none',
     tabBarOptions: {
-      activeTintColor: 'black',
+      activeTintColor: Colors.main,
       inactiveTintColor: 'grey',
       indicatorStyle: Style.indicator,
       style: Style.tabBarOptions,

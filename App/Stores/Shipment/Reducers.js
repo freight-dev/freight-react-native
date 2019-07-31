@@ -48,6 +48,29 @@ export const getInProgressShipmentsFailure = (state, { error }) => ({
   inProgressShipmentsErrorMessage: error.error.description,
 })
 
+/**
+ * Get Completed Shipments
+ */
+export const getCompletedShipmentsLoading = (state) => ({
+  ...state,
+  completedShipmentsIsLoading: true,
+  completedShipmentsErrorMessage: null,
+})
+
+export const getCompletedShipmentsSuccess = (state, { cargoShipment }) => ({
+  ...state,
+  completedShipments: cargoShipment.cargoShipment,
+  completedShipmentsIsLoading: false,
+  completedShipmentsErrorMessage: null,
+})
+
+export const getCompletedShipmentsFailure = (state, { error }) => ({
+  ...state,
+  completedShipments: [],
+  completedShipmentsIsLoading: false,
+  completedShipmentsErrorMessage: error.error.description,
+})
+
 export const reducer = createReducer(INITIAL_STATE, {
   [ShipmentTypes.GET_UPCOMING_SHIPMENTS_LOADING]: getUpcomingShipmentsLoading,
   [ShipmentTypes.GET_UPCOMING_SHIPMENTS_SUCCESS]: getUpcomingShipmentsSuccess,
@@ -55,4 +78,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [ShipmentTypes.GET_IN_PROGRESS_SHIPMENTS_LOADING]: getInProgressShipmentsLoading,
   [ShipmentTypes.GET_IN_PROGRESS_SHIPMENTS_SUCCESS]: getInProgressShipmentsSuccess,
   [ShipmentTypes.GET_IN_PROGRESS_SHIPMENTS_FAILURE]: getInProgressShipmentsFailure,
+  [ShipmentTypes.GET_COMPLETED_SHIPMENTS_LOADING]: getCompletedShipmentsLoading,
+  [ShipmentTypes.GET_COMPLETED_SHIPMENTS_SUCCESS]: getCompletedShipmentsSuccess,
+  [ShipmentTypes.GET_COMPLETED_SHIPMENTS_FAILURE]: getCompletedShipmentsFailure,
 })
