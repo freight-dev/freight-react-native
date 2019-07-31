@@ -1,53 +1,52 @@
 import React, { Component } from 'react'
-import { FlatList, View, Text, StatusBar } from 'react-native'
+import { FlatList, View, StatusBar } from 'react-native'
 import { PropTypes } from 'prop-types'
-import CargoActions from '../../Stores/Cargo/Actions'
-import { CargoCard } from '../../Components/CargoCard'
 import { connect } from 'react-redux'
+import ShipmentActions from '../../Stores/Shipment/Actions'
 import Style from './ShipmentCompletedScreenStyle'
+import { CompletedShipmentCard } from '../../Components/CompletedShipmentCard'
 
 class ShipmentCompletedScreen extends Component {
   componentDidMount() {
-    // this.props.getActiveCargos()
+    this.props.getCompletedShipments()
   }
 
   _keyExtractor = (item) => item.id
 
   _renderItem = ({item}) => (
-    {/*<CargoCard data={item} navigation={this.props.navigation} />*/}
+    <CompletedShipmentCard shipment={item.shipment} cargo={item.cargo} navigation={this.props.navigation} />
   );
 
   render() {
-    return null
-    // if (this.props.activeCargosIsLoading) {
-    //   return null
-    // }
-    // return (
-    //   <View style={Style.container}>
-    //     <StatusBar backgroundColor='white' barStyle="dark-content" />
-    //     <FlatList
-    //       data={this.props.activeCargos}
-    //       keyExtractor={this._keyExtractor}
-    //       renderItem={this._renderItem}
-    //     />
-    //   </View>
-    // )
+    if (this.props.completedShipmentsIsLoading) {
+      return null
+    }
+    return (
+      <View style={Style.container}>
+        <StatusBar backgroundColor='white' barStyle="dark-content" />
+        <FlatList
+          data={this.props.completedShipments}
+          keyExtractor={this._keyExtractor}
+          renderItem={this._renderItem}
+        />
+      </View>
+    )
   }
 }
 
 ShipmentCompletedScreen.propTypes = {
-  // getActiveCargos: PropTypes.func,
-  // activeCargos: PropTypes.array,
-  // activeCargosIsLoading: PropTypes.bool,
+  getCompletedShipments: PropTypes.func,
+  completedShipments: PropTypes.array,
+  completedShipmentsIsLoading: PropTypes.bool,
 }
 
 const mapStateToProps = (state) => ({
-  // activeCargos: state.cargo.activeCargos,
-  // activeCargosIsLoading: state.cargo.activeCargosIsLoading,
+  completedShipments: state.shipment.completedShipments,
+  completedShipmentsIsLoading: state.shipment.completedShipmentsIsLoading,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  // getActiveCargos: () => dispatch(CargoActions.getActiveCargos()),
+  getCompletedShipments: () => dispatch(ShipmentActions.getCompletedShipments()),
 })
 
 export default connect(

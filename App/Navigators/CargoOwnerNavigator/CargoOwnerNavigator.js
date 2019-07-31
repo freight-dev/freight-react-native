@@ -3,11 +3,11 @@ import {
 } from 'react-navigation'
 
 import InquiryNavigator from 'App/Navigators/CargoOwnerNavigator/InquiryNavigator'
-import PostFormNavigator from './PostFormNavigator'
+import CargoPostInquiryNavigator from './CargoPostInquiryNavigator'
 import ShipmentNavigator from './ShipmentNavigator'
 
 export default createBottomTabNavigator({
-  PostScreen: PostFormNavigator,
+  CargoPostInquiryScreen: CargoPostInquiryNavigator,
   InquiryScreen: InquiryNavigator,
   ShipmentScreen: ShipmentNavigator,
 })

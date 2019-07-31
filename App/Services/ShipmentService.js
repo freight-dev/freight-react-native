@@ -20,7 +20,7 @@ const shipmentApiClient = axios.create({
 
 function getUpcomingShipments() {
   return shipmentApiClient
-    .get(Config.API_URL + '/shipment?status=upcoming&cargoStatus=reserved')
+    .get(Config.API_URL + '/shipment?status=upcoming')
     .then((response) => {
       if (in200s(response.status)) {
         return response.data
@@ -31,7 +31,18 @@ function getUpcomingShipments() {
 
 function getInProgressShipments() {
   return shipmentApiClient
-    .get(Config.API_URL + '/shipment?status=live&cargoStatus=reserved')
+    .get(Config.API_URL + '/shipment?status=live')
+    .then((response) => {
+      if (in200s(response.status)) {
+        return response.data
+      }
+      return null
+    })
+}
+
+function getCompletedShipments() {
+  return shipmentApiClient
+    .get(Config.API_URL + '/shipment?status=completed')
     .then((response) => {
       if (in200s(response.status)) {
         return response.data
@@ -43,4 +54,5 @@ function getInProgressShipments() {
 export const shipmentService = {
   getUpcomingShipments,
   getInProgressShipments,
+  getCompletedShipments,
 }

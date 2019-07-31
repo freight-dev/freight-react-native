@@ -1,14 +1,13 @@
 import React from 'react'
-import { Text, View, Button, ActivityIndicator, Image } from 'react-native'
+import { View, ActivityIndicator, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
-import ExampleActions from 'App/Stores/Example/Actions'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
-import Style from './PostScreenStyle'
-import SearchForm from './PostForm'
+import Style from './CargoPostInquiryScreenStyle'
+import SearchForm from '../../Components/CargoForm/CargoForm'
 import { Images } from 'App/Theme'
 
-class PostScreen extends React.Component {
+class CargoInquiryPostScreen extends React.Component {
   componentDidMount() {
     // this.props.fetchUser()
   }
@@ -16,6 +15,7 @@ class PostScreen extends React.Component {
   render() {
     return (
       <View style={Style.container}>
+        <StatusBar backgroundColor='white' barStyle="dark-content" />
         {this.props.configIsLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
@@ -26,7 +26,7 @@ class PostScreen extends React.Component {
   }
 }
 
-PostScreen.propTypes = {
+CargoInquiryPostScreen.propTypes = {
   containerTypes: PropTypes.array,
   bulkTypes: PropTypes.array,
   cargoTypes: PropTypes.array,
@@ -57,4 +57,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PostScreen)
+)(CargoInquiryPostScreen)

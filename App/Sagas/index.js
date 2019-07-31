@@ -12,7 +12,7 @@ import { getPort } from './PortSaga'
 import { postCargo, getActiveCargos, getHistoryCargos } from './CargoSaga'
 import { getContracts, setContractsStatusSearch } from './ContractSaga'
 import { startup } from './StartupSaga'
-import { getUpcomingShipments, getInProgressShipments } from './ShipmentSaga'
+import { getUpcomingShipments, getInProgressShipments, getCompletedShipments } from './ShipmentSaga'
 
 export default function* root() {
   yield all([
@@ -41,5 +41,7 @@ export default function* root() {
     takeLatest(ShipmentTypes.GET_UPCOMING_SHIPMENTS, getUpcomingShipments),
     // Call `getInProgressShipments()`
     takeLatest(ShipmentTypes.GET_IN_PROGRESS_SHIPMENTS, getInProgressShipments),
+    // Call `getCompletedShipments()`
+    takeLatest(ShipmentTypes.GET_COMPLETED_SHIPMENTS, getCompletedShipments),
   ])
 }

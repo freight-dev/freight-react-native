@@ -10,9 +10,8 @@ import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText }
 import moment from 'moment'
 import * as _ from 'lodash'
 import {
-  ACCEPTED,
   ACTION_REQUIRED,
-  ALL,
+  ALL, CUSTOMER_ACCEPTED,
   DECLINED,
   EXPIRED, mapContractStatus,
   WAITING_REPLY,
@@ -63,7 +62,6 @@ class CargoContractScreen extends Component {
               { statusSearchTab(this.props, ALL) }
               { statusSearchTab(this.props, ACTION_REQUIRED) }
               { statusSearchTab(this.props, WAITING_REPLY) }
-              { statusSearchTab(this.props, ACCEPTED) }
               { statusSearchTab(this.props, DECLINED) }
               { statusSearchTab(this.props, EXPIRED) }
             </ScrollView>
@@ -100,8 +98,12 @@ class CargoContractScreen extends Component {
 }
 
 const _filterContract = (contractsStatusSearch, contracts) => {
+  // We dont want to return accepted contract for ALL
+  // This should not happened because ACCEPTED contract should have RESERVED cargo
   if (contractsStatusSearch === ALL) {
-    return contracts
+    return _.filter(contracts, function(contract) {
+      return contract.status !== CUSTOMER_ACCEPTED;
+    });
   }
   return _.filter(contracts, function(contract) {
     return contractsStatusSearch.includes(mapContractStatus(contract.status));

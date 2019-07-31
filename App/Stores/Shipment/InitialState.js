@@ -8,4 +8,7 @@ export const INITIAL_STATE = {
   inProgressShipments: [],
   inProgressShipmentsIsLoading: false,
   inProgressShipmentsErrorMessage: null,
+  completedShipments: [],
+  completedShipmentsIsLoading: false,
+  completedShipmentsErrorMessage: null,
 }
