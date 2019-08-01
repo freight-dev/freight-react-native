@@ -4,7 +4,6 @@ import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
-import SegmentedControlTab from 'react-native-segmented-control-tab'
 import DatePicker from 'react-native-datepicker'
 
 import { cargoService as CargoActions } from '../../Services/CargoService'
@@ -13,6 +12,7 @@ import { LCL } from './LclForm'
 import { Bulk } from './BulkForm'
 import { validators } from '../../Helper/CargoFormHelper'
 import Style from './CargoFormStyle'
+import SegmentedControlTab from 'react-native-segmented-control-tab'
 
 class CargoForm extends Component {
   constructor(props) {
@@ -34,6 +34,7 @@ class CargoForm extends Component {
             getTitle: router.getTitle,
           })
         }}
+        style={Style.form}
         clearOnClose={false} // delete the values of the form when unmounted
         defaults={{
           cargoTypeId: 0,
@@ -105,31 +106,34 @@ class CargoForm extends Component {
 
 
         <SegmentedControlTab
-          tabsContainerStyle={styles.tabsContainerStyle}
-          tabStyle={styles.tabStyle}
-          activeTabStyle={styles.activeTabStyle}
-          activeTabTextStyle={styles.activeTabTextStyle}
+          tabsContainerStyle={Style.tabsContainerStyle}
+          tabStyle={Style.tabStyle}
+          tabTextStyle={Style.tabsTextStyle}
+          activeTabStyle={Style.activeTabStyle}
+          activeTabTextStyle={Style.activeTabTextStyle}
+          borderRadius={0}
           values={this.props.cargoTypes.map((cargoType) => cargoType.displayName)}
           selectedIndex={this.state.cargoTypeId}
           onTabPress={(index) => {
             GiftedFormManager.updateValue('cargo', 'cargoTypeId', index)
             this.setState({ ...this.state, cargoTypeId: index })
           }}
-          borderRadius={0}
         />
 
         {this.state.cargoTypeId === 0 && FCL(this.props.containerTypes)}
         {this.state.cargoTypeId === 1 && LCL(this.props.weightUnits, this.props.dimensionUnits)}
         {this.state.cargoTypeId === 2 && Bulk(this.props.weightUnits, this.props.volumeUnits, this.props.bulkTypes)}
 
-        <GiftedForm.ErrorsWidget />
+        <GiftedForm.ErrorsWidget widgetStyles={{
+          errorContainer: Style.errorContainer,
+          errorText: Style.errorText,
+        }}/>
 
         <GiftedForm.SubmitWidget
           title="Inquire"
           widgetStyles={{
-            submitButton: {
-              // backgroundColor: themes.mainColor,
-            },
+            submitButton: Style.submitButton,
+            textSubmitButton: Style.textSubmitButton,
           }}
           onSubmit={(
             isValid,
@@ -175,40 +179,11 @@ class CargoForm extends Component {
 
         {/* <GiftedForm.NoticeWidget title="By signing up, you agree to the Terms of Service and Privacy Policity." /> */}
 
-        <GiftedForm.HiddenWidget name="tos" value={true} />
+        {/*<GiftedForm.HiddenWidget name="tos" value={true} />*/}
       </GiftedForm>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  form: {
-    backgroundColor: 'white',
-  },
-  tabsContainerStyle: {
-    height: 50,
-    // backgroundColor: '#F2F2F2'
-  },
-  tabStyle: {
-    backgroundColor: 'white',
-    borderWidth: 0,
-    borderColor: 'transparent',
-    borderRadius: 4,
-    padding: 5,
-  },
-  tabTextStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 11,
-  },
-  activeTabStyle: {
-    backgroundColor: 'blue',
-    // marginTop: 2
-  },
-  activeTabTextStyle: {
-    color: 'white',
-  },
-})
 
 CargoForm.propTypes = {
   navigation: PropTypes.object,

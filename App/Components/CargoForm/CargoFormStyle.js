@@ -4,6 +4,13 @@ import ApplicationStyles from 'App/Theme/ApplicationStyles'
 import Colors from '../../Theme/Colors'
 
 export default StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  form: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   rowContainer: {
     backgroundColor: '#FFF',
     borderBottomWidth: 1 / PixelRatio.get(),
@@ -38,12 +45,44 @@ export default StyleSheet.create({
     marginRight: 10,
     marginLeft: 10,
   },
-  // underlineIdle: {
-  //   borderBottomWidth: 2,
-  //   borderColor: '#c8c7cc',
-  // },
   datePickerContainer: {
     borderWidth: 0,
     flex: 1,
+  },
+  tabsContainerStyle: {
+    backgroundColor: 'white',
+    paddingVertical: 10,
+  },
+  tabStyle: {
+    backgroundColor: 'white',
+    borderWidth: 0,
+    padding : 0,
+  },
+  activeTabStyle: {
+    padding : 0,
+    backgroundColor: Colors.main,
+  },
+  tabsTextStyle: {
+    color: 'black',
+    fontFamily: 'OpenSans',
+  },
+  activeTabTextStyle: {
+    color: 'white',
+    fontFamily: 'OpenSans',
+    fontWeight: 'bold',
+  },
+  errorContainer: {
+    backgroundColor: Colors.red,
+  },
+  errorText: {
+    color: 'white',
+    fontFamily: 'OpenSans'
+  },
+  submitButton: {
+    backgroundColor: Colors.main,
+  },
+  textSubmitButton: {
+    color: 'white',
+    fontFamily: 'OpenSans'
   },
 })

@@ -6,6 +6,7 @@ import {
 import CargoInquiryPostScreen from '../../Containers/CargoOwner/CargoInquiryPostScreen'
 import CargoFormModal from '../../Components/CargoForm/CargoFormModal'
 import Colors from '../../Theme/Colors'
+import InquiryNavigator from './InquiryNavigator'
 
 const CargoPostInquiryNavigator = createStackNavigator(
   {
@@ -27,5 +28,14 @@ const CargoPostInquiryNavigator = createStackNavigator(
     headerMode: 'screen',
   }
 )
+
+CargoPostInquiryNavigator.navigationOptions = ({navigation})=>{
+  let { routeName } = navigation.state.routes[navigation.state.index];
+  let navigationOptions = {};
+  if (routeName === 'Modal') {
+    navigationOptions.tabBarVisible = false;
+  }
+  return navigationOptions;
+}
 
 export default CargoPostInquiryNavigator
