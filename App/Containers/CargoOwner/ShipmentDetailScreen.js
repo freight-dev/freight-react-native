@@ -5,6 +5,9 @@ import CargoActions from '../../Stores/Cargo/Actions'
 import { CargoCard } from '../../Components/CargoCard'
 import { connect } from 'react-redux'
 import Style from './ShipmentDetailScreenStyle'
+import MapView, { Marker, Callout } from 'react-native-maps'
+import Colors from '../../Theme/Colors'
+import { OpenSansText } from '../../Components/StyledText'
 
 class ShipmentDetailScreen extends Component {
   componentDidMount() {
@@ -18,20 +21,40 @@ class ShipmentDetailScreen extends Component {
   );
 
   render() {
-    return null
-    // if (this.props.activeCargosIsLoading) {
-    //   return null
-    // }
-    // return (
-    //   <View style={Style.container}>
-    //     <StatusBar backgroundColor='white' barStyle="dark-content" />
-    //     <FlatList
-    //       data={this.props.activeCargos}
-    //       keyExtractor={this._keyExtractor}
-    //       renderItem={this._renderItem}
-    //     />
-    //   </View>
-    // )
+    return (
+      <View style={Style.container}>
+        <StatusBar hidden={true} />
+        <MapView
+          style={Style.map}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 1.0922,
+            longitudeDelta: 1.0421,
+          }}
+        >
+          <Marker coordinate={{
+            latitude: 37.78825,
+            longitude: -122.4324,}}
+                  pinColor={Colors.main}>
+            <Callout>
+              <OpenSansText>Origin</OpenSansText>
+            </Callout>
+          </Marker>
+          <Marker coordinate={{
+            latitude: 37.68825,
+            longitude: -122.4324,}}>
+            <Callout>
+              <OpenSansText>Destination</OpenSansText>
+            </Callout>
+          </Marker>
+        </MapView>
+        <View style={Style.card}>
+          <OpenSansText>Test</OpenSansText>
+          <OpenSansText>Yes</OpenSansText>
+        </View>
+      </View>
+    )
   }
 }
 
