@@ -9,6 +9,7 @@ export default {
   transparent: 'rgba(0,0,0,0)',
   main: '#336699',
   backgroundMain: '#F7FAFE',
+  tabIconDefault: '#ccc',
   // main: '#3D52D5',
   greenButton: '#52c41a',
   redButton: '#ff190c',
