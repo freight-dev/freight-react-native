@@ -10,13 +10,9 @@ export default StyleSheet.create({
     flex: 1,
   },
   card: {
-    backgroundColor: 'white',
-    alignItems: 'center',
-    padding: 10,
     position: 'absolute',
-    bottom: 50,
+    bottom: 20,
     left: 20,
     right: 20,
-    borderRadius: 5,
   },
 })
