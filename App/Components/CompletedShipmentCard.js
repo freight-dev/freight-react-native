@@ -8,7 +8,7 @@ import { CargoHistoryCard } from './CargoHistoryCard'
 
 export const CompletedShipmentCard = (props) => {
   return (
-    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, props.shipment)}>
+    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, props.shipment, props.cargo)}>
       <View style={Style.card}>
         <View style={Style.cargo}>
           <View style={Style.cargoOriginDestination}>
@@ -42,9 +42,10 @@ export const CompletedShipmentCard = (props) => {
   )
 }
 
-const navigateToShipmentDetail = (navigation, shipment) => {
+const navigateToShipmentDetail = (navigation, shipment, cargo) => {
   navigation.navigate('ShipmentDetailScreen', {
     shipment: shipment,
+    cargo: cargo,
   })
 }
 
