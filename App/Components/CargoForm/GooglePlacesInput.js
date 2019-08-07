@@ -23,7 +23,7 @@ export const GooglePlacesInput = () => {
       getDefaultValue={() => ''}
       query={{
         // available options: https://developers.google.com/places/web-service/autocomplete
-        key: 'AIzaSyCclDCDde2TWgKs0wgC-mNwZN1E2VkNdF8',
+        key: '',
         language: 'id', // language of the results
         types: '(cities)' // default: 'geocode'
       }}
