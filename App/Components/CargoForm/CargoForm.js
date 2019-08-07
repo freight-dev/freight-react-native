@@ -13,6 +13,7 @@ import { Bulk } from './BulkForm'
 import { validators } from '../../Helper/CargoFormHelper'
 import Style from './CargoFormStyle'
 import SegmentedControlTab from 'react-native-segmented-control-tab'
+import { GooglePlacesInput } from './GooglePlacesInput'
 
 class CargoForm extends Component {
   constructor(props) {
@@ -77,6 +78,7 @@ class CargoForm extends Component {
 
         {/* // TODO: Add destination */}
 
+        <GooglePlacesInput />
         <View style={Style.rowContainer}>
           <View style={Style.row}>
             <Text
