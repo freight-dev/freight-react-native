@@ -78,7 +78,7 @@ class CargoForm extends Component {
 
         {/* // TODO: Add destination */}
 
-        <GooglePlacesInput />
+        {/*<GooglePlacesInput />*/}
         <View style={Style.rowContainer}>
           <View style={Style.row}>
             <Text
