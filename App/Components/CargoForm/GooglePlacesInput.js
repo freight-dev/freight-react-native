@@ -10,22 +10,23 @@ export const GooglePlacesInput = () => {
   return (
     <GooglePlacesAutocomplete
       placeholder='Search'
-      minLength={1} // minimum length of text to search
-      autoFocus={false}
+      minLength={3} // minimum length of text to search
+      autoFocus={true}
       returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
       keyboardAppearance={'light'} // Can be left out for default keyboardAppearance https://facebook.github.io/react-native/docs/textinput.html#keyboardappearance
-      listViewDisplayed='auto'    // true/false/undefined
-      fetchDetails={false}
+      listViewDisplayed={true}    // true/false/undefined
+      fetchDetails={true}
       renderDescription={row => row.description} // custom description render
       onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
-        alert(JSON.stringify(data) + '\n' + JSON.stringify(details));
+        console.log(JSON.stringify(data) + '\n' + JSON.stringify(details));
       }}
       getDefaultValue={() => ''}
       query={{
         // available options: https://developers.google.com/places/web-service/autocomplete
         key: '',
         language: 'id', // language of the results
-        types: '(cities)' // default: 'geocode'
+         // types: 'geocode', // default: 'geocode'
+        components: 'country:ID',
       }}
 
       styles={{
@@ -40,25 +41,25 @@ export const GooglePlacesInput = () => {
         }
       }}
 
-      currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
-      currentLocationLabel="Current location"
-      nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
-      GoogleReverseGeocodingQuery={{
-        // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
-      }}
-      GooglePlacesSearchQuery={{
-        // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
-        rankby: 'distance',
-        type: 'transit_station'
-      }}
+      currentLocation={false} // Will add a 'Current location' button at the top of the predefined places list
+      // currentLocationLabel="Current location"
+      // nearbyPlacesAPI='GoogleReverseGeocoding' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+      // GoogleReverseGeocodingQuery={{
+      //   // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+      // }}
+      // GooglePlacesSearchQuery={{
+      //   // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+      //   rankby: 'distance',
+      //   type: 'transit_station',
+      // }}
 
-      GooglePlacesDetailsQuery={{
-        // available options for GooglePlacesDetails API : https://developers.google.com/places/web-service/details
-        fields: 'formatted_address',
-      }}
+      // GooglePlacesDetailsQuery={{
+      //   // available options for GooglePlacesDetails API : https://developers.google.com/places/web-service/details
+      //   // fields: 'formatted_address',
+      // }}
 
-      filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
-      predefinedPlaces={[homePlace, workPlace]}
+      filterReverseGeocodingByTypes={['establishment', 'sublocality', 'locality', 'administrative_area_level_2', 'administrative_area_level_3', 'administrative_area_level_4']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
+      // predefinedPlaces={[homePlace, workPlace]}
 
       debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
       renderLeftButton={()  => <OpenSansText>From</OpenSansText>}

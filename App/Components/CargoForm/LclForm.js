@@ -1,5 +1,8 @@
 import React from 'react'
+import { View } from 'react-native'
 import { GiftedForm } from 'react-native-gifted-form'
+import Styles from './LclFormStyle'
+import { OpenSansText } from '../StyledText'
 
 export const LCL = (weightUnits, dimensionUnits) => {
   return (
@@ -11,22 +14,36 @@ export const LCL = (weightUnits, dimensionUnits) => {
         clearButtonMode="while-editing"
         keyboardType="numeric"
       />
-      <GiftedForm.TextInputWidget
-        name="weight"
-        title="Weight"
-        placeholder="Enter weight.."
-        clearButtonMode="while-editing"
-        keyboardType="numeric"
-      />
-      <GiftedForm.ModalWidget title="Weight Unit" displayValue="weightUnit">
-        <GiftedForm.SelectWidget name="weightUnit" multiple={false}>
-          {weightUnits
-            .filter((weightUnit) => weightUnit !== 'NOT_USED')
-            .map((weightUnit) => (
-              <GiftedForm.OptionWidget key={weightUnit} title={weightUnit} value={weightUnit} />
-            ))}
-        </GiftedForm.SelectWidget>
-      </GiftedForm.ModalWidget>
+      <GiftedForm.GroupWidget style={Styles.weightContainer}>
+        <GiftedForm.TextInputWidget
+            name="weight"
+            // title="Weight"
+            placeholder="Weight"
+            clearButtonMode="while-editing"
+            keyboardType="numeric"
+            widgetStyles={{
+              rowContainer: Styles.weight,
+              row: Styles.weightTextContainer,
+              spacer: Styles.spacer,
+              textInputInline: Styles.weightText,
+            }}
+          />
+        <GiftedForm.ModalWidget
+          displayValue="weightUnit"
+          widgetStyles={{
+            rowContainer: Styles.weightUnit,
+          }}
+        >
+          <GiftedForm.SelectWidget name="weightUnit" multiple={false}>
+            {weightUnits
+              .filter((weightUnit) => weightUnit !== 'NOT_USED')
+              .map((weightUnit) => (
+                <GiftedForm.OptionWidget key={weightUnit} title={weightUnit} value={weightUnit} />
+              ))}
+          </GiftedForm.SelectWidget>
+        </GiftedForm.ModalWidget>
+      </GiftedForm.GroupWidget>
+
       <GiftedForm.TextInputWidget
         name="length"
         title="Length"
