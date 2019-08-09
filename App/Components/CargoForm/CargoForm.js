@@ -15,6 +15,11 @@ import Style from './CargoFormStyle'
 import SegmentedControlTab from 'react-native-segmented-control-tab'
 import { GooglePlacesInput } from './GooglePlacesInput'
 
+const location = {
+  ORIGIN: 'origin',
+  DESTINATION: 'destination',
+}
+
 class CargoForm extends Component {
   constructor(props) {
     super(props)
@@ -78,7 +83,8 @@ class CargoForm extends Component {
 
         {/* // TODO: Add destination */}
 
-        {/*<GooglePlacesInput />*/}
+        <GooglePlacesInput location={location.ORIGIN}/>
+        <GooglePlacesInput location={location.DESTINATION}/>
         <View style={Style.rowContainer}>
           <View style={Style.row}>
             <Text
