@@ -224,4 +224,26 @@ export const validators = {
       },
     ],
   },
+  originMainName: {
+    title: 'Origin',
+    validate: [
+      {
+        validator: (...args) => {
+          return args[0] !== undefined && args[0] !== ''
+        },
+        message: '{TITLE} is required',
+      },
+    ],
+  },
+  destinationMainName: {
+    title: 'Destination',
+    validate: [
+      {
+        validator: (...args) => {
+          return args[0] !== undefined && args[0] !== ''
+        },
+        message: '{TITLE} is required',
+      },
+    ],
+  },
 }
