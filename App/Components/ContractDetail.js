@@ -19,8 +19,8 @@ export const ContractDetail = (props) => {
               <OpenSansLightText>Origin</OpenSansLightText>
             </View>
             <View style={Style.contractInfoData}>
-              <OpenSansBoldText>Tanjung Priok</OpenSansBoldText>
-              <OpenSansItalicText>Jakarta, DKI Jakarta</OpenSansItalicText>
+              <OpenSansBoldText>{contract.origin.mainName}</OpenSansBoldText>
+              <OpenSansItalicText>{contract.origin.secondaryName}</OpenSansItalicText>
             </View>
           </View>
           <View style={Style.contractInfo}>
@@ -28,8 +28,8 @@ export const ContractDetail = (props) => {
               <OpenSansLightText>Destination</OpenSansLightText>
             </View>
             <View style={Style.contractInfoData}>
-              <OpenSansBoldText>Semayang</OpenSansBoldText>
-              <OpenSansItalicText>Balikpapan, Kalimantan Timur</OpenSansItalicText>
+              <OpenSansBoldText>{contract.destination.mainName}</OpenSansBoldText>
+              <OpenSansItalicText>{contract.destination.secondaryName}</OpenSansItalicText>
             </View>
           </View>
         </View>

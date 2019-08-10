@@ -14,13 +14,13 @@ export const CargoHistoryCard = (props) => {
           <View style={Style.cargoOriginDestinationText}>
             <View style={Style.cargoInfoField}>
               <OpenSansLightText>Origin</OpenSansLightText>
-              <OpenSansBoldText>Tanjung Priok</OpenSansBoldText>
-              <OpenSansItalicText>Jakarta, DKI Jakarta</OpenSansItalicText>
+              <OpenSansBoldText>{cargo.origin.mainName}</OpenSansBoldText>
+              <OpenSansItalicText>{cargo.origin.secondaryName}</OpenSansItalicText>
             </View>
             <View style={Style.cargoInfoField}>
               <OpenSansLightText>Destination</OpenSansLightText>
-              <OpenSansBoldText>Semayang</OpenSansBoldText>
-              <OpenSansItalicText>Balikpapan, Kalimantan Timur</OpenSansItalicText>
+              <OpenSansBoldText>{cargo.destination.mainName}</OpenSansBoldText>
+              <OpenSansItalicText>{cargo.destination.secondaryName}</OpenSansItalicText>
             </View>
           </View>
         </View>

@@ -43,13 +43,13 @@ class CargoContractScreen extends Component {
             <View style={Style.cargoOriginDestinationText}>
               <View style={Style.cargoInfoField}>
                 <OpenSansLightText style={{color: 'white'}}>Origin</OpenSansLightText>
-                <OpenSansBoldText style={{color: 'white'}}>Tanjung Priok</OpenSansBoldText>
-                <OpenSansItalicText style={{color: 'white'}}>Jakarta, DKI Jakarta</OpenSansItalicText>
+                <OpenSansBoldText style={{color: 'white'}}>{cargo.origin.mainName}</OpenSansBoldText>
+                <OpenSansItalicText style={{color: 'white'}}>{cargo.origin.secondaryName}</OpenSansItalicText>
               </View>
               <View style={Style.cargoInfoField}>
                 <OpenSansLightText style={{color: 'white'}}>Destination</OpenSansLightText>
-                <OpenSansBoldText style={{color: 'white'}}>Semayang</OpenSansBoldText>
-                <OpenSansItalicText style={{color: 'white'}}>Balikpapan, Kalimantan Timur</OpenSansItalicText>
+                <OpenSansBoldText style={{color: 'white'}}>{cargo.destination.mainName}</OpenSansBoldText>
+                <OpenSansItalicText style={{color: 'white'}}>{cargo.destination.secondaryName}</OpenSansItalicText>
               </View>
             </View>
           </View>

@@ -34,31 +34,33 @@ const shipStatusStyle = {
 }
 
 export const InProgressShipmentCard = (props) => {
+  const cargo = props.cargo
+  const shipment = props.shipment
   return (
-    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, props.shipment)}>
+    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, shipment)}>
       <View style={Style.card}>
         <View style={Style.topCard}>
           <View style={Style.shipmentOriginDestinationContainer}>
             <View style={Style.shipmentOriginDestination}>
               <View style={Style.shipmentOrigin}>
                 <OpenSansLightText>Origin</OpenSansLightText>
-                <OpenSansBoldText>Tanjung Priok</OpenSansBoldText>
-                <OpenSansItalicText>Jakarta, DKI Jakarta</OpenSansItalicText>
+                <OpenSansBoldText>{shipment.destination.mainName}</OpenSansBoldText>
+                <OpenSansItalicText>{shipment.destination.secondaryName}</OpenSansItalicText>
               </View>
               <View>
                 <OpenSansLightText>Destination</OpenSansLightText>
-                <OpenSansBoldText>Semayang</OpenSansBoldText>
-                <OpenSansItalicText>Balikpapan, Kalimantan Timur</OpenSansItalicText>
+                <OpenSansBoldText>{shipment.destination.mainName}</OpenSansBoldText>
+                <OpenSansItalicText>{shipment.destination.secondaryName}</OpenSansItalicText>
               </View>
             </View>
           </View>
-          <View>{renderShipmentInformation(props.shipment, props.cargo)}</View>
+          <View>{renderShipmentInformation(shipment, cargo)}</View>
         </View>
         <View style={Style.shipStatus}>
           <StepIndicator
             stepCount={shipStatus.length}
             customStyles={shipStatusStyle}
-            currentPosition={mapShipStatus(props.shipment.shipStatus)}
+            currentPosition={mapShipStatus(shipment.shipStatus)}
             labels={shipStatus}
           />
         </View>

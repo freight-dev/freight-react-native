@@ -9,8 +9,9 @@ import moment from 'moment'
 import Colors from '../Theme/Colors'
 
 export const CargoCard = (props) => {
+  const cargo = props.data
   return (
-    <TouchableHighlight onPress={() => navigateToCargoContract(props.navigation, props.data)}>
+    <TouchableHighlight onPress={() => navigateToCargoContract(props.navigation, cargo)}>
       <View style={Style.card}>
         <View style={Style.cargoOriginDestination}>
           <View style={Style.flowLineIcon}>
@@ -18,16 +19,16 @@ export const CargoCard = (props) => {
           </View>
           <View style={Style.cargoOriginDestinationText}>
             <View>
-              <OpenSansBoldText>Tanjung Priok</OpenSansBoldText>
-              <OpenSansItalicText>Jakarta, DKI Jakarta</OpenSansItalicText>
+              <OpenSansBoldText>{cargo.origin.mainName}</OpenSansBoldText>
+              <OpenSansItalicText>{cargo.origin.secondaryName}</OpenSansItalicText>
             </View>
             <View>
-              <OpenSansBoldText>Semayang</OpenSansBoldText>
-              <OpenSansItalicText>Balikpapan, Kalimantan Timur</OpenSansItalicText>
+              <OpenSansBoldText>{cargo.destination.mainName}</OpenSansBoldText>
+              <OpenSansItalicText>{cargo.destination.secondaryName}</OpenSansItalicText>
             </View>
           </View>
         </View>
-        <View>{renderCargoInformation(props.data)}</View>
+        <View>{renderCargoInformation(cargo)}</View>
       </View>
     </TouchableHighlight>
   )
