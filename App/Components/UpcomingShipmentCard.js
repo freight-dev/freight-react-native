@@ -8,8 +8,9 @@ import moment from 'moment'
 import Colors from '../Theme/Colors'
 
 export const UpcomingShipmentCard = (props) => {
+  const shipment = props.shipment
   return (
-    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, props.shipment)}>
+    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, shipment)}>
       <View style={Style.card}>
         <View style={Style.shipmentOriginDestination}>
           <View style={Style.flowLineIcon}>
@@ -17,12 +18,12 @@ export const UpcomingShipmentCard = (props) => {
           </View>
           <View style={Style.shipmentOriginDestinationText}>
             <View>
-              <OpenSansBoldText>Tanjung Priok</OpenSansBoldText>
-              <OpenSansItalicText>Jakarta, DKI Jakarta</OpenSansItalicText>
+              <OpenSansBoldText>{shipment.origin.mainName}</OpenSansBoldText>
+              <OpenSansItalicText>{shipment.origin.secondaryName}</OpenSansItalicText>
             </View>
             <View>
-              <OpenSansBoldText>Semayang</OpenSansBoldText>
-              <OpenSansItalicText>Balikpapan, Kalimantan Timur</OpenSansItalicText>
+              <OpenSansBoldText>{shipment.destination.mainName}</OpenSansBoldText>
+              <OpenSansItalicText>{shipment.destination.secondaryName}</OpenSansItalicText>
             </View>
           </View>
         </View>

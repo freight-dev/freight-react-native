@@ -7,29 +7,31 @@ import moment from 'moment'
 import { CargoHistoryCard } from './CargoHistoryCard'
 
 export const CompletedShipmentCard = (props) => {
+  const shipment = props.shipment
+  const cargo = props.cargo
   return (
-    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, props.shipment, props.cargo)}>
+    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, shipment, cargo)}>
       <View style={Style.card}>
         <View style={Style.cargo}>
           <View style={Style.cargoOriginDestination}>
             <View style={Style.cargoOriginDestinationText}>
               <View style={Style.cargoInfoField}>
                 <OpenSansLightText>Origin</OpenSansLightText>
-                <OpenSansBoldText>Tanjung Priok</OpenSansBoldText>
-                <OpenSansItalicText>Jakarta, DKI Jakarta</OpenSansItalicText>
+                <OpenSansBoldText>{shipment.destination.mainName}</OpenSansBoldText>
+                <OpenSansItalicText>{shipment.destination.secondaryName}</OpenSansItalicText>
               </View>
               <View style={Style.cargoInfoField}>
                 <OpenSansLightText>Destination</OpenSansLightText>
-                <OpenSansBoldText>Semayang</OpenSansBoldText>
-                <OpenSansItalicText>Balikpapan, Kalimantan Timur</OpenSansItalicText>
+                <OpenSansBoldText>{shipment.destination.mainName}</OpenSansBoldText>
+                <OpenSansItalicText>{shipment.destination.secondaryName}</OpenSansItalicText>
               </View>
             </View>
           </View>
-          <View>{renderCargoInformation(props.cargo)}</View>
+          <View>{renderCargoInformation(cargo)}</View>
         </View>
         <View style={Style.bottomCardContainer}>
           <View style={Style.statusContainer}>
-            <OpenSansText style={Style.statusText}>{props.shipment.status}</OpenSansText>
+            <OpenSansText style={Style.statusText}>{shipment.status}</OpenSansText>
           </View>
           <View style={Style.buttonContainer}>
             <TouchableHighlight style={Style.button}>

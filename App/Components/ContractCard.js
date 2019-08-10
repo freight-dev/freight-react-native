@@ -20,12 +20,12 @@ export const ContractCard = (props) => {
         <View style={Style.cargoOriginDestination}>
           <View style={Style.contractOriginDestinationText}>
             <View style={Style.contractInfoField}>
-              <OpenSansBoldText>Tanjung Priok</OpenSansBoldText>
-              <OpenSansItalicText>Jakarta, DKI Jakarta</OpenSansItalicText>
+              <OpenSansBoldText>{contract.origin.mainName}</OpenSansBoldText>
+              <OpenSansItalicText>{contract.origin.secondaryName}</OpenSansItalicText>
             </View>
             <View style={Style.contractInfoField}>
-              <OpenSansBoldText>Semayang</OpenSansBoldText>
-              <OpenSansItalicText>Balikpapan, Kalimantan Timur</OpenSansItalicText>
+              <OpenSansBoldText>{contract.destination.mainName}</OpenSansBoldText>
+              <OpenSansItalicText>{contract.destination.secondaryName}</OpenSansItalicText>
             </View>
           </View>
         </View>
