@@ -5,7 +5,7 @@ import ApplicationStyles from 'App/Theme/ApplicationStyles'
 export default StyleSheet.create({
   container: {
     ...ApplicationStyles.screen.container,
-    margin: 30,
+    padding: 20,
     flex: 1,
     justifyContent: 'center',
   },

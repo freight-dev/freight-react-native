@@ -47,23 +47,22 @@ function _onPress(location, data, details) {
 
   GiftedFormManager.updateValue('cargo', location + 'MainName', data.structured_formatting.main_text)
   GiftedFormManager.updateValue('cargo', location + 'SecondaryName', data.structured_formatting.secondary_text)
-  GiftedFormManager.updateValue('cargo', location + 'Id', details.id)
+  GiftedFormManager.updateValue('cargo', location + 'ExternalId', details.id)
   GiftedFormManager.updateValue('cargo', location + 'Lat', details.geometry.location.lat)
   GiftedFormManager.updateValue('cargo', location + 'Lon', details.geometry.location.lng)
   GiftedFormManager.updateValue('cargo', location + 'Route', route)
   GiftedFormManager.updateValue('cargo', location + 'Locality', locality)
-  GiftedFormManager.updateValue('cargo', location + 'AdministrativeAreaLevel_4', administrative_area_level_4)
-  GiftedFormManager.updateValue('cargo', location + 'AdministrativeAreaLevel_3', administrative_area_level_3)
-  GiftedFormManager.updateValue('cargo', location + 'AdministrativeAreaLevel_2', administrative_area_level_2)
-  GiftedFormManager.updateValue('cargo', location + 'AdministrativeAreaLevel_1', administrative_area_level_1)
+  GiftedFormManager.updateValue('cargo', location + 'Village', administrative_area_level_4)
+  GiftedFormManager.updateValue('cargo', location + 'Subdistrict', administrative_area_level_3)
+  GiftedFormManager.updateValue('cargo', location + 'City', administrative_area_level_2)
+  GiftedFormManager.updateValue('cargo', location + 'Province', administrative_area_level_1)
   GiftedFormManager.updateValue('cargo', location + 'Country', country)
-  GiftedFormManager.updateValue('cargo', location + 'Location', location)
 }
 
 export const GooglePlacesInput = ({location}) => {
   return (
     <GooglePlacesAutocomplete
-      placeholder='Search'
+      placeholder='Search..'
       minLength={3} // minimum length of text to search
       autoFocus={false}
       returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
@@ -82,15 +81,27 @@ export const GooglePlacesInput = ({location}) => {
       }}
 
       styles={{
+        container: {
+          flex: 1,
+        },
         textInputContainer: {
-          width: '100%'
+          width: '100%',
+          flex: 1,
+          alignItems: 'center',
+          backgroundColor: 'white',
         },
-        description: {
-          fontWeight: 'bold'
+        listView: {
+          backgroundColor: 'white',
+          flex: 1,
         },
-        predefinedPlacesDescription: {
-          color: '#1faadb'
-        }
+        poweredContainer: {
+          flex: 0,
+          width: 0,
+        },
+        powered: {
+          flex: 0,
+          width: 0,
+        },
       }}
 
       currentLocation={false} // Will add a 'Current location' button at the top of the predefined places list
@@ -114,7 +125,6 @@ export const GooglePlacesInput = ({location}) => {
       // predefinedPlaces={[homePlace, workPlace]}
 
       debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
-      renderLeftButton={()  => <OpenSansText>From</OpenSansText>}
     />
   );
 }

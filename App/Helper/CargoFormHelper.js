@@ -2,6 +2,28 @@ import React from 'react'
 import { GiftedFormManager } from 'react-native-gifted-form'
 
 export const validators = {
+  originMainName: {
+    title: 'Origin location',
+    validate: [
+      {
+        validator: (...args) => {
+          return args[0] !== undefined && args[0] !== ''
+        },
+        message: '{TITLE} is required',
+      },
+    ],
+  },
+  destinationMainName: {
+    title: 'Destination location',
+    validate: [
+      {
+        validator: (...args) => {
+          return args[0] !== undefined && args[0] !== ''
+        },
+        message: '{TITLE} is required',
+      },
+    ],
+  },
   departure: {
     title: 'Departure date',
     validate: [
@@ -53,7 +75,8 @@ export const validators = {
     validate: [
       {
         validator: (...args) => {
-          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))) {
+          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))
+            && GiftedFormManager.getValue('cargo', 'volume') === undefined) {
             return args[0] !== undefined && args[0] !== ''
           }
           return true
@@ -77,7 +100,8 @@ export const validators = {
     validate: [
       {
         validator: (...args) => {
-          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))) {
+          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))
+            && GiftedFormManager.getValue('cargo', 'volume') === undefined) {
             return args[0] !== undefined && args[0] !== ''
           }
           return true
@@ -87,11 +111,12 @@ export const validators = {
     ],
   },
   volume: {
-    title: 'Weight',
+    title: 'Volume',
     validate: [
       {
         validator: (...args) => {
-          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))) {
+          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))
+            && GiftedFormManager.getValue('cargo', 'weight') === undefined) {
             return args[0] !== undefined && args[0] !== ''
           }
           return true
@@ -111,11 +136,12 @@ export const validators = {
     ],
   },
   volumeUnit: {
-    title: 'Weight Unit',
+    title: 'Volume Unit',
     validate: [
       {
         validator: (...args) => {
-          if (GiftedFormManager.getValue('cargo', 'cargoTypeId') === 2) {
+          if (GiftedFormManager.getValue('cargo', 'cargoTypeId') === 2
+            && GiftedFormManager.getValue('cargo', 'weight') === undefined) {
             return args[0] !== undefined && args[0] !== ''
           }
           return true
@@ -219,28 +245,6 @@ export const validators = {
             return args[0] !== undefined
           }
           return true
-        },
-        message: '{TITLE} is required',
-      },
-    ],
-  },
-  originMainName: {
-    title: 'Origin',
-    validate: [
-      {
-        validator: (...args) => {
-          return args[0] !== undefined && args[0] !== ''
-        },
-        message: '{TITLE} is required',
-      },
-    ],
-  },
-  destinationMainName: {
-    title: 'Destination',
-    validate: [
-      {
-        validator: (...args) => {
-          return args[0] !== undefined && args[0] !== ''
         },
         message: '{TITLE} is required',
       },

@@ -14,6 +14,7 @@ import { validators } from '../../Helper/CargoFormHelper'
 import Style from './CargoFormStyle'
 import SegmentedControlTab from 'react-native-segmented-control-tab'
 import { GooglePlacesInput } from './GooglePlacesInput'
+import FormStyles from './FormStyle'
 
 const location = {
   ORIGIN: 'origin',
@@ -32,7 +33,7 @@ class CargoForm extends Component {
   render() {
     return (
       <GiftedForm
-        formName="cargo" // GiftedForm instances that use the same name will also share the same states
+        formName="cargo"
         openModal={(router) => {
           this.props.navigation.navigate('Modal', {
             renderContent: router.renderScene,
@@ -41,7 +42,8 @@ class CargoForm extends Component {
           })
         }}
         style={Style.form}
-        clearOnClose={false} // delete the values of the form when unmounted
+        showsVerticalScrollIndicator={false}
+        clearOnClose={true} // delete the values of the form when unmounted
         defaults={{
           cargoTypeId: 0,
           // containerTypeId: '',
@@ -55,46 +57,53 @@ class CargoForm extends Component {
         }}
         validators={validators}
       >
-        {/* <GiftedForm.ModalWidget */}
-        {/*  title="Origin" */}
-        {/*  displayValue="origin" */}
-        {/*  disclosure={false} */}
-        {/*  scrollEnabled={false} */}
-        {/* > */}
+        {/* Origin */}
+        <GiftedForm.GroupWidget style={FormStyles.fieldGroupContainer}>
+          <GiftedForm.GroupWidget style={FormStyles.fieldTitleContainer}>
+            <Text style={FormStyles.fieldTitleText}>Origin</Text>
+          </GiftedForm.GroupWidget>
+          <GiftedForm.ModalWidget
+            displayValue="originMainName"
+            title="Origin"
+            widgetStyles={{
+              rowContainer: FormStyles.fieldUnit,
+              alignRight: FormStyles.fieldUnitTextContainer,
+              modalTitle: FormStyles.spacer,
+              modalValue: FormStyles.fieldUnitText,
+            }}>
+            <GooglePlacesInput location={location.ORIGIN}/>
+          </GiftedForm.ModalWidget>
+        </GiftedForm.GroupWidget>
 
-        {/* // TODO: Add origin */}
+        {/* Destination */}
+        <GiftedForm.GroupWidget style={FormStyles.fieldGroupContainer}>
+          <GiftedForm.GroupWidget style={FormStyles.fieldTitleContainer}>
+            <Text style={FormStyles.fieldTitleText}>Destination</Text>
+          </GiftedForm.GroupWidget>
+          <GiftedForm.ModalWidget
+            displayValue="destinationMainName"
+            title="Destination"
+            widgetStyles={{
+              rowContainer: FormStyles.fieldUnit,
+              alignRight: FormStyles.fieldUnitTextContainer,
+              modalTitle: FormStyles.spacer,
+              modalValue: FormStyles.fieldUnitText,
+            }}>
+            <GooglePlacesInput location={location.DESTINATION}/>
+          </GiftedForm.ModalWidget>
+        </GiftedForm.GroupWidget>
 
-        {/* <LocationInput ports={this.props.ports} portIsLoading={this.props.portIsLoading} /> */}
-        {/* </GiftedForm.ModalWidget> */}
-
-        {/* <GiftedForm.ModalWidget */}
-        {/*  title="Destination" */}
-        {/*  displayValue="destination" */}
-        {/*  disclosure={false} */}
-        {/*  scrollEnabled={false} */}
-        {/* > */}
-        {/*  <GiftedForm.GooglePlacesWidget */}
-        {/*    code="destination" */}
-        {/*    name="destination" */}
-        {/*    title="City" */}
-        {/*    autoFocus={true} */}
-        {/*  /> */}
-        {/* </GiftedForm.ModalWidget> */}
-
-        {/* // TODO: Add destination */}
-
-        <GooglePlacesInput location={location.ORIGIN}/>
-        <GooglePlacesInput location={location.DESTINATION}/>
-        <View style={Style.rowContainer}>
-          <View style={Style.row}>
-            <Text
-              numberOfLines={1}
-              style={Style.textInputTitleInline}>Departure</Text>
+        {/* Departure */}
+        <GiftedForm.GroupWidget style={FormStyles.fieldGroupContainer}>
+          <GiftedForm.GroupWidget style={FormStyles.fieldTitleContainer}>
+            <Text style={FormStyles.fieldTitleText}>Departure Date</Text>
+          </GiftedForm.GroupWidget>
+          <View style={FormStyles.fieldDataGroupContainer}>
             <DatePicker
-              style={Style.datePickerContainer}
+              style={FormStyles.field}
               date={this.state.departure}
               mode="date"
-              placeholder="Select departure date"
+              placeholder="Select departure date.."
               format="YYYY-MM-DD"
               minDate={moment(new Date())
                 .add(1, 'days')
@@ -102,16 +111,14 @@ class CargoForm extends Component {
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               showIcon={false}
-              customStyles={{dateInput: Style.textInputInline}}
+              customStyles={{dateInput: Style.datePickerText, dateText: Style.dateText, placeholderText: Style.placeHolderDateText}}
               onDateChange={(date) => {
                 GiftedFormManager.updateValue('cargo', 'departure', date)
                 this.setState({ ...this.state, departure: date })
               }}
             />
           </View>
-          <View style={[Style.underline, Style.underlineIdle]}/>
-        </View>
-
+        </GiftedForm.GroupWidget>
 
         <SegmentedControlTab
           tabsContainerStyle={Style.tabsContainerStyle}
@@ -132,10 +139,11 @@ class CargoForm extends Component {
         {this.state.cargoTypeId === 1 && LCL(this.props.weightUnits, this.props.dimensionUnits)}
         {this.state.cargoTypeId === 2 && Bulk(this.props.weightUnits, this.props.volumeUnits, this.props.bulkTypes)}
 
-        <GiftedForm.ErrorsWidget widgetStyles={{
-          errorContainer: Style.errorContainer,
-          errorText: Style.errorText,
-        }}/>
+        <GiftedForm.ErrorsWidget/>
+        {/*<GiftedForm.ErrorsWidget widgetStyles={{*/}
+        {/*  errorContainer: Style.errorContainer,*/}
+        {/*  errorText: Style.errorText,*/}
+        {/*}}/>*/}
 
         <GiftedForm.SubmitWidget
           title="Inquire"
@@ -159,25 +167,53 @@ class CargoForm extends Component {
                ** GiftedFormManager.reset("signupForm"); // clear the states of the form manually. "signupForm" is the formName used
                */
               const payload = {
+                origin: {
+                  externalId: values.originExternalId,
+                  mainName: values.originMainName,
+                  secondaryName: values.originSecondaryName,
+                  lat: values.originLat,
+                  lon: values.originLon,
+                  route: values.originRoute,
+                  locality: values.originLocality,
+                  village: values.originVillage,
+                  subdistrict: values.originSubdistrict,
+                  city: values.originCity,
+                  province: values.originProvince,
+                  country: values.originCountry,
+                },
+                destination: {
+                  externalId: values.destinationExternalId,
+                  mainName: values.destinationMainName,
+                  secondaryName: values.destinationSecondaryName,
+                  lat: values.destinationLat,
+                  lon: values.destinationLon,
+                  route: values.destinationRoute,
+                  locality: values.destinationLocality,
+                  village: values.destinationVillage,
+                  subdistrict: values.destinationSubdistrict,
+                  city: values.destinationCity,
+                  province: values.destinationProvince,
+                  country: values.destinationCountry,
+                },
                 departure: values.departure,
                 cargoTypeId: values.cargoTypeId + 1, // because index starts at 0, TODO: remove this hack
-                quantity: values.quantity,
-                volume: values.volume,
-                volumeUnit: values.volumeUnit === undefined ? 'NOT_USED' : values.volumeUnit,
-                weight: values.weight,
-                weightUnit: values.weightUnit === undefined ? 'NOT_USED' : values.weightUnit,
-                length: values.length,
-                width: values.width,
-                height: values.height,
-                dimensionUnit:
-                  values.dimensionUnit === undefined ? 'NOT_USED' : values.dimensionUnit,
-                containerTypeId: values.containerTypeId,
-                bulkTypeId: values.bulkTypeId,
+                quantity: parseInt(values.quantity),
+                volume: parseInt(values.volume),
+                volumeUnit: values.volumeUnit === undefined ? 'NOT_USED' : values.volumeUnit[0],
+                weight: parseInt(values.weight),
+                weightUnit: values.weightUnit === undefined ? 'NOT_USED' : values.weightUnit[0],
+                length: parseInt(values.length),
+                width: parseInt(values.width),
+                height: parseInt(values.height),
+                dimensionUnit: values.dimensionUnit === undefined ? 'NOT_USED' : values.dimensionUnit[0],
+                containerTypeId: values.containerTypeId !== undefined ? parseInt(values.containerTypeId[0]) : null,
+                bulkTypeId: values.bulkTypeId !== undefined ? parseInt(values.bulkTypeId[0]) : null,
               }
               this.props.postCargo(payload)
               if (!this.props.cargoIsLoading && !this.props.cargoErrorMessage) {
                 postSubmit()
                 GiftedFormManager.reset('cargo')
+                this.props.navigation.navigate('InquiryScreen')
               } else {
                 postSubmit(this.props.cargoErrorMessage)
               }

@@ -3,7 +3,7 @@ import { View, ActivityIndicator, StatusBar } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
-import Style from './CargoPostInquiryScreenStyle'
+import Style from './CargoInquiryPostScreenStyle'
 import SearchForm from '../../Components/CargoForm/CargoForm'
 import { Images } from 'App/Theme'
 
