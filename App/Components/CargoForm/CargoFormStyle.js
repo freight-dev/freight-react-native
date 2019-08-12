@@ -4,50 +4,22 @@ import ApplicationStyles from 'App/Theme/ApplicationStyles'
 import Colors from '../../Theme/Colors'
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   form: {
     flex: 1,
-    backgroundColor: 'white',
   },
-  rowContainer: {
-    backgroundColor: '#FFF',
-    borderBottomWidth: 1 / PixelRatio.get(),
-    borderColor: '#c8c7cc',
-  },
-  row: {
-    flexDirection: 'row',
-    height: 44,
-    alignItems: 'center',
-  },
-  titleContainer: {
-    paddingTop: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    // selfAlign: 'center',
-    // backgroundColor: '#ff0000',
-  },
-  textInputInline: {
+  dateText: {
     fontSize: 15,
+    color: 'black',
+  },
+  placeHolderDateText: {
+    fontSize: 15,
+    color: 'grey',
+  },
+  datePickerText: {
     flex: 1,
     height: 40,
-    marginTop: 2,
+    flexDirection: 'row',
     borderWidth: 0,
-  },
-  textInputTitleInline: {
-    width: 110,
-    fontSize: 15,
-    color: '#000',
-    paddingLeft: 10,
-  },
-  underline: {
-    marginRight: 10,
-    marginLeft: 10,
-  },
-  datePickerContainer: {
-    borderWidth: 0,
-    flex: 1,
   },
   tabsContainerStyle: {
     backgroundColor: 'white',
@@ -55,6 +27,7 @@ export default StyleSheet.create({
   },
   tabStyle: {
     backgroundColor: 'white',
+    height: 50,
     borderWidth: 0,
     padding : 0,
   },
@@ -64,11 +37,11 @@ export default StyleSheet.create({
   },
   tabsTextStyle: {
     color: 'black',
-    fontFamily: 'OpenSans',
+    // fontFamily: 'OpenSans',
   },
   activeTabTextStyle: {
     color: 'white',
-    fontFamily: 'OpenSans',
+    // fontFamily: 'OpenSans',
     fontWeight: 'bold',
   },
   errorContainer: {

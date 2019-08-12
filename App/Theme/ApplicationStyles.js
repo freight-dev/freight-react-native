@@ -39,5 +39,10 @@ export default {
       shadowColor: 'black',
       shadowOpacity: 0.8,
     },
+    border: {
+      borderWidth: StyleSheet.hairlineWidth,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   },
 }

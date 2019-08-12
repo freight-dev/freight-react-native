@@ -22,6 +22,8 @@ const cargoApiClient = axios.create({
 function postCargo(payload) {
   const requestBody = {
     departure: moment(payload.departure, 'YYYY-MM-DD').unix(),
+    origin: payload.origin,
+    destination: payload.destination,
     cargoTypeId: payload.cargoTypeId,
     quantity: payload.quantity,
     weight: payload.weight === undefined ? null : payload.weight,
@@ -34,10 +36,10 @@ function postCargo(payload) {
     dimensionUnit:
       payload.dimensionUnit === undefined ? 'NOT_USED' : payload.dimensionUnit.toString(),
     containerTypeId:
-      payload.containerTypeId === undefined ? null : payload.containerTypeId.toString(),
-    bulkTypeId: payload.bulkTypeId === undefined ? null : payload.bulkTypeId.toString(),
+      payload.containerTypeId === undefined ? null : payload.containerTypeId,
+    bulkTypeId: payload.bulkTypeId === undefined ? null : payload.bulkTypeId,
   }
-
+  console.log(requestBody)
   return cargoApiClient.post(Config.API_URL + '/cargo', requestBody).then((response) => {
     if (in200s(response.status)) {
       return response.data

@@ -21,6 +21,7 @@ export default class CargoFormModal extends Component {
           size={20}
           style={Style.closeContainer}
           onPress={() => {
+            onClose(null, null)
             navigation.goBack()
           }}
         />
@@ -29,7 +30,10 @@ export default class CargoFormModal extends Component {
         <TouchableOpacity
           style={Style.doneContainer}
           onPress={() => {
-            onClose(null, null)
+            // TODO: stupid hack. figure out why!
+            if (getTitle() === 'Origin' || getTitle() === 'Destination') {
+              onClose(null, null)
+            }
             navigation.goBack()
           }}>
           <OpenSansText style={Style.done}>Done</OpenSansText>
