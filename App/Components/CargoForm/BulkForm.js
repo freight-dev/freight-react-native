@@ -76,7 +76,7 @@ export const Bulk = (weightUnits, volumeUnits, bulkTypes) => {
               rowContainer: Styles.fieldUnit,
               alignRight: Styles.fieldUnitTextContainer,
               modalTitle: Styles.spacer,
-              modRalValue: Styles.fieldUnitText,
+              modalValue: Styles.fieldUnitText,
             }}
           >
             <GiftedForm.SelectWidget name="weightUnit" multiple={false}>
@@ -114,7 +114,7 @@ export const Bulk = (weightUnits, volumeUnits, bulkTypes) => {
               rowContainer: Styles.fieldUnit,
               alignRight: Styles.fieldUnitTextContainer,
               modalTitle: Styles.spacer,
-              modRalValue: Styles.fieldUnitText,
+              modalValue: Styles.fieldUnitText,
             }}>
             <GiftedForm.SelectWidget name="volumeUnit" multiple={false}>
               {volumeUnits

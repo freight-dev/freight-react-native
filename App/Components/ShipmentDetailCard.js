@@ -54,7 +54,7 @@ export const ShipmentDetailCard = (props) => {
           stepCount={shipStatus.length}
           customStyles={shipStatusStyle}
           currentPosition={mapShipStatus(props.shipment.shipStatus)}
-          labels={['Tanjung Priok, Jakarta, DKI Jakarta', 'Loading', 'At sea', 'Discharge', 'Semayang, Balikpapan, Kalimantan Timur']}
+          labels={[shipment.origin.mainName, 'Loading', 'At sea', 'Discharge', shipment.destination.mainName]}
         />
       </View>
       <View style={Style.line} />
@@ -112,11 +112,11 @@ const Bulk = (cargo, shipment) => {
     <View style={Style.cargoInfo}>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText>Departure</OpenSansLightText>
-        <OpenSansBoldText>{moment(shipment.departure).format('D MMM YYYY')}</OpenSansBoldText>
+        <OpenSansBoldText>{moment(shipment.departure).format('D MMM YY')}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText>Estimated Arrival</OpenSansLightText>
-        <OpenSansBoldText>{moment(shipment.arrival).format('D MMM YYYY')}</OpenSansBoldText>
+        <OpenSansBoldText>{moment(shipment.arrival).format('D MMM YY')}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
         <OpenSansBoldText>{cargo.bulkType.displayName}</OpenSansBoldText>

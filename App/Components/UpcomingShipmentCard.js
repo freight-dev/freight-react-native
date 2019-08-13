@@ -6,6 +6,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText } from './StyledText'
 import moment from 'moment'
 import Colors from '../Theme/Colors'
+import { secondaryLocation } from '../Helper/LocationHelper'
 
 export const UpcomingShipmentCard = (props) => {
   const shipment = props.shipment
@@ -13,17 +14,17 @@ export const UpcomingShipmentCard = (props) => {
     <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, shipment)}>
       <View style={Style.card}>
         <View style={Style.shipmentOriginDestination}>
-          <View style={Style.flowLineIcon}>
-            <Entypo name="flow-line" size={90} color={Colors.main} />
-          </View>
+          {/*<View style={Style.flowLineIcon}>*/}
+          {/*  <Entypo name="flow-line" size={90} color={Colors.main} />*/}
+          {/*</View>*/}
           <View style={Style.shipmentOriginDestinationText}>
             <View>
               <OpenSansBoldText>{shipment.origin.mainName}</OpenSansBoldText>
-              <OpenSansItalicText>{shipment.origin.secondaryName}</OpenSansItalicText>
+              <OpenSansItalicText>{secondaryLocation(shipment.origin)}</OpenSansItalicText>
             </View>
             <View>
               <OpenSansBoldText>{shipment.destination.mainName}</OpenSansBoldText>
-              <OpenSansItalicText>{shipment.destination.secondaryName}</OpenSansItalicText>
+              <OpenSansItalicText>{secondaryLocation(shipment.destination)}</OpenSansItalicText>
             </View>
           </View>
         </View>
@@ -65,11 +66,11 @@ const Bulk = (shipment, cargo) => {
     <View style={Style.shipmentInfo}>
       <View style={Style.shipmentInfoField}>
         <OpenSansLightText>Departure</OpenSansLightText>
-        <OpenSansBoldText>{moment(shipment.departure).format('D MMM YYYY')}</OpenSansBoldText>
+        <OpenSansBoldText>{moment(shipment.departure).format('D MMM YY')}</OpenSansBoldText>
       </View>
       <View style={Style.shipmentInfoField}>
         <OpenSansLightText>Estimated Arrival</OpenSansLightText>
-        <OpenSansBoldText>{moment(shipment.arrival).format('D MMM YYYY')}</OpenSansBoldText>
+        <OpenSansBoldText>{moment(shipment.arrival).format('D MMM YY')}</OpenSansBoldText>
       </View>
       <View style={Style.shipmentInfoField}>
         <OpenSansBoldText>{cargo.bulkType.displayName}</OpenSansBoldText>

@@ -8,7 +8,10 @@ import { CompletedShipmentCard } from '../../Components/CompletedShipmentCard'
 
 class ShipmentCompletedScreen extends Component {
   componentDidMount() {
-    this.props.getCompletedShipments()
+    this.props.getCompletedShipments({
+      start: 0,
+      limit: 20,
+    })
   }
 
   _keyExtractor = (item) => item.id
@@ -28,6 +31,27 @@ class ShipmentCompletedScreen extends Component {
           data={this.props.completedShipments}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
+          onEndReached={() => {
+            if (this.props.completedShipments.length >= 20 ) {
+              this.props.getCompletedShipments({
+                start: this.props.completedShipmentsStart,
+                limit: 20,
+              })
+            }
+          }}
+          onEndReachedThreshold={0.5}
+          onRefresh={() => this.props.getCompletedShipments({
+            start: this.props.completedShipmentsStart,
+            limit: 20,
+          })}
+          refreshing={this.props.completedShipmentsIsLoading}
+          ref={ref => this.flatList = ref}
+          onContentSizeChange={() => {
+            if (this.props.completedShipments > 0) this.flatList.scrollToIndex({ animated: true, index: 0 });
+          }}
+          onLayout={() => {
+            if (this.props.completedShipments > 0) this.flatList.scrollToIndex({ animated: true, index: 0 });
+          }}
         />
       </View>
     )
@@ -46,7 +70,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  getCompletedShipments: () => dispatch(ShipmentActions.getCompletedShipments()),
+  getCompletedShipments: (param) => dispatch(ShipmentActions.getCompletedShipments(param)),
 })
 
 export default connect(

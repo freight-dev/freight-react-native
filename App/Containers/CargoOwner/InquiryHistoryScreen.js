@@ -8,7 +8,10 @@ import Style from './InquiryHistoryScreenStyle'
 
 class InquiryHistoryScreen extends Component {
   componentDidMount() {
-    this.props.getHistoryCargos()
+    this.props.getHistoryCargos({
+      start: 0,
+      limit: 20,
+    })
   }
 
   _keyExtractor = (item) => item.id
@@ -28,6 +31,27 @@ class InquiryHistoryScreen extends Component {
           data={this.props.historyCargos}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
+          onEndReached={() => {
+            if (this.props.getHistoryCargos.length >= 20 ) {
+              this.props.getHistoryCargos({
+                start: this.props.historyCargosStart,
+                limit: 20,
+              })
+            }
+          }}
+          onEndReachedThreshold={0.5}
+          onRefresh={() => this.props.getHistoryCargos({
+            start: this.props.historyCargosStart,
+            limit: 20,
+          })}
+          refreshing={this.props.historyCargosIsLoading}
+          ref={ref => this.flatList = ref}
+          onContentSizeChange={() => {
+            if (this.props.historyCargos > 0) this.flatList.scrollToIndex({ animated: true, index: 0 });
+          }}
+          onLayout={() => {
+            if (this.props.historyCargos > 0) this.flatList.scrollToIndex({ animated: true, index: 0 });
+          }}
         />
       </View>
     )
@@ -46,7 +70,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  getHistoryCargos: () => dispatch(CargoActions.getHistoryCargos()),
+  getHistoryCargos: (param) => dispatch(CargoActions.getHistoryCargos(param)),
 })
 
 export default connect(

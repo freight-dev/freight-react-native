@@ -16,6 +16,8 @@ import {
   EXPIRED, mapContractStatus,
   WAITING_REPLY,
 } from '../../Helper/ContractHelper'
+import { secondaryLocation } from '../../Helper/LocationHelper'
+import { ifExist } from '../../Helper/PrintHelper'
 
 class CargoContractScreen extends Component {
   componentDidMount() {
@@ -44,12 +46,12 @@ class CargoContractScreen extends Component {
               <View style={Style.cargoInfoField}>
                 <OpenSansLightText style={{color: 'white'}}>Origin</OpenSansLightText>
                 <OpenSansBoldText style={{color: 'white'}}>{cargo.origin.mainName}</OpenSansBoldText>
-                <OpenSansItalicText style={{color: 'white'}}>{cargo.origin.secondaryName}</OpenSansItalicText>
+                <OpenSansItalicText style={{color: 'white'}}>{secondaryLocation(cargo.origin)}</OpenSansItalicText>
               </View>
               <View style={Style.cargoInfoField}>
                 <OpenSansLightText style={{color: 'white'}}>Destination</OpenSansLightText>
                 <OpenSansBoldText style={{color: 'white'}}>{cargo.destination.mainName}</OpenSansBoldText>
-                <OpenSansItalicText style={{color: 'white'}}>{cargo.destination.secondaryName}</OpenSansItalicText>
+                <OpenSansItalicText style={{color: 'white'}}>{secondaryLocation(cargo.destination)}</OpenSansItalicText>
               </View>
             </View>
           </View>
@@ -71,11 +73,15 @@ class CargoContractScreen extends Component {
             data={_filterContract(this.props.contractsStatusSearch, this.props.contracts)}
             keyExtractor={this._keyExtractor}
             renderItem={(contract) => this._renderItem(contract, cargo)}
-            onEndReached={() => this.props.getContracts({
-              cargoId: this.props.navigation.getParam('cargo').id,
-              start: this.props.contractsStart,
-              limit: 20,
-            })}
+            onEndReached={() => {
+              if (this.props.contracts.length >= 20 ) {
+                this.props.getContracts({
+                  cargoId: this.props.navigation.getParam('cargo').id,
+                  start: this.props.contractsStart,
+                  limit: 20,
+                })
+              }
+            }}
             onEndReachedThreshold={0.5}
             onRefresh={() => this.props.getContracts({
               cargoId: this.props.navigation.getParam('cargo').id,
@@ -85,10 +91,10 @@ class CargoContractScreen extends Component {
             refreshing={this.props.contractsIsLoading}
             ref={ref => this.flatList = ref}
             onContentSizeChange={() => {
-              if (this.contracts) this.flatList.scrollToIndex({ animated: true, index: 0 });
+              if (this.props.contracts > 0) this.flatList.scrollToIndex({ animated: true, index: 0 });
             }}
             onLayout={() => {
-              if (this.contracts) this.flatList.scrollToIndex({ animated: true, index: 0 });
+              if (this.props.contracts > 0) this.flatList.scrollToIndex({ animated: true, index: 0 });
             }}
           />
         </View>
@@ -147,15 +153,15 @@ const Bulk = (cargo) => {
     <View style={Style.cargoInfo}>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText style={{color: 'white'}}>Departure</OpenSansLightText>
-        <OpenSansBoldText style={{color: 'white'}}>{moment(cargo.departure).format('D MMM YYYY')}</OpenSansBoldText>
+        <OpenSansBoldText style={{color: 'white'}}>{moment(cargo.departure).format('D MMM YY')}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText style={{color: 'white'}}>Type</OpenSansLightText>
         <OpenSansBoldText style={{color: 'white'}}>{cargo.bulkType.displayName}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
-        <OpenSansText style={{color: 'white'}}>{cargo.weight} {cargo.weightUnit.toLowerCase()}</OpenSansText>
-        <OpenSansText style={{color: 'white'}}>{cargo.volume} {cargo.volumeUnit.toLowerCase()}</OpenSansText>
+        <OpenSansText style={{color: 'white'}}>{ifExist(cargo.weight)} {ifExist(cargo.weightUnit)}</OpenSansText>
+        <OpenSansText style={{color: 'white'}}>{ifExist(cargo.volume)} {ifExist(cargo.volumeUnit)}</OpenSansText>
       </View>
     </View>
   )

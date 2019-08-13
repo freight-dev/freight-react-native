@@ -49,23 +49,24 @@ function postCargo(payload) {
   })
 }
 
-function getActiveCargos() {
-  return cargoApiClient.get(Config.API_URL + '/cargo?status=inquiry').then((response) => {
-    if (in200s(response.status)) {
-      return response.data
-    }
+function getActiveCargos(param) {
+  return cargoApiClient.get(Config.API_URL + '/cargo?status=inquiry&start=' + param.start + '&limit=' + param.limit)
+    .then((response) => {
+      if (in200s(response.status)) {
+        return response.data
+      }
 
-    return null
+      return null
   })
 }
 
-function getHistoryCargos() {
-  return cargoApiClient.get(Config.API_URL + '/cargo?status=reserved,expired,canceled').then((response) => {
-    if (in200s(response.status)) {
-      return response.data
-    }
-
-    return null
+function getHistoryCargos(param) {
+  return cargoApiClient.get(Config.API_URL + '/cargo?status=reserved,expired,canceled&start=' + param.start + '&limit=' + param.limit)
+    .then((response) => {
+      if (in200s(response.status)) {
+        return response.data
+      }
+      return null
   })
 }
 

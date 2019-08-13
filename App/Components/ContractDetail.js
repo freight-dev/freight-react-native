@@ -5,7 +5,7 @@ import Style from './ContractDetailStyle'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText } from './StyledText'
 import { Badge } from 'react-native-elements'
 import moment from 'moment'
-import { formatNumber } from '../Helper/NumberHelper'
+import { formatCurrency, ifExist } from '../Helper/PrintHelper'
 
 export const ContractDetail = (props) => {
   const contract = props.contract
@@ -79,8 +79,8 @@ export const ContractDetail = (props) => {
           <View style={Style.contractInfo}>
             <View style={Style.contractInfoData}>
               <OpenSansBoldText>
-                {contract.currency} {contract.price}
-                {contract.priceUnit.toUpperCase() === 'NOT_USED' ? '' : ' / ' + contract.priceUnit}</OpenSansBoldText>
+                {formatCurrency(contract.currency)} {contract.price}
+                {contract.priceUnit.toUpperCase() === 'NOT_USED' ? '' : ' / ' + contract.priceUnit.toLowerCase()}</OpenSansBoldText>
               <OpenSansBoldText>{contract.priceUnit}</OpenSansBoldText>
             </View>
           </View>
@@ -148,8 +148,8 @@ const Bulk = (cargo) => {
     <View style={Style.contractInfoData}>
       <OpenSansBoldText>{cargo.bulkType.displayName}</OpenSansBoldText>
       <OpenSansBoldText>Quantity {cargo.quantity}</OpenSansBoldText>
-      <OpenSansBoldText>{cargo.weight} {cargo.weightUnit.toLowerCase()}</OpenSansBoldText>
-      <OpenSansBoldText>{cargo.volume} {cargo.volumeUnit.toLowerCase()}</OpenSansBoldText>
+      <OpenSansBoldText>{ifExist(cargo.weight)} {ifExist(cargo.weightUnit)}</OpenSansBoldText>
+      <OpenSansBoldText>{ifExist(cargo.volume)} {ifExist(cargo.volumeUnit)}</OpenSansBoldText>
     </View>
   )
 }

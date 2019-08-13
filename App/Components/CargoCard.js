@@ -7,6 +7,7 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText } from './StyledText'
 import moment from 'moment'
 import Colors from '../Theme/Colors'
+import { secondaryLocation } from '../Helper/LocationHelper'
 
 export const CargoCard = (props) => {
   const cargo = props.data
@@ -20,11 +21,11 @@ export const CargoCard = (props) => {
           <View style={Style.cargoOriginDestinationText}>
             <View>
               <OpenSansBoldText>{cargo.origin.mainName}</OpenSansBoldText>
-              <OpenSansItalicText>{cargo.origin.secondaryName}</OpenSansItalicText>
+              <OpenSansItalicText>{secondaryLocation(cargo.origin)}</OpenSansItalicText>
             </View>
             <View>
               <OpenSansBoldText>{cargo.destination.mainName}</OpenSansBoldText>
-              <OpenSansItalicText>{cargo.destination.secondaryName}</OpenSansItalicText>
+              <OpenSansItalicText>{secondaryLocation(cargo.destination)}</OpenSansItalicText>
             </View>
           </View>
         </View>
@@ -69,7 +70,7 @@ const Bulk = (cargo) => {
       </View>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText>Departure</OpenSansLightText>
-        <OpenSansBoldText>{moment(cargo.departure).format('D MMM YYYY')}</OpenSansBoldText>
+        <OpenSansBoldText>{moment(cargo.departure).format('D MMM YY')}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
         <OpenSansBoldText>{cargo.bulkType.displayName}</OpenSansBoldText>

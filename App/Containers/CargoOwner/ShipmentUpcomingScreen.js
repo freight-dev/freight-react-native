@@ -8,7 +8,10 @@ import { UpcomingShipmentCard } from '../../Components/UpcomingShipmentCard'
 
 class ShipmentUpcomingScreen extends Component {
   componentDidMount() {
-    this.props.getUpcomingShipments()
+    this.props.getUpcomingShipments({
+      start: 0,
+      limit: 20,
+    })
   }
 
   _keyExtractor = (item) => item.id
@@ -28,6 +31,27 @@ class ShipmentUpcomingScreen extends Component {
           data={this.props.upcomingShipments}
           keyExtractor={this._keyExtractor}
           renderItem={this._renderItem}
+          onEndReached={() => {
+            if (this.props.upcomingShipments.length >= 20 ) {
+              this.props.getUpcomingShipments({
+                start: this.props.upcomingShipmentsStart,
+                limit: 20,
+              })
+            }
+          }}
+          onEndReachedThreshold={0.5}
+          onRefresh={() => this.props.getUpcomingShipments({
+            start: this.props.upcomingShipmentsStart,
+            limit: 20,
+          })}
+          refreshing={this.props.upcomingShipmentsIsLoading}
+          ref={ref => this.flatList = ref}
+          onContentSizeChange={() => {
+            if (this.props.upcomingShipments > 0) this.flatList.scrollToIndex({ animated: true, index: 0 });
+          }}
+          onLayout={() => {
+            if (this.props.upcomingShipments > 0) this.flatList.scrollToIndex({ animated: true, index: 0 });
+          }}
         />
       </View>
     )
@@ -46,7 +70,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  getUpcomingShipments: () => dispatch(ShipmentActions.getUpcomingShipments()),
+  getUpcomingShipments: (param) => dispatch(ShipmentActions.getUpcomingShipments(param)),
 })
 
 export default connect(

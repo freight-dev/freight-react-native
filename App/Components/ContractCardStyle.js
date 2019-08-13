@@ -38,15 +38,4 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
     flexDirection: 'row',
   },
-  flowLineIcon: {
-    alignItems: 'flex-start',
-    marginLeft: -25,
-    marginRight: -25,
-  },
-
-  title: {
-    ...Fonts.style.h2,
-    textAlign: 'center',
-    marginBottom: 10,
-  },
 })

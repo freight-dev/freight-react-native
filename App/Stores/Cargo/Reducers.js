@@ -34,9 +34,10 @@ export const getActiveCargosLoading = (state) => ({
   activeCargosErrorMessage: null,
 })
 
-export const getActiveCargosSuccess = (state, { cargos }) => ({
+export const getActiveCargosSuccess = (state, { cargos, start }) => ({
   ...state,
   activeCargos: cargos.cargos,
+  activeCargosStart: start,
   activeCargosIsLoading: false,
   activeCargosErrorMessage: null,
 })
@@ -57,9 +58,10 @@ export const getHistoryCargosLoading = (state) => ({
   historyCargosErrorMessage: null,
 })
 
-export const getHistoryCargosSuccess = (state, { cargos }) => ({
+export const getHistoryCargosSuccess = (state, { cargos, start }) => ({
   ...state,
   historyCargos: cargos.cargos,
+  historyCargosStart: start,
   historyCargosIsLoading: false,
   historyCargosErrorMessage: null,
 })

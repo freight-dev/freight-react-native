@@ -15,12 +15,12 @@ export function* postCargo(action) {
   }
 }
 
-export function* getActiveCargos() {
+export function* getActiveCargos(action) {
   yield put(CargoActions.getActiveCargosLoading())
 
-  const cargos = yield call(cargoService.getActiveCargos)
+  const cargos = yield call(cargoService.getActiveCargos, action.param)
   if (!cargos.error) {
-    yield put(CargoActions.getActiveCargosSuccess(cargos))
+    yield put(CargoActions.getActiveCargosSuccess(cargos, action.param.start))
   } else if (cargos.error) {
     yield put(CargoActions.getActiveCargosFailure(cargos.error))
   } else {
@@ -28,12 +28,12 @@ export function* getActiveCargos() {
   }
 }
 
-export function* getHistoryCargos() {
+export function* getHistoryCargos(action) {
   yield put(CargoActions.getHistoryCargosLoading())
 
-  const cargos = yield call(cargoService.getHistoryCargos)
+  const cargos = yield call(cargoService.getHistoryCargos, action.param)
   if (!cargos.error) {
-    yield put(CargoActions.getHistoryCargosSuccess(cargos))
+    yield put(CargoActions.getHistoryCargosSuccess(cargos, action.param.start))
   } else if (cargos.error) {
     yield put(CargoActions.getHistoryCargosFailure(cargos.error))
   } else {

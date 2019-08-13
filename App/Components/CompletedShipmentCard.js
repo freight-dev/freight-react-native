@@ -5,6 +5,8 @@ import Style from './CompletedShipmentCardStyle'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText } from './StyledText'
 import moment from 'moment'
 import { CargoHistoryCard } from './CargoHistoryCard'
+import { secondaryLocation } from '../Helper/LocationHelper'
+import { ifExist } from '../Helper/PrintHelper'
 
 export const CompletedShipmentCard = (props) => {
   const shipment = props.shipment
@@ -17,13 +19,13 @@ export const CompletedShipmentCard = (props) => {
             <View style={Style.cargoOriginDestinationText}>
               <View style={Style.cargoInfoField}>
                 <OpenSansLightText>Origin</OpenSansLightText>
-                <OpenSansBoldText>{shipment.destination.mainName}</OpenSansBoldText>
-                <OpenSansItalicText>{shipment.destination.secondaryName}</OpenSansItalicText>
+                <OpenSansBoldText>{shipment.origin.mainName}</OpenSansBoldText>
+                <OpenSansItalicText>{secondaryLocation(shipment.origin)}</OpenSansItalicText>
               </View>
               <View style={Style.cargoInfoField}>
                 <OpenSansLightText>Destination</OpenSansLightText>
                 <OpenSansBoldText>{shipment.destination.mainName}</OpenSansBoldText>
-                <OpenSansItalicText>{shipment.destination.secondaryName}</OpenSansItalicText>
+                <OpenSansItalicText>{secondaryLocation(shipment.destination)}</OpenSansItalicText>
               </View>
             </View>
           </View>
@@ -77,15 +79,15 @@ const Bulk = (cargo) => {
     <View style={Style.cargoInfo}>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText>Departure</OpenSansLightText>
-        <OpenSansBoldText>{moment(cargo.departure).format('D MMM YYYY')}</OpenSansBoldText>
+        <OpenSansBoldText>{moment(cargo.departure).format('D MMM YY')}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText>Type</OpenSansLightText>
         <OpenSansBoldText>{cargo.bulkType.displayName}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
-        <OpenSansText>{cargo.weight} {cargo.weightUnit.toLowerCase()}</OpenSansText>
-        <OpenSansText>{cargo.volume} {cargo.volumeUnit.toLowerCase()}</OpenSansText>
+        <OpenSansText>{ifExist(cargo.weight)} {ifExist(cargo.weightUnit)}</OpenSansText>
+        <OpenSansText>{ifExist(cargo.volume)} {ifExist(cargo.volumeUnit)}</OpenSansText>
       </View>
     </View>
   )

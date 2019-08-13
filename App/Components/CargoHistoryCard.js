@@ -4,6 +4,8 @@ import { PropTypes } from 'prop-types'
 import Style from './CargoHistoryCardStyle'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText } from './StyledText'
 import moment from 'moment'
+import { secondaryLocation } from '../Helper/LocationHelper'
+import { ifExist } from '../Helper/PrintHelper'
 
 export const CargoHistoryCard = (props) => {
   const cargo = props.data
@@ -15,12 +17,12 @@ export const CargoHistoryCard = (props) => {
             <View style={Style.cargoInfoField}>
               <OpenSansLightText>Origin</OpenSansLightText>
               <OpenSansBoldText>{cargo.origin.mainName}</OpenSansBoldText>
-              <OpenSansItalicText>{cargo.origin.secondaryName}</OpenSansItalicText>
+              <OpenSansItalicText>{secondaryLocation(cargo.origin)}</OpenSansItalicText>
             </View>
             <View style={Style.cargoInfoField}>
               <OpenSansLightText>Destination</OpenSansLightText>
               <OpenSansBoldText>{cargo.destination.mainName}</OpenSansBoldText>
-              <OpenSansItalicText>{cargo.destination.secondaryName}</OpenSansItalicText>
+              <OpenSansItalicText>{secondaryLocation(cargo.destination)}</OpenSansItalicText>
             </View>
           </View>
         </View>
@@ -66,15 +68,15 @@ const Bulk = (cargo) => {
     <View style={Style.cargoInfo}>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText>Departure</OpenSansLightText>
-        <OpenSansBoldText>{moment(cargo.departure).format('D MMM YYYY')}</OpenSansBoldText>
+        <OpenSansBoldText>{moment(cargo.departure).format('D MMM YY')}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText>Type</OpenSansLightText>
         <OpenSansBoldText>{cargo.bulkType.displayName}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
-        <OpenSansText>{cargo.weight} {cargo.weightUnit.toLowerCase()}</OpenSansText>
-        <OpenSansText>{cargo.volume} {cargo.volumeUnit.toLowerCase()}</OpenSansText>
+        <OpenSansText>{ifExist(cargo.weight)} {ifExist(cargo.weightUnit)}</OpenSansText>
+        <OpenSansText>{ifExist(cargo.volume)} {ifExist(cargo.volumeUnit)}</OpenSansText>
       </View>
     </View>
   )

@@ -3,29 +3,31 @@ import { TouchableHighlight, View, Text, StyleSheet } from 'react-native'
 import { PropTypes } from 'prop-types'
 import Style from './ContractCardStyle'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText } from './StyledText'
-import { formatNumber } from '../Helper/NumberHelper'
 import moment from 'moment'
 import { Badge } from 'react-native-elements'
 import { contractStatusBadge, mapContractStatus } from '../Helper/ContractHelper'
+import { secondaryLocation } from '../Helper/LocationHelper'
+import { firstCharUpperCase, formatCurrency, formatNumberToText } from '../Helper/PrintHelper'
 
 export const ContractCard = (props) => {
   const contract = props.contract.item
   const cargo = props.cargo
+
   if (contract === undefined || cargo === undefined) {
     return null
   }
   return (
     <TouchableHighlight onPress={() => navigateToContract(props.navigation, contract, cargo)}>
       <View style={Style.contract}>
-        <View style={Style.cargoOriginDestination}>
+        <View style={Style.contractOriginDestination}>
           <View style={Style.contractOriginDestinationText}>
             <View style={Style.contractInfoField}>
               <OpenSansBoldText>{contract.origin.mainName}</OpenSansBoldText>
-              <OpenSansItalicText>{contract.origin.secondaryName}</OpenSansItalicText>
+              <OpenSansItalicText>{secondaryLocation(contract.origin)}</OpenSansItalicText>
             </View>
             <View style={Style.contractInfoField}>
               <OpenSansBoldText>{contract.destination.mainName}</OpenSansBoldText>
-              <OpenSansItalicText>{contract.destination.secondaryName}</OpenSansItalicText>
+              <OpenSansItalicText>{secondaryLocation(contract.destination)}</OpenSansItalicText>
             </View>
           </View>
         </View>
@@ -34,20 +36,20 @@ export const ContractCard = (props) => {
             {contractStatusBadge(contract.status)}
           </View>
           <View style={Style.contractInfoDetailField}>
-            <OpenSansBoldText>
-              {moment(contract.startDate).format('D MMM YYYY')}
+            <OpenSansText>
+              {moment(contract.startDate).format('D MMM YY')}
               {' - '}
-              {moment(contract.endDate).format('D MMM YYYY')}
-            </OpenSansBoldText>
+              {moment(contract.endDate).format('D MMM YY')}
+            </OpenSansText>
           </View>
           <View style={Style.contractInfoDetail}>
             <View style={Style.contractInfoDetailField}>
-              <OpenSansText>{contract.charterType}</OpenSansText>
+              <OpenSansText>{firstCharUpperCase(contract.charterType)}</OpenSansText>
             </View>
             <View style={Style.contractInfoDetailField}>
               <OpenSansBoldText>
-                {contract.currency} {formatNumber(contract.price)}
-                {contract.priceUnit.toUpperCase() === 'NOT_USED' ? '' : ' / ' + contract.priceUnit}
+                {formatCurrency(contract.currency)} {formatNumberToText(contract.price)}
+                {contract.priceUnit.toUpperCase() === 'NOT_USED' ? '' : ' / ' + contract.priceUnit.toLowerCase()}
               </OpenSansBoldText>
             </View>
           </View>

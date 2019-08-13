@@ -219,23 +219,23 @@ class ShipmentDetailScreen extends Component {
           customMapStyle={mapStyle}
           style={Style.map}
           initialRegion={{
-            latitude: -6.1343973,
-            longitude: 106.7895063,
-            latitudeDelta: 1.0922,
-            longitudeDelta: 1.0421,
+            latitude: (shipment.origin.lat + shipment.destination.lat) / 2,
+            longitude: (shipment.origin.lon + shipment.destination.lon) / 2,
+            latitudeDelta: Math.abs(shipment.origin.lat - shipment.destination.lat) * 1.5,
+            longitudeDelta: Math.abs(shipment.origin.lon - shipment.destination.lon) * 1.5,
           }}
         >
           <Marker coordinate={{
-            latitude: -6.134479,
-            longitude: 106.789853,}}>
+            latitude: shipment.origin.lat,
+            longitude: shipment.origin.lon}}>
             <Entypo name="location-pin" size={40} color={Colors.main} style={{marginTop: 20}}/>
             <Callout>
               <OpenSansText>Origin</OpenSansText>
             </Callout>
           </Marker>
           <Marker coordinate={{
-            latitude: -6.2129484,
-            longitude: 106.8091016,}}>
+            latitude: shipment.destination.lat,
+            longitude: shipment.destination.lon}}>
             <Entypo name="location-pin" size={40} color={Colors.red} style={{marginTop: 20}}/>
             <Callout>
               <OpenSansText>Destination</OpenSansText>
