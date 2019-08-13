@@ -11,9 +11,10 @@ export const getUpcomingShipmentsLoading = (state) => ({
   upcomingShipmentsErrorMessage: null,
 })
 
-export const getUpcomingShipmentsSuccess = (state, { cargoShipment }) => ({
+export const getUpcomingShipmentsSuccess = (state, { cargoShipment, start  }) => ({
   ...state,
   upcomingShipments: cargoShipment.cargoShipment,
+  upcomingShipmentsStart: start,
   upcomingShipmentsIsLoading: false,
   upcomingShipmentsErrorMessage: null,
 })
@@ -34,9 +35,10 @@ export const getInProgressShipmentsLoading = (state) => ({
   inProgressShipmentsErrorMessage: null,
 })
 
-export const getInProgressShipmentsSuccess = (state, { cargoShipment }) => ({
+export const getInProgressShipmentsSuccess = (state, { cargoShipment, start  }) => ({
   ...state,
   inProgressShipments: cargoShipment.cargoShipment,
+  inProgressShipmentsStart: start,
   inProgressShipmentsIsLoading: false,
   inProgressShipmentsErrorMessage: null,
 })
@@ -57,9 +59,10 @@ export const getCompletedShipmentsLoading = (state) => ({
   completedShipmentsErrorMessage: null,
 })
 
-export const getCompletedShipmentsSuccess = (state, { cargoShipment }) => ({
+export const getCompletedShipmentsSuccess = (state, { cargoShipment, start  }) => ({
   ...state,
   completedShipments: cargoShipment.cargoShipment,
+  completedShipmentsStart: start,
   completedShipmentsIsLoading: false,
   completedShipmentsErrorMessage: null,
 })

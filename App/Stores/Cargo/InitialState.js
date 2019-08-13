@@ -6,9 +6,11 @@ export const INITIAL_STATE = {
   cargoIsLoading: false,
   cargoErrorMessage: null,
   activeCargos: [],
+  activeCargosStart: 0,
   activeCargosIsLoading: false,
   activeCargosErrorMessage: null,
   historyCargos: [],
+  historyCargosStart: 0,
   historyCargosIsLoading: false,
   historyCargosErrorMessage: null,
 }

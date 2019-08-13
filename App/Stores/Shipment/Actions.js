@@ -2,19 +2,19 @@ import { createActions } from 'reduxsauce'
 
 const { Types, Creators } = createActions({
   // Get upcoming shipment
-  getUpcomingShipments: [],
+  getUpcomingShipments: ['param'],
   getUpcomingShipmentsLoading: null,
-  getUpcomingShipmentsSuccess: ['cargoShipment'],
+  getUpcomingShipmentsSuccess: ['cargoShipment', 'start'],
   getUpcomingShipmentsFailure: ['error'],
   // Get in progress shipment
-  getInProgressShipments: [],
+  getInProgressShipments: ['param'],
   getInProgressShipmentsLoading: null,
-  getInProgressShipmentsSuccess: ['cargoShipment'],
+  getInProgressShipmentsSuccess: ['cargoShipment', 'start'],
   getInProgressShipmentsFailure: ['error'],
   // Get completed shipment
-  getCompletedShipments: [],
+  getCompletedShipments: ['param'],
   getCompletedShipmentsLoading: null,
-  getCompletedShipmentsSuccess: ['cargoShipment'],
+  getCompletedShipmentsSuccess: ['cargoShipment', 'start'],
   getCompletedShipmentsFailure: ['error'],
 })
 

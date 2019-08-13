@@ -66,7 +66,9 @@ const InquiryNavigator = createStackNavigator(
         }
       },
     },
-    ContractDetailScreen: ContractDetailScreen,
+    ContractDetailScreen: {
+      screen: ContractDetailScreen,
+    },
   },
   {
     // mode: 'modal',

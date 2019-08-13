@@ -7,6 +7,7 @@ import moment from 'moment'
 import Colors from '../Theme/Colors'
 import StepIndicator from 'react-native-step-indicator'
 import { mapShipStatus, shipStatus } from '../Helper/ShipmentHelper'
+import { secondaryLocation } from '../Helper/LocationHelper'
 
 const shipStatusStyle = {
   stepIndicatorSize: 10,
@@ -44,13 +45,13 @@ export const InProgressShipmentCard = (props) => {
             <View style={Style.shipmentOriginDestination}>
               <View style={Style.shipmentOrigin}>
                 <OpenSansLightText>Origin</OpenSansLightText>
-                <OpenSansBoldText>{shipment.destination.mainName}</OpenSansBoldText>
-                <OpenSansItalicText>{shipment.destination.secondaryName}</OpenSansItalicText>
+                <OpenSansBoldText>{shipment.origin.mainName}</OpenSansBoldText>
+                <OpenSansItalicText>{secondaryLocation(shipment.origin)}</OpenSansItalicText>
               </View>
               <View>
                 <OpenSansLightText>Destination</OpenSansLightText>
                 <OpenSansBoldText>{shipment.destination.mainName}</OpenSansBoldText>
-                <OpenSansItalicText>{shipment.destination.secondaryName}</OpenSansItalicText>
+                <OpenSansItalicText>{secondaryLocation(shipment.destination)}</OpenSansItalicText>
               </View>
             </View>
           </View>
@@ -101,11 +102,11 @@ const Bulk = (shipment, cargo) => {
     <View style={Style.shipmentInfo}>
       <View style={Style.shipmentInfoField}>
         <OpenSansLightText>Departure</OpenSansLightText>
-        <OpenSansBoldText>{moment(shipment.departure).format('D MMM YYYY')}</OpenSansBoldText>
+        <OpenSansBoldText>{moment(shipment.departure).format('D MMM YY')}</OpenSansBoldText>
       </View>
       <View style={Style.shipmentInfoField}>
         <OpenSansLightText>Estimated Arrival</OpenSansLightText>
-        <OpenSansBoldText>{moment(shipment.arrival).format('D MMM YYYY')}</OpenSansBoldText>
+        <OpenSansBoldText>{moment(shipment.arrival).format('D MMM YY')}</OpenSansBoldText>
       </View>
       <View style={Style.shipmentInfoField}>
         <OpenSansBoldText>{cargo.bulkType.displayName}</OpenSansBoldText>
