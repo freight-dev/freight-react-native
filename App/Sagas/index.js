@@ -6,9 +6,11 @@ import { PortTypes } from '../Stores/Port/Actions'
 import { CargoTypes } from '../Stores/Cargo/Actions'
 import { ContractTypes } from '../Stores/Contract/Actions'
 import { ShipmentTypes } from '../Stores/Shipment/Actions'
+import { AuthTypes } from '../Stores/Auth/Actions'
 import { fetchUser } from './ExampleSaga'
 import { getConfig } from './ConfigSaga'
 import { getPort } from './PortSaga'
+import { signUp, verify } from './AuthSaga'
 import { postCargo, getActiveCargos, getHistoryCargos } from './CargoSaga'
 import { getContracts, setContractsStatusSearch } from './ContractSaga'
 import { startup } from './StartupSaga'
@@ -43,5 +45,9 @@ export default function* root() {
     takeLatest(ShipmentTypes.GET_IN_PROGRESS_SHIPMENTS, getInProgressShipments),
     // Call `getCompletedShipments()`
     takeLatest(ShipmentTypes.GET_COMPLETED_SHIPMENTS, getCompletedShipments),
+    // Call `signUp()`
+    takeLatest(AuthTypes.SIGN_UP, signUp),
+    // Call `verify()`
+    takeLatest(AuthTypes.VERIFY, verify),
   ])
 }
