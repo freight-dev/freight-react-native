@@ -3,7 +3,6 @@ import { createAppContainer, createStackNavigator } from 'react-navigation'
 import CargoOwnerNavigator from 'App/Navigators/CargoOwnerNavigator/CargoOwnerNavigator'
 import SignInScreen from '../Containers/Auth/SignInScreen'
 import SignUpScreen from '../Containers/Auth/SignUpScreen'
-import TypeScreen from '../Containers/Auth/TypeScreen'
 
 /**
  * The root screen contains the application's navigation.
@@ -17,8 +16,7 @@ const AuthNavigator = createStackNavigator(
     // See https://reactnavigation.org/docs/en/stack-navigator.html#routeconfigs
     SignIn: SignInScreen,
     SignUp: SignUpScreen,
-    Type: TypeScreen,
-    // The main application screen is our "ExampleScreen". Feel free to replace it with your
+    // The ma  in application screen is our "ExampleScreen". Feel free to replace it with your
     // own screen and remove the example.
     CargoOwner: CargoOwnerNavigator,
   },

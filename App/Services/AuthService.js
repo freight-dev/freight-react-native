@@ -50,10 +50,9 @@ const authApiClientWithToken = axios.create({
 
 function signUp(payload) {
   const requestBody = {
-    email: payload.email ? payload.email : null,
-    phone: payload.phone ? payload.phone : null,
+    phone: payload.phone,
     password: payload.password,
-    companyName: payload.companyName ? payload.companyName: null,
+    companyName: payload.companyName,
     type: payload.type,
   }
   console.log(requestBody)
