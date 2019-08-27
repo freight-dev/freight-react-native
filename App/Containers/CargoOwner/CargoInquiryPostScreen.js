@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import { liveInEurope } from 'App/Stores/Example/Selectors'
 import Style from './CargoInquiryPostScreenStyle'
-import SearchForm from '../../Components/CargoForm/CargoForm'
+import CargoForm from '../../Components/CargoForm/CargoForm'
 import { Images } from 'App/Theme'
 
 class CargoInquiryPostScreen extends React.Component {
@@ -19,7 +19,7 @@ class CargoInquiryPostScreen extends React.Component {
         {this.props.configIsLoading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
-          <SearchForm navigation={this.props.navigation} />
+          <CargoForm navigation={this.props.navigation} />
         )}
       </View>
     )
