@@ -17,10 +17,9 @@ export default StyleSheet.create({
     paddingVertical: 5,
   },
   fieldTitleText: {
-    color: 'grey',
-    fontWeight: 'bold',
-    fontSize: 15,
+    width: 50,
   },
+
   fieldDataGroupContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -48,6 +47,13 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+  },
+  fieldTextWithTitle: {
+    textAlign: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    marginLeft: -50,
   },
   fieldUnit: {
     ...ApplicationStyles.component.border,

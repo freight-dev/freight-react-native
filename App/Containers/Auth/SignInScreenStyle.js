@@ -53,7 +53,15 @@ export default StyleSheet.create({
   },
   iconContainer: {
     justifyContent: 'center',
+    alignItems: 'center',
     flex: 1,
+  },
+  textInputPrefixContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  prefixText: {
+    color: 'black',
   },
   textInput: {
     flex: 5,

@@ -1,6 +1,11 @@
 import { createActions } from 'reduxsauce'
 
 const { Types, Creators } = createActions({
+  // Sign In
+  signIn: ['payload'],
+  signInLoading: null,
+  signInSuccess: [],
+  signInFailure: ['error'],
   // Sign Up
   signUp: ['payload'],
   signUpLoading: null,

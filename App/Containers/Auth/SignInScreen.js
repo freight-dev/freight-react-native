@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { View, ActivityIndicator, StatusBar, TouchableOpacity, StyleSheet, Text, Keyboard, Animated, TextInput, Image } from 'react-native'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
@@ -9,32 +9,16 @@ import { OpenSansLightText, OpenSansText } from '../../Components/StyledText'
 import Colors from '../../Theme/Colors'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { authService as AuthActions } from '../../Services/AuthService'
 
 
-class SignInScreen extends React.Component {
-  // render() {
-  //   return (
-  //     <View style={Style.container}>
-  //       <StatusBar backgroundColor='white' barStyle="dark-content" />
-  //       {this.props.configIsLoading ? (
-  //         <ActivityIndicator size="large" color="#0000ff" />
-  //       ) : (
-  //         <SearchForm navigation={this.props.navigation} />
-  //       )}
-  //     </View>
-  //   )
-  // }
-
-  componentDidMount() {
-
-  }
-
-  _signIn() {
-    authenticate(this.state.email, this.state.password)
-      .then((responseJson) => {
-        storeToken(responseJson.token);
-        this.props.navigation.navigate('Main');
-      })
+class SignInScreen extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      phone: '',
+      password: '',
+    }
   }
 
   render() {
@@ -56,16 +40,19 @@ class SignInScreen extends React.Component {
           <View style={Styles.textContainer}>
             <View style={Styles.textBorderContainer}>
               <View style={Styles.iconContainer}>
-                <MaterialIcons name='mail' size={30} style={Styles.icon}/>
+                <FontAwesome name='phone' size={30} style={Styles.icon}/>
+              </View>
+              <View style={Styles.textInputPrefixContainer}>
+                <OpenSansText style={Styles.prefixText}>+62</OpenSansText>
               </View>
               <TextInput
                 style={Styles.textInput}
                 placeholder='phone'
-                onChangeText={text => {
-                  // this.setState({email: text});
+                onChangeText={phone => {
+                  this.setState({phone: phone});
                 }}
                 autoCorrect={false}
-                // value={this.state.email}
+                value={this.state.phone}
               />
             </View>
           </View>
@@ -80,10 +67,10 @@ class SignInScreen extends React.Component {
                 secureTextEntry={true}
                 autoCapitalize='none'
                 autoCorrect={false}
-                onChangeText={text => {
-                  // this.setState({password: text});
+                onChangeText={password => {
+                  this.setState({password: password});
                 }}
-                // value={this.state.password}
+                value={this.state.password}
               />
             </View>
           </View>
@@ -96,8 +83,14 @@ class SignInScreen extends React.Component {
             <TouchableOpacity
               style={Styles.signInButtonContainer}
               activeOpacity={0.8}
-              // disabled={this.state.email == '' || this.state.password == ''}
-              onPress={() => this._signIn()} >
+              disabled={this.state.phone === '' || this.state.password === ''}
+              onPress={() => {
+                const payload = {
+                  phone: '62' + this.state.phone,
+                  password: this.state.password,
+                }
+                this.props.signIn(payload)
+              }}>
               <OpenSansText style={{fontSize: 18, color: 'white'}}>Sign in</OpenSansText>
             </TouchableOpacity>
           </View>
@@ -105,7 +98,6 @@ class SignInScreen extends React.Component {
             <View style={Styles.signUpContainer}>
               <TouchableOpacity
                 activeOpacity={0.8}
-                // disabled={this.state.newUserButtonDisabled}
                 onPress={() => { this.props.navigation.navigate('SignUp') }} >
                 <OpenSansLightText style={{fontSize: 16, color: 'white'}}>Sign up!</OpenSansLightText>
               </TouchableOpacity>
@@ -131,18 +123,17 @@ SignInScreen.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-  containerTypes: state.config.containerTypes,
-  bulkTypes: state.config.bulkTypes,
-  cargoTypes: state.config.cargoTypes,
-  configIsLoading: state.config.configIsLoading,
-  user: state.example.user,
-  userIsLoading: state.example.userIsLoading,
-  userErrorMessage: state.example.userErrorMessage,
-  liveInEurope: liveInEurope(state),
+  signInIsLoading: state.auth.signInIsLoading,
+  signInErrorMessage: state.auth.signInErrorMessage,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  // getPort: () => dispatch(PortActions.getPort()),
+  signIn: (payload) => {
+    return dispatch({
+      type: AuthActions.signIn(payload),
+      payload: payload,
+    })
+  },
 })
 
 export default connect(
