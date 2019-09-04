@@ -4,6 +4,8 @@ import CargoOwnerNavigator from 'App/Navigators/CargoOwnerNavigator/CargoOwnerNa
 // import ExampleScreen from 'App/Containers/Example/ExampleScreen'
 import SplashScreen from 'App/Containers/SplashScreen/SplashScreen'
 import AuthNavigator from './AuthNavigator'
+import SignInScreen from '../Containers/Auth/SignInScreen'
+import SignUpScreen from '../Containers/Auth/SignUpScreen'
 
 /**
  * The root screen contains the application's navigation.
@@ -18,7 +20,11 @@ const StackNavigator = createStackNavigator(
     SplashScreen: SplashScreen,
     // The main application screen is our "ExampleScreen". Feel free to replace it with your
     // own screen and remove the example.
-    MainScreen: AuthNavigator,
+    SignIn: SignInScreen,
+    SignUp: SignUpScreen,
+    // The ma  in application screen is our "ExampleScreen". Feel free to replace it with your
+    // own screen and remove the example.
+    CargoOwner: CargoOwnerNavigator,
   },
   {
     // By default the application will show the splash screen

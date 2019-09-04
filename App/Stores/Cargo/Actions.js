@@ -8,13 +8,13 @@ const { Types, Creators } = createActions({
   postCargoFailure: ['error'],
 
   // Get active cargo
-  getActiveCargos: ['param'],
+  getActiveCargos: ['param', 'token'],
   getActiveCargosLoading: null,
   getActiveCargosSuccess: ['cargos', 'start'],
   getActiveCargosFailure: ['error'],
 
   // Get history cargo
-  getHistoryCargos: ['param'],
+  getHistoryCargos: ['param', 'token'],
   getHistoryCargosLoading: null,
   getHistoryCargosSuccess: ['cargos', 'start'],
   getHistoryCargosFailure: ['error'],

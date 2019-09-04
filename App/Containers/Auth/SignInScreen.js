@@ -10,6 +10,7 @@ import Colors from '../../Theme/Colors'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import { authService as AuthActions } from '../../Services/AuthService'
+import NavigationService from '../../Services/NavigationService'
 
 
 class SignInScreen extends Component {
@@ -90,6 +91,9 @@ class SignInScreen extends Component {
                   password: this.state.password,
                 }
                 this.props.signIn(payload)
+                if (!this.props.signInIsLoading && this.props.signedIn) {
+                  NavigationService.navigateAndReset('CargoOwner')
+                }
               }}>
               <OpenSansText style={{fontSize: 18, color: 'white'}}>Sign in</OpenSansText>
             </TouchableOpacity>
@@ -110,19 +114,12 @@ class SignInScreen extends Component {
 }
 
 SignInScreen.propTypes = {
-  containerTypes: PropTypes.array,
-  bulkTypes: PropTypes.array,
-  cargoTypes: PropTypes.array,
-  configIsLoading: PropTypes.bool,
-  user: PropTypes.object,
-  userIsLoading: PropTypes.bool,
-  userErrorMessage: PropTypes.string,
-  fetchUser: PropTypes.func,
-  liveInEurope: PropTypes.bool,
+
   navigation: PropTypes.object,
 }
 
 const mapStateToProps = (state) => ({
+  signedIn: state.auth.signedIn,
   signInIsLoading: state.auth.signInIsLoading,
   signInErrorMessage: state.auth.signInErrorMessage,
 })

@@ -19,7 +19,6 @@ const authApiClient = axios.create({
 
 const storeToken = async (token) => {
   try {
-    console.log('token: ' + token)
     await AsyncStorage.setItem('token', token)
   } catch (error) {
     console.error("Error in storing user's token, error=" + error)
@@ -30,8 +29,11 @@ const getToken = async () => {
   try {
     const value = await AsyncStorage.getItem('token')
     if(value !== null) {
+      console.log('getting token, with value: ' + value)
       return value
     }
+    console.log('getting token NULL , with value: ' + value)
+
   } catch(error) {
     console.error("Error in getting user's token, error=" + error)
   }
@@ -54,8 +56,10 @@ function signIn(payload) {
   }
   return authApiClient.post(Config.API_URL + '/authentication/authenticate', requestBody).then((response) => {
     if (in200s(response.status)) {
-      console.log('response inside auth service \n' + JSON.stringify(response.data))
-      return response.data
+      return storeToken(response.data.token).then(() => {
+        console.log("token: " + JSON.stringify(response.data))
+        return response.data
+      })
     }
     return null
   })
@@ -70,7 +74,9 @@ function signUp(payload) {
   }
   return authApiClient.post(Config.API_URL + '/authentication', requestBody).then((response) => {
     if (in200s(response.status)) {
-      return response.data
+      return storeToken(response.data.token).then(() => {
+        return response.data
+      })
     }
     return null
   })
@@ -82,7 +88,9 @@ function verify(payload) {
   }
   return authApiClientWithToken.post(Config.API_URL + '/verify', requestBody).then((response) => {
     if (in200s(response.status)) {
-      return response.data
+      return storeToken(response.data.token).then(() => {
+        return response.data
+      })
     }
 
     return null

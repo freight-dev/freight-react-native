@@ -1,11 +1,13 @@
 import { put, call } from 'redux-saga/effects'
 import CargoActions from 'App/Stores/Cargo/Actions'
 import { cargoService } from 'App/Services/CargoService'
+import { authService } from '../Services/AuthService'
 
 export function* postCargo(action) {
   yield put(CargoActions.postCargoLoading())
 
-  const cargo = yield call(cargoService.postCargo, action.payload)
+  const token = yield call(authService.getToken)
+  const cargo = yield call(cargoService.postCargo, action.payload, token)
   if (!cargo.error) {
     yield put(CargoActions.postCargoSuccess(cargo))
   } else if (cargo.error) {
@@ -18,7 +20,8 @@ export function* postCargo(action) {
 export function* getActiveCargos(action) {
   yield put(CargoActions.getActiveCargosLoading())
 
-  const cargos = yield call(cargoService.getActiveCargos, action.param)
+  const token = yield call(authService.getToken)
+  const cargos = yield call(cargoService.getActiveCargos, action.param, token)
   if (!cargos.error) {
     yield put(CargoActions.getActiveCargosSuccess(cargos, action.param.start))
   } else if (cargos.error) {
@@ -31,7 +34,8 @@ export function* getActiveCargos(action) {
 export function* getHistoryCargos(action) {
   yield put(CargoActions.getHistoryCargosLoading())
 
-  const cargos = yield call(cargoService.getHistoryCargos, action.param)
+  const token = yield call(authService.getToken)
+  const cargos = yield call(cargoService.getHistoryCargos, action.param, token)
   if (!cargos.error) {
     yield put(CargoActions.getHistoryCargosSuccess(cargos, action.param.start))
   } else if (cargos.error) {

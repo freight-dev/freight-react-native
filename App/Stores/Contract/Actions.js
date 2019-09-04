@@ -1,6 +1,11 @@
 import { createActions } from 'reduxsauce'
 
 const { Types, Creators } = createActions({
+  // Update contract status
+  updateContractStatus: ['param'],
+  updateContractStatusLoading: null,
+  updateContractStatusSuccess: ['cargoContract'],
+  updateContractStatusFailure: ['error'],
   // Get contracts
   getContracts: ['param'],
   getContractsLoading: null,

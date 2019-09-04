@@ -3,6 +3,20 @@ import { createReducer } from 'reduxsauce'
 import { AuthTypes } from './Actions'
 
 /**
+ * Signed In
+ */
+export const isSignedInLoading = (state) => ({
+  ...state,
+  isSignedInLoading: true,
+})
+
+export const isSignedInSuccess = (state, { signedIn }) => ({
+  ...state,
+  signedIn: signedIn,
+  isSignedInLoading: false,
+})
+
+/**
  * Sign In
  */
 export const signInLoading = (state) => ({
@@ -11,8 +25,9 @@ export const signInLoading = (state) => ({
   signInErrorMessage: null,
 })
 
-export const signInSuccess = (state) => ({
+export const signInSuccess = (state, { signedIn }) => ({
   ...state,
+  signedIn: signedIn,
   signInIsLoading: false,
   signInErrorMessage: null,
 })
@@ -32,8 +47,9 @@ export const signUpLoading = (state) => ({
   signUpErrorMessage: null,
 })
 
-export const signUpSuccess = (state) => ({
+export const signUpSuccess = (state, { signedIn }) => ({
   ...state,
+  signedIn: signedIn,
   signUpIsLoading: false,
   signUpErrorMessage: null,
 })
@@ -66,6 +82,8 @@ export const verifyFailure = (state, { error }) => ({
 })
 
 export const reducer = createReducer(INITIAL_STATE, {
+  [AuthTypes.IS_SIGNED_IN_LOADING]: isSignedInLoading,
+  [AuthTypes.IS_SIGNED_IN_SUCCESS]: isSignedInSuccess,
   [AuthTypes.SIGN_UP_LOADING]: signUpLoading,
   [AuthTypes.SIGN_UP_SUCCESS]: signUpSuccess,
   [AuthTypes.SIGN_UP_FAILURE]: signUpFailure,

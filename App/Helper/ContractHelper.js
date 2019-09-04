@@ -9,6 +9,7 @@ export const CUSTOMER_ACCEPTED = 'CUSTOMER_ACCEPTED'
 export const CUSTOMER_DECLINED = 'CUSTOMER_DECLINED'
 export const CUSTOMER_EXPIRED = 'CUSTOMER_EXPIRED'
 export const TRANSPORTER_EXPIRED = 'TRANSPORTER_EXPIRED'
+export const CUSTOMER_ACCEPT_OTHER_CONTRACT = 'CUSTOMER_ACCEPT_OTHER_CONTRACT'
 
 export const ALL = 'All'
 export const ACTION_REQUIRED = 'Action Required'
@@ -21,7 +22,8 @@ export const contractStatus = [
   CUSTOMER_NEGOTIATE,
   CUSTOMER_DECLINED,
   CUSTOMER_EXPIRED,
-  TRANSPORTER_EXPIRED
+  TRANSPORTER_EXPIRED,
+  CUSTOMER_ACCEPT_OTHER_CONTRACT,
 ]
 
 export const mapContractStatus = (status) => {
@@ -32,29 +34,14 @@ export const mapContractStatus = (status) => {
       return WAITING_REPLY
     case CUSTOMER_DECLINED:
       return DECLINED
+    case CUSTOMER_ACCEPT_OTHER_CONTRACT:
+      return DECLINED
     case CUSTOMER_EXPIRED:
       return EXPIRED
     case TRANSPORTER_EXPIRED:
       return EXPIRED
     case contractStatus:
       return ALL
-    default:
-      return null
-  }
-}
-
-export const mapToContractStatus = (status) => {
-  switch (status) {
-    case ACTION_REQUIRED:
-      return [TRANSPORTER_OFFERED]
-    case WAITING_REPLY:
-      return [CUSTOMER_NEGOTIATE]
-    case DECLINED:
-      return [CUSTOMER_DECLINED]
-    case EXPIRED:
-      return [CUSTOMER_EXPIRED, TRANSPORTER_EXPIRED]
-    case ALL:
-      return contractStatus
     default:
       return null
   }
