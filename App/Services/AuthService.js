@@ -2,7 +2,6 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios'
 import { Config } from 'App/Config'
 import { is, curryN, gte } from 'ramda'
-import { resolve } from 'react-native-svg/lib/resolve'
 
 const isWithin = curryN(3, (min, max, value) => {
   const isNumber = is(Number)
@@ -30,9 +29,11 @@ const getToken = async () => {
   try {
     const value = await AsyncStorage.getItem('token')
     if(value !== null) {
-      console.log(value);
+      console.log('getting token, with value: ' + value)
       return value
     }
+    console.log('getting token NULL , with value: ' + value)
+
   } catch(error) {
     console.error("Error in getting user's token, error=" + error)
   }
@@ -48,6 +49,22 @@ const authApiClientWithToken = axios.create({
   timeout: 3000,
 })
 
+function signIn(payload) {
+  const requestBody = {
+    phone: payload.phone,
+    password: payload.password,
+  }
+  return authApiClient.post(Config.API_URL + '/authentication/authenticate', requestBody).then((response) => {
+    if (in200s(response.status)) {
+      return storeToken(response.data.token).then(() => {
+        console.log("token: " + JSON.stringify(response.data))
+        return response.data
+      })
+    }
+    return null
+  })
+}
+
 function signUp(payload) {
   const requestBody = {
     phone: payload.phone,
@@ -55,12 +72,12 @@ function signUp(payload) {
     companyName: payload.companyName,
     type: payload.type,
   }
-  console.log(requestBody)
   return authApiClient.post(Config.API_URL + '/authentication', requestBody).then((response) => {
     if (in200s(response.status)) {
-      return response.data
+      return storeToken(response.data.token).then(() => {
+        return response.data
+      })
     }
-    console.log("response: " + JSON.stringify(response))
     return null
   })
 }
@@ -71,7 +88,9 @@ function verify(payload) {
   }
   return authApiClientWithToken.post(Config.API_URL + '/verify', requestBody).then((response) => {
     if (in200s(response.status)) {
-      return response.data
+      return storeToken(response.data.token).then(() => {
+        return response.data
+      })
     }
 
     return null
@@ -81,6 +100,7 @@ function verify(payload) {
 export const authService = {
   storeToken,
   getToken,
+  signIn,
   signUp,
   verify,
 }

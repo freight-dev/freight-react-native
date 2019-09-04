@@ -90,9 +90,14 @@ export const validators = {
         message: '{TITLE} is required'
       },
       {
-        validator: 'isLength',
-        arguments: [3, 150],
-        message: '{TITLE} has to be between 3-150 characters',
+        validator: (...args) => {
+          const owner = GiftedFormManager.getValue('signUp', 'owner')
+          if (owner === 'company') {
+            return args[0].length >= 3 && args[0] <= 150
+          }
+          return true
+        },
+        message: '{TITLE} has to be between 3-150 characters'
       },
     ],
   },

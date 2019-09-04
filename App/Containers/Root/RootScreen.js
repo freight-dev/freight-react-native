@@ -4,8 +4,8 @@ import AppNavigator from 'App/Navigators/AppNavigator'
 import { View } from 'react-native'
 import styles from './RootScreenStyle'
 import { connect } from 'react-redux'
-import StartupActions from 'App/Stores/Startup/Actions'
 import ConfigActions from 'App/Stores/Config/Actions'
+import AuthActions from 'App/Stores/Auth/Actions'
 import { PropTypes } from 'prop-types'
 
 class RootScreen extends Component {
@@ -13,10 +13,17 @@ class RootScreen extends Component {
     // Run the startup saga when the application is starting
     // this.props.startup()
     this.props.getConfig()
+    this.props.isSignedIn()
 
     // When those operations are finished we redirect to the main screen
-    if (!this.props.configIsLoading && this.props.configErrorMessage === null) {
-      NavigationService.navigateAndReset('MainScreen')
+    if (!this.props.configIsLoading && this.props.configErrorMessage === null && !this.props.isSignedInIsLoading) {
+      console.log("isSignedInIsLoading inside Root Screen: " + this.props.isSignedInIsLoading)
+      console.log("signedIn inside Root Screen: " + this.props.signedIn)
+      if (this.props.signedIn) {
+        NavigationService.navigateAndReset('CargoOwner')
+      } else {
+        NavigationService.navigateAndReset('SignIn')
+      }
     }
   }
 
@@ -35,20 +42,24 @@ class RootScreen extends Component {
 }
 
 RootScreen.propTypes = {
-  // startup: PropTypes.func,
+  signedIn: PropTypes.bool,
+  isSignedIn: PropTypes.func,
+  isSignedInIsLoading: PropTypes.bool,
   getConfig: PropTypes.func,
   configIsLoading: PropTypes.bool,
   configErrorMessage: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
+  signedIn: state.auth.signedIn,
+  isSignedInIsLoading: state.auth.isSignedInIsLoading,
   configIsLoading: state.config.configIsLoading,
   configErrorMessage: state.config.configErrorMessage,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  startup: () => dispatch(StartupActions.startup()),
   getConfig: () => dispatch(ConfigActions.getConfig()),
+  isSignedIn: () => dispatch(AuthActions.isSignedIn()),
 })
 
 export default connect(

@@ -1,11 +1,13 @@
 import { put, call } from 'redux-saga/effects'
 import ShipmentActions from 'App/Stores/Shipment/Actions'
 import { shipmentService } from 'App/Services/ShipmentService'
+import { authService } from '../Services/AuthService'
 
 export function* getUpcomingShipments(action) {
   yield put(ShipmentActions.getUpcomingShipmentsLoading())
 
-  const cargoShipment = yield call(shipmentService.getUpcomingShipments, action.param)
+  const token = yield call(authService.getToken)
+  const cargoShipment = yield call(shipmentService.getUpcomingShipments, action.param, token)
   if (!cargoShipment.error) {
     yield put(ShipmentActions.getUpcomingShipmentsSuccess(cargoShipment, action.param.start))
   } else if (cargoShipment.error) {
@@ -18,7 +20,8 @@ export function* getUpcomingShipments(action) {
 export function* getInProgressShipments(action) {
   yield put(ShipmentActions.getInProgressShipmentsLoading())
 
-  const cargoShipment = yield call(shipmentService.getInProgressShipments, action.param)
+  const token = yield call(authService.getToken)
+  const cargoShipment = yield call(shipmentService.getInProgressShipments, action.param, token)
   if (!cargoShipment.error) {
     yield put(ShipmentActions.getInProgressShipmentsSuccess(cargoShipment, action.param.start))
   } else if (cargoShipment.error) {
@@ -31,7 +34,8 @@ export function* getInProgressShipments(action) {
 export function* getCompletedShipments(action) {
   yield put(ShipmentActions.getCompletedShipmentsLoading())
 
-  const cargoShipment = yield call(shipmentService.getCompletedShipments, action.param)
+  const token = yield call(authService.getToken)
+  const cargoShipment = yield call(shipmentService.getCompletedShipments, action.param, token)
   if (!cargoShipment.error) {
     yield put(ShipmentActions.getCompletedShipmentsSuccess(cargoShipment, action.param.start))
   } else if (cargoShipment.error) {

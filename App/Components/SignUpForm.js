@@ -57,7 +57,8 @@ class SignUpForm extends Component {
               rowContainer: Styles.field,
               row: Styles.fieldTextContainer,
               spacer: Styles.spacer,
-              textInputInline: Styles.fieldText,
+              textInputInline: Styles.fieldTextWithTitle,
+              textInputTitleInline: Styles.fieldTitleText,
             }}
             image={Images.phone}
           />
@@ -198,39 +199,35 @@ class SignUpForm extends Component {
 
         <GiftedForm.ErrorsWidget/>
 
-        <GiftedForm.GroupWidget style={Styles.fieldGroupContainer}>
-          <GiftedForm.SubmitWidget
-            title="Sign Up"
-            widgetStyles={{
-              submitButton: Styles.signUpButton,
-              textSubmitButton: Styles.signUpText,
-            }}
-            onSubmit={(
-              isValid,
-              values,
-              validationResults,
-              postSubmit = null,
-              modalNavigator = null
-            ) => {
-              if (isValid === true) {
-                const payload = {
-                  phone: '62' + values.phone,
-                  password: values.password,
-                  companyName: values.owner === COMPANY ? values.companyName : null,
-                  type: values.type,
-                }
-                this.props.signUp(payload)
-                if (!this.props.signUpIsLoading && !this.props.signUpErrorMessage) {
-                  postSubmit()
-                  GiftedFormManager.reset('signUp')
-                  this.props.navigation.navigate('CargoOwner')
-                } else {
-                  postSubmit(this.props.signUpErrorMessage)
-                }
+        <GiftedForm.SubmitWidget
+          title="Sign Up"
+          widgetStyles={{
+            submitButton: Styles.signUpButton,
+            textSubmitButton: Styles.signUpText,
+          }}
+          onSubmit={(
+            isValid,
+            values,
+          ) => {
+            if (isValid === true) {
+              const payload = {
+                phone: '62' + values.phone,
+                password: values.password,
+                companyName: values.owner === COMPANY ? values.companyName : null,
+                type: values.type,
               }
-            }}
-          />
-        </GiftedForm.GroupWidget>
+              console.log(JSON.stringify(payload))
+
+              this.props.signUp(payload)
+              if (!this.props.signUpIsLoading && !this.props.signUpErrorMessage) {
+                GiftedFormManager.reset('signUp')
+                this.props.navigation.navigate('CargoOwner')
+              } else {
+                postSubmit(this.props.signUpErrorMessage)
+              }
+            }
+          }}
+        />
 
       </GiftedForm>
     )

@@ -36,12 +36,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  signUp: (payload) => {
-    return dispatch({
-      type: AuthActions.signUp(payload),
-      payload: payload
-    })
-  },
 })
 
 export default connect(
