@@ -19,6 +19,9 @@ class ContractDetailScreen extends Component {
 
     return (
       <View style={Style.container}>
+        <View style={Style.header}>
+          <OpenSansBoldText style={Style.headerTitle}>#{contract.id}</OpenSansBoldText>
+        </View>
         <ContractDetail contract={contract} cargo={cargo}/>
         <View style={Style.buttonContainer}>
           <TouchableOpacity
@@ -64,7 +67,7 @@ class ContractDetailScreen extends Component {
 }
 
 ContractDetailScreen.propTypes = {
-  navigation: PropTypes.func,
+  navigation: PropTypes.object,
   cargoContract: PropTypes.object,
   cargoContractIsLoading: PropTypes.bool,
 }

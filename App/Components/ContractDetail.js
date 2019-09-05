@@ -73,6 +73,28 @@ export const ContractDetail = (props) => {
               <OpenSansBoldText>{contract.ship.grossTonnage}</OpenSansBoldText>
             </View>
           </View>
+          <View style={Style.contractInfo}>
+            <View style={Style.contractInfoTitle}>
+              <OpenSansLightText>Facilities</OpenSansLightText>
+            </View>
+            <View style={Style.contractInfoData}>
+              {contract.ship.shipFacilities.map(shipFacility => {
+                if (shipFacility.description) {
+                  return (
+                    <View style={Style.contractInfoDataInline}>
+                      <OpenSansBoldText>{shipFacility.displayName}</OpenSansBoldText>
+                      <OpenSansLightText> </OpenSansLightText>
+                      <OpenSansLightText>{shipFacility.description}</OpenSansLightText>
+                    </View>
+
+                  )
+                }
+                return (
+                  <OpenSansBoldText>{shipFacility.displayName}</OpenSansBoldText>
+                )
+              })}
+            </View>
+          </View>
         </View>
 
         <View style={Style.contractGroup}>

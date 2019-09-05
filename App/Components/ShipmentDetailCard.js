@@ -46,6 +46,10 @@ const shipStatusStyle = {
 export const ShipmentDetailCard = (props) => {
   const cargo = props.cargo
   const shipment = props.shipment
+
+  console.log("cargo\n" + JSON.stringify(cargo) + '\n\n')
+  console.log("shipment\n" + JSON.stringify(shipment))
+
   return (
     <View style={Style.card}>
       <View style={Style.cargo}>
@@ -71,7 +75,7 @@ export const ShipmentDetailCard = (props) => {
           </View>
         </View>
         <View style={Style.shipInfoRight}>
-          <TouchableHighlight onPress={() => navigateToCargoContract(props.navigation, props.data)}>
+          <TouchableHighlight onPress={() => navigateToShipmentContractDetail(props.navigation, cargo)}>
             <FontAwesome5 name="chevron-circle-right" size={30} color={Colors.main} />
           </TouchableHighlight>
         </View>
@@ -80,10 +84,10 @@ export const ShipmentDetailCard = (props) => {
   )
 }
 
-const navigateToCargoContract = (navigation, cargo) => {
-  // navigation.navigate('CargoContractScreen', {
-  //   cargo: cargo,
-  // })
+const navigateToShipmentContractDetail = (navigation, cargo) => {
+  navigation.navigate('ShipmentContractDetailScreen', {
+    cargo: cargo,
+  })
 }
 
 const renderCargoInformation = (cargo, shipment) => {

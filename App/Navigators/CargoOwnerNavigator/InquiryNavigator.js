@@ -68,6 +68,23 @@ const InquiryNavigator = createStackNavigator(
     },
     ContractDetailScreen: {
       screen: ContractDetailScreen,
+      navigationOptions: {
+        headerTransparent: true,
+        headerTintColor: Colors.main,
+        headerBackTitleStyle: {
+          backgroundColor: 'white',
+        },
+        headerLeftContainerStyle: {
+          backgroundColor: 'white',
+          width: 30,
+          height: 30,
+          borderRadius: 15,
+          justifyContent: 'center',
+          alignItems: 'center',
+          left: 10,
+          top: 10,
+        },
+      },
     },
   },
   {
@@ -76,7 +93,7 @@ const InquiryNavigator = createStackNavigator(
   }
 )
 
-InquiryNavigator.navigationOptions = ({navigation})=>{
+InquiryNavigator.navigationOptions = ({ navigation }) => {
   let { routeName } = navigation.state.routes[navigation.state.index];
   let navigationOptions = {};
   if (routeName === 'ContractDetailScreen') {

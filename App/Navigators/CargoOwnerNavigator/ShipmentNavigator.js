@@ -9,6 +9,7 @@ import ShipmentInProgressScreen from 'App/Containers/CargoOwner/ShipmentInProgre
 import ShipmentCompletedScreen from 'App/Containers/CargoOwner/ShipmentCompletedScreen'
 import Style from './CargoOwnerNavigatorStyle'
 import Colors from '../../Theme/Colors'
+import ShipmentContractDetailScreen from '../../Containers/CargoOwner/ShipmentContractDetailScreen'
 
 const ShipmentTopNavigator = createMaterialTopTabNavigator(
   {
@@ -68,6 +69,26 @@ const ShipmentNavigator = createStackNavigator(
           left: 10,
           top: 10,
         }
+      },
+    },
+    ShipmentContractDetailScreen: {
+      screen: ShipmentContractDetailScreen,
+      navigationOptions: {
+        headerTransparent: true,
+        headerTintColor: Colors.main,
+        headerBackTitleStyle: {
+          backgroundColor: 'white',
+        },
+        headerLeftContainerStyle: {
+          backgroundColor: 'white',
+          width: 30,
+          height: 30,
+          borderRadius: 15,
+          justifyContent: 'center',
+          alignItems: 'center',
+          left: 10,
+          top: 10,
+        },
       },
     },
   },
