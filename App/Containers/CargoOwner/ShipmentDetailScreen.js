@@ -243,7 +243,10 @@ class ShipmentDetailScreen extends Component {
           </Marker>
         </MapView>
         <View style={Style.card}>
-          <ShipmentDetailCard cargo={cargo} shipment={shipment} />
+          <ShipmentDetailCard
+            navigation={this.props.navigation}
+            cargo={cargo}
+            shipment={shipment} />
         </View>
       </View>
     )

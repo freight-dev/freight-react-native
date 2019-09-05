@@ -37,6 +37,9 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     flex: 9
   },
+  contractInfoDataInline: {
+    flexDirection: 'row',
+  },
   emptySpace: {
     height: 70,
   },
