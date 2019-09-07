@@ -69,6 +69,7 @@ const InquiryNavigator = createStackNavigator(
     ContractDetailScreen: {
       screen: ContractDetailScreen,
       navigationOptions: {
+        tabBarVisible: false,
         headerTransparent: true,
         headerTintColor: Colors.main,
         headerBackTitleStyle: {

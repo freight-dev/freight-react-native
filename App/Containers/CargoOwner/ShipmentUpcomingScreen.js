@@ -14,7 +14,7 @@ class ShipmentUpcomingScreen extends Component {
     })
   }
 
-  _keyExtractor = (item) => item.id
+  _keyExtractor = (item) => item.shipment.id.toString()
 
   _renderItem = ({item}) => (
     <UpcomingShipmentCard shipment={item.shipment} cargo={item.cargo} navigation={this.props.navigation} />
@@ -66,6 +66,7 @@ ShipmentUpcomingScreen.propTypes = {
 
 const mapStateToProps = (state) => ({
   upcomingShipments: state.shipment.upcomingShipments,
+  upcomingShipmentsStart: state.shipment.upcomingShipmentsStart,
   upcomingShipmentsIsLoading: state.shipment.upcomingShipmentsIsLoading,
 })
 

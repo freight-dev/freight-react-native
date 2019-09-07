@@ -6,7 +6,13 @@ import { View, TouchableOpacity, ScrollView } from 'react-native'
 import Style from './ContractDetailScreenStyle'
 import { OpenSansBoldText, OpenSansText } from '../../Components/StyledText'
 import ContractActions from '../../Stores/Contract/Actions'
-import { CUSTOMER_ACCEPTED, CUSTOMER_DECLINED, CUSTOMER_NEGOTIATE } from '../../Helper/ContractHelper'
+import {
+  ACTION_REQUIRED, CUSTOMER_ACCEPT_OTHER_CONTRACT,
+  CUSTOMER_ACCEPTED,
+  CUSTOMER_DECLINED, CUSTOMER_EXPIRED,
+  CUSTOMER_NEGOTIATE, DECLINED, EXPIRED, TRANSPORTER_EXPIRED,
+  TRANSPORTER_OFFERED, WAITING_REPLY,
+} from '../../Helper/ContractHelper'
 
 class ContractDetailScreen extends Component {
   render() {
@@ -23,47 +29,78 @@ class ContractDetailScreen extends Component {
           <OpenSansBoldText style={Style.headerTitle}>#{contract.id}</OpenSansBoldText>
         </View>
         <ContractDetail contract={contract} cargo={cargo}/>
-        <View style={Style.buttonContainer}>
-          <TouchableOpacity
-            style={[Style.decline, Style.button]}
-            onPress={() => {
-              const payload = {
-                contractId: contract.id,
-                status: CUSTOMER_DECLINED,
-              }
-              this.props.updateContractStatus(payload)
-            }}
-          >
-            <OpenSansText style={Style.buttonText}>Decline</OpenSansText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[Style.negotiate, Style.button]}
-            onPress={() => {
-              const payload = {
-                contractId: contract.id,
-                status: CUSTOMER_NEGOTIATE,
-              }
-              this.props.updateContractStatus(payload)
-            }}
-          >
-            <OpenSansText style={Style.buttonText}>Negotiate</OpenSansText>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[Style.accept, Style.button]}
-            onPress={() => {
-              const payload = {
-                contractId: contract.id,
-                status: CUSTOMER_ACCEPTED,
-              }
-              this.props.updateContractStatus(payload)
-            }}
-          >
-            <OpenSansText style={Style.buttonText}>Accept</OpenSansText>
-          </TouchableOpacity>
-        </View>
+        {renderButton(contract)}
       </View>
     )
   }
+}
+
+const renderButton = (contract) => {
+  switch (contract.status) {
+    case TRANSPORTER_OFFERED:
+      return renderActionButton(contract)
+    case CUSTOMER_NEGOTIATE:
+      return renderStatus(contract, 'Waiting for Reply', Style.negotiate)
+    case CUSTOMER_DECLINED:
+    case CUSTOMER_ACCEPT_OTHER_CONTRACT:
+      return renderStatus(contract, 'Declined', Style.decline)
+    case CUSTOMER_EXPIRED:
+    case TRANSPORTER_EXPIRED:
+      return renderStatus(contract, 'Expired', Style.decline)
+    default:
+      return null
+  }
+}
+
+const renderActionButton = (contract) => {
+  return (
+    <View style={Style.buttonContainer}>
+      <TouchableOpacity
+        style={[Style.decline, Style.button]}
+        onPress={() => {
+          const payload = {
+            contractId: contract.id,
+            status: CUSTOMER_DECLINED,
+          }
+          this.props.updateContractStatus(payload)
+        }}
+      >
+        <OpenSansText style={Style.buttonText}>DECLINE</OpenSansText>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[Style.negotiate, Style.button]}
+        onPress={() => {
+          const payload = {
+            contractId: contract.id,
+            status: CUSTOMER_NEGOTIATE,
+          }
+          this.props.updateContractStatus(payload)
+        }}
+      >
+        <OpenSansText style={Style.buttonText}>NEGOTIATE</OpenSansText>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={[Style.accept, Style.button]}
+        onPress={() => {
+          const payload = {
+            contractId: contract.id,
+            status: CUSTOMER_ACCEPTED,
+          }
+          this.props.updateContractStatus(payload)
+        }}
+      >
+        <OpenSansText style={Style.buttonText}>ACCEPT</OpenSansText>
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+const renderStatus = (contract, title, style) => {
+  return (
+    <View style={[style, Style.statusContainer]}>
+      <OpenSansText style={Style.statusText}>{title}</OpenSansText>
+    </View>
+  )
 }
 
 ContractDetailScreen.propTypes = {

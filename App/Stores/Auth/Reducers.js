@@ -10,9 +10,9 @@ export const isSignedInLoading = (state) => ({
   isSignedInLoading: true,
 })
 
-export const isSignedInSuccess = (state, { signedIn }) => ({
+export const isSignedInSuccess = (state) => ({
   ...state,
-  signedIn: signedIn,
+  signedIn: true,
   isSignedInLoading: false,
 })
 
@@ -25,9 +25,9 @@ export const signInLoading = (state) => ({
   signInErrorMessage: null,
 })
 
-export const signInSuccess = (state, { signedIn }) => ({
+export const signInSuccess = (state) => ({
   ...state,
-  signedIn: signedIn,
+  signedIn: true,
   signInIsLoading: false,
   signInErrorMessage: null,
 })

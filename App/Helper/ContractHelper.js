@@ -2,6 +2,7 @@ import React from 'react'
 import { OpenSansText } from '../Components/StyledText'
 import { Badge } from 'react-native-elements'
 import { StyleSheet } from 'react-native'
+import Colors from '../Theme/Colors'
 
 export const TRANSPORTER_OFFERED = 'TRANSPORTER_OFFERED'
 export const CUSTOMER_NEGOTIATE = 'CUSTOMER_NEGOTIATE'
@@ -65,21 +66,24 @@ const Style = StyleSheet.create({
 
 export const contractStatusBadge = (contractStatus) => {
   let status = mapContractStatus(contractStatus)
-  let badgeStatus = null
+  let badgeColor = null
   switch (status) {
     case ACTION_REQUIRED:
-      badgeStatus = 'success'
+      badgeColor = Colors.success
       break
-    case WAITING_REPLY:
     case DECLINED:
     case EXPIRED:
+      badgeColor = Colors.error
+      break
+    case WAITING_REPLY:
+      badgeColor = Colors.grey
     default:
       break
   }
-  if (badgeStatus) {
+  if (badgeColor) {
     return <Badge
-      status={badgeStatus}
-      badgeStyle={Style.badgeStatusContainer}
+      // status={badgeStatus}
+      badgeStyle={[Style.badgeStatusContainer, {backgroundColor: badgeColor}]}
       value={
         <OpenSansText style={Style.badgeStatusText}>{status}</OpenSansText>
       }

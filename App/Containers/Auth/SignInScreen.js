@@ -91,8 +91,6 @@ class SignInScreen extends Component {
                   password: this.state.password,
                 }
                 this.props.signIn(payload)
-                console.log('this.props.signInIsLoading: ' + this.props.signInIsLoading)
-                console.log('this.props.signedIn: ' + this.props.signedIn)
                 if (!this.props.signInIsLoading && this.props.signedIn) {
                   NavigationService.navigateAndReset('CargoOwner')
                 }
