@@ -1,14 +1,13 @@
-export const ifExist = (text) => {
-  if (text === 'NOT_USED') {
+export const printNumber = (value, unit=null) => {
+  if (!value || value === '') {
     return null
   }
 
-  if (text !== null && (text instanceof String || typeof text === 'string')) {
-    return text.toLowerCase()
-  } else if (text != null) {
-    return text
+  if (!unit || unit === 'NOT_USED' || unit === '') {
+    return value
+  } else {
+    return value + ' ' + unit.toLowerCase()
   }
-
   return null
 }
 
@@ -38,6 +37,14 @@ export const formatCurrency = (currency) => {
 export const firstCharUpperCase = (text) => {
   if (text !== null && text !== '') {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
+  }
+
+  return null
+}
+
+export const firstCharUpperCaseAndRemoveUnderscore = (text) => {
+  if (text !== null && text !== '') {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase().replace(/_/g, " ");
   }
 
   return null

@@ -26,7 +26,6 @@ function updateContractStatus(payload, token) {
     contractId: payload.contractId,
     status: payload.status,
   }
-  console.log(requestBody)
   return contractApiClient(token).post(Config.API_URL + '/contract', requestBody).then((response) => {
     if (in200s(response.status)) {
       return response.data

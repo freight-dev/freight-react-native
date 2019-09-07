@@ -14,7 +14,7 @@ class InquiryHistoryScreen extends Component {
     })
   }
 
-  _keyExtractor = (item) => item.id
+  _keyExtractor = (item) => item.id.toString()
 
   _renderItem = ({item}) => (
     <CargoHistoryCard data={item} navigation={this.props.navigation} />
@@ -66,6 +66,7 @@ InquiryHistoryScreen.propTypes = {
 
 const mapStateToProps = (state) => ({
   historyCargos: state.cargo.historyCargos,
+  historyCargosStart: state.cargo.historyCargosStart,
   historyCargosIsLoading: state.cargo.historyCargosIsLoading,
 })
 

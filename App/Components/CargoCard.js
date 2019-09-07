@@ -66,7 +66,7 @@ const Bulk = (cargo) => {
   return (
     <View style={Style.cargoInfo}>
       <View style={Style.badgeContainer}>
-        <Badge status="success" value={<OpenSansText style={Style.badgeText}>2</OpenSansText>} />
+        {cargo.actionCount > 0 ? <Badge badgeStyle={Style.badgeStyle} value={<OpenSansText style={Style.badgeText}>{cargo.actionCount}</OpenSansText>} /> : null}
       </View>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText>Departure</OpenSansLightText>

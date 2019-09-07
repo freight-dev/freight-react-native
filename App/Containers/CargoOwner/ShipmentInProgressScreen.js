@@ -14,7 +14,7 @@ class ShipmentInProgressScreen extends Component {
     })
   }
 
-  _keyExtractor = (item) => item.id
+  _keyExtractor = (item) => item.shipment.id.toString()
 
   _renderItem = ({item}) => (
     <InProgressShipmentCard shipment={item.shipment} cargo={item.cargo} navigation={this.props.navigation} />
@@ -66,6 +66,7 @@ ShipmentInProgressScreen.propTypes = {
 
 const mapStateToProps = (state) => ({
   inProgressShipments: state.shipment.inProgressShipments,
+  inProgressShipmentsStart: state.shipment.inProgressShipmentsStart,
   inProgressShipmentsIsLoading: state.shipment.inProgressShipmentsIsLoading,
 })
 

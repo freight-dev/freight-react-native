@@ -74,6 +74,7 @@ const ShipmentNavigator = createStackNavigator(
     ShipmentContractDetailScreen: {
       screen: ShipmentContractDetailScreen,
       navigationOptions: {
+        tabBarVisible: false,
         headerTransparent: true,
         headerTintColor: Colors.main,
         headerBackTitleStyle: {

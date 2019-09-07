@@ -7,7 +7,12 @@ import moment from 'moment'
 import { Badge } from 'react-native-elements'
 import { contractStatusBadge, mapContractStatus } from '../Helper/ContractHelper'
 import { secondaryLocation } from '../Helper/LocationHelper'
-import { firstCharUpperCase, formatCurrency, formatNumberToText } from '../Helper/PrintHelper'
+import {
+  firstCharUpperCase,
+  firstCharUpperCaseAndRemoveUnderscore,
+  formatCurrency,
+  formatNumberToText,
+} from '../Helper/PrintHelper'
 
 export const ContractCard = (props) => {
   const contract = props.contract.item
@@ -44,7 +49,7 @@ export const ContractCard = (props) => {
           </View>
           <View style={Style.contractInfoDetail}>
             <View style={Style.contractInfoDetailField}>
-              <OpenSansText>{firstCharUpperCase(contract.charterType)}</OpenSansText>
+              <OpenSansText>{firstCharUpperCaseAndRemoveUnderscore(contract.charterType)}</OpenSansText>
             </View>
             <View style={Style.contractInfoDetailField}>
               <OpenSansBoldText>

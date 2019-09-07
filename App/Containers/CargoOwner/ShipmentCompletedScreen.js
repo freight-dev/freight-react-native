@@ -14,7 +14,7 @@ class ShipmentCompletedScreen extends Component {
     })
   }
 
-  _keyExtractor = (item) => item.id
+  _keyExtractor = (item) => item.shipment.id.toString()
 
   _renderItem = ({item}) => (
     <CompletedShipmentCard shipment={item.shipment} cargo={item.cargo} navigation={this.props.navigation} />
@@ -66,6 +66,7 @@ ShipmentCompletedScreen.propTypes = {
 
 const mapStateToProps = (state) => ({
   completedShipments: state.shipment.completedShipments,
+  completedShipmentsStart: state.shipment.completedShipmentsStart,
   completedShipmentsIsLoading: state.shipment.completedShipmentsIsLoading,
 })
 

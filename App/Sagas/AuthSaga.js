@@ -1,24 +1,24 @@
 import { put, call } from 'redux-saga/effects'
 import AuthActions from 'App/Stores/Auth/Actions'
 import { authService } from 'App/Services/AuthService'
+import NavigationService from '../Services/NavigationService'
 
 export function* isSignedIn() {
   yield put(AuthActions.isSignedInLoading())
 
-  const auth = yield call(authService.getToken)
-  const signedIn = !!auth
-  yield put(AuthActions.isSignedInSuccess(signedIn))
+  const token = yield call(authService.getToken)
+  if (!token) {
+    yield put(AuthActions.isSignedInSuccess())
+  }
 }
 
 export function* signIn(action) {
   yield put(AuthActions.signInLoading())
 
   const auth = yield call(authService.signIn, action.payload)
-  console.log("auth: " + JSON.stringify("token") )
-  const signedIn = !!auth.token
 
-  if (!auth.error) {
-    yield put(AuthActions.signInSuccess(signedIn))
+  if (!auth.error && !auth.token) {
+    yield put(AuthActions.signInSuccess())
   } else if (auth.error) {
     yield put(AuthActions.signInFailure(auth.error))
   } else {

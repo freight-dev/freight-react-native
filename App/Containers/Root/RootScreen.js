@@ -17,8 +17,6 @@ class RootScreen extends Component {
 
     // When those operations are finished we redirect to the main screen
     if (!this.props.configIsLoading && this.props.configErrorMessage === null && !this.props.isSignedInIsLoading) {
-      console.log("isSignedInIsLoading inside Root Screen: " + this.props.isSignedInIsLoading)
-      console.log("signedIn inside Root Screen: " + this.props.signedIn)
       if (this.props.signedIn) {
         NavigationService.navigateAndReset('CargoOwner')
       } else {

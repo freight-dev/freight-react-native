@@ -6,7 +6,7 @@ import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText }
 import moment from 'moment'
 import { CargoHistoryCard } from './CargoHistoryCard'
 import { secondaryLocation } from '../Helper/LocationHelper'
-import { ifExist } from '../Helper/PrintHelper'
+import { printNumber } from '../Helper/PrintHelper'
 
 export const CompletedShipmentCard = (props) => {
   const shipment = props.shipment
@@ -36,8 +36,13 @@ export const CompletedShipmentCard = (props) => {
             <OpenSansText style={Style.statusText}>{shipment.status}</OpenSansText>
           </View>
           <View style={Style.buttonContainer}>
-            <TouchableHighlight style={Style.button}>
-              <OpenSansText style={Style.buttonText}>Inquire Again</OpenSansText>
+            <TouchableHighlight
+              style={Style.button}
+              onPress={() => props.navigation.navigate('CargoPostInquiryScreen', {
+                cargo: cargo,
+              })}
+            >
+              <OpenSansText style={Style.buttonText}>INQUIRE AGAIN</OpenSansText>
             </TouchableHighlight>
           </View>
         </View>
@@ -86,8 +91,8 @@ const Bulk = (cargo) => {
         <OpenSansBoldText>{cargo.bulkType.displayName}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
-        <OpenSansText>{ifExist(cargo.weight)} {ifExist(cargo.weightUnit)}</OpenSansText>
-        <OpenSansText>{ifExist(cargo.volume)} {ifExist(cargo.volumeUnit)}</OpenSansText>
+        <OpenSansBoldText>{printNumber(cargo.weight, cargo.weightUnit)}</OpenSansBoldText>
+        <OpenSansBoldText>{printNumber(cargo.volume, cargo.volumeUnit)}</OpenSansBoldText>
       </View>
     </View>
   )

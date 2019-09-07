@@ -39,15 +39,31 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   accept: {
-    backgroundColor: 'green',
+    backgroundColor: Colors.success,
   },
   negotiate: {
-    backgroundColor: 'blue',
+    backgroundColor: Colors.grey,
   },
   decline: {
-    backgroundColor: 'red',
+    backgroundColor: Colors.error,
   },
   buttonText: {
+    color: 'white',
+    fontSize: 15,
+  },
+  statusContainer: {
+    flexDirection: 'row',
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
+    right: 0,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    padding: 10,
+  },
+  statusText: {
+    alignItems: 'center',
+    justifyContent: 'center',
     color: 'white',
     fontSize: 15,
   },

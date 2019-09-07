@@ -27,6 +27,9 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
     flexDirection: 'row',
   },
+  badgeStyle: {
+    backgroundColor: Colors.success,
+  },
   badgeText: {
     color: 'white',
   },

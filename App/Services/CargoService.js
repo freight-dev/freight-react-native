@@ -42,7 +42,6 @@ function postCargo(payload, token) {
       payload.containerTypeId === undefined ? null : payload.containerTypeId,
     bulkTypeId: payload.bulkTypeId === undefined ? null : payload.bulkTypeId,
   }
-  console.log(requestBody)
   return cargoApiClient(token).post(Config.API_URL + '/cargo', requestBody).then((response) => {
     if (in200s(response.status)) {
       return response.data

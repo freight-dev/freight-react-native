@@ -47,9 +47,6 @@ export const ShipmentDetailCard = (props) => {
   const cargo = props.cargo
   const shipment = props.shipment
 
-  console.log("cargo\n" + JSON.stringify(cargo) + '\n\n')
-  console.log("shipment\n" + JSON.stringify(shipment))
-
   return (
     <View style={Style.card}>
       <View style={Style.cargo}>

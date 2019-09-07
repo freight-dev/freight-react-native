@@ -3,9 +3,12 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { PropTypes } from 'prop-types'
 import Style from './ContractDetailStyle'
 import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText } from './StyledText'
-import { Badge } from 'react-native-elements'
 import moment from 'moment'
-import { formatCurrency, ifExist } from '../Helper/PrintHelper'
+import {
+  firstCharUpperCaseAndRemoveUnderscore,
+  formatCurrency,
+  printNumber,
+} from '../Helper/PrintHelper'
 
 export const ContractDetail = (props) => {
   const contract = props.contract
@@ -58,9 +61,6 @@ export const ContractDetail = (props) => {
           </View>
         </View>
 
-        {contractGroupWithoutBorder('Charter Type',
-          <OpenSansBoldText>{contract.charterType}</OpenSansBoldText>)}
-
         <View style={Style.contractGroup}>
           <View style={Style.contractInfo}>
             <View style={Style.contractInfoTitle}>
@@ -70,7 +70,7 @@ export const ContractDetail = (props) => {
               <OpenSansBoldText>{contract.ship.name}</OpenSansBoldText>
               <OpenSansBoldText>{contract.ship.company.name}</OpenSansBoldText>
               <OpenSansBoldText>{contract.ship.yearBuilt}</OpenSansBoldText>
-              <OpenSansBoldText>{contract.ship.grossTonnage}</OpenSansBoldText>
+              <OpenSansBoldText>{contract.ship.grossTonnage} GT</OpenSansBoldText>
             </View>
           </View>
           <View style={Style.contractInfo}>
@@ -81,7 +81,7 @@ export const ContractDetail = (props) => {
               {contract.ship.shipFacilities.map(shipFacility => {
                 if (shipFacility.description) {
                   return (
-                    <View style={Style.contractInfoDataInline}>
+                    <View style={Style.contractInfoDataInline} key={shipFacility.type}>
                       <OpenSansBoldText>{shipFacility.displayName}</OpenSansBoldText>
                       <OpenSansLightText> </OpenSansLightText>
                       <OpenSansLightText>{shipFacility.description}</OpenSansLightText>
@@ -90,7 +90,9 @@ export const ContractDetail = (props) => {
                   )
                 }
                 return (
-                  <OpenSansBoldText>{shipFacility.displayName}</OpenSansBoldText>
+                  <View style={Style.contractInfoDataInline} key={shipFacility.type}>
+                    <OpenSansBoldText>{shipFacility.displayName}</OpenSansBoldText>
+                  </View>
                 )
               })}
             </View>
@@ -103,40 +105,25 @@ export const ContractDetail = (props) => {
               <OpenSansBoldText>
                 {formatCurrency(contract.currency)} {contract.price}
                 {contract.priceUnit.toUpperCase() === 'NOT_USED' ? '' : ' / ' + contract.priceUnit.toLowerCase()}</OpenSansBoldText>
-              <OpenSansBoldText>{contract.priceUnit}</OpenSansBoldText>
             </View>
           </View>
         </View>
 
-        {contractGroupWithoutBorder('Charter Type',
-          <OpenSansBoldText>{contract.charterType}</OpenSansBoldText>)}
-        {contractGroupWithoutBorder('Incoterms',
-          <OpenSansBoldText>{contract.incoterms.displayName}</OpenSansBoldText>)}
-        {contractGroupWithoutBorder('Loading Type',
-          <OpenSansBoldText>{contract.loadingType}</OpenSansBoldText>)}
-        {contractGroupWithoutBorder('Cargo Sender',
-          <OpenSansBoldText>{contract.cargoSender}</OpenSansBoldText>)}
-        {contractGroupWithoutBorder('Cargo Receiver',
-          <OpenSansBoldText>{contract.cargoReceiver}</OpenSansBoldText>)}
-        {contractGroupWithoutBorder('Cargo Insurance',
-          <OpenSansBoldText>{contract.cargoInsurance}</OpenSansBoldText>)}
-        {contractGroupWithoutBorder('Ship Insurance',
-          <OpenSansBoldText>{contract.shipInsurance}</OpenSansBoldText>)}
-        {contractGroupWithoutBorder('Ship Agent',
-          <OpenSansBoldText>{contract.shipAgent.type}</OpenSansBoldText>)}
-        {contractGroupWithoutBorder('Miscellaneous Fee',
-          <OpenSansBoldText>{contract.miscellaneousFee}</OpenSansBoldText>)}
-        {contractGroupWithoutBorder('Demurrage',
-          <OpenSansBoldText>{contract.demurrage} {contract.demurrageUnit}</OpenSansBoldText>)}
+        {contractGroupWithoutBorder('Charter Type', firstCharUpperCaseAndRemoveUnderscore(contract.charterType))}
+        {contractGroupWithoutBorder('Incoterms', contract.incoterms.displayName)}
+        {contractGroupWithoutBorder('Loading Type', contract.loadingType)}
+        {contractGroupWithoutBorder('Cargo Sender', firstCharUpperCaseAndRemoveUnderscore(contract.cargoSender))}
+        {contractGroupWithoutBorder('Cargo Receiver', firstCharUpperCaseAndRemoveUnderscore(contract.cargoReceiver))}
+        {contractGroupWithoutBorder('Cargo Insurance', firstCharUpperCaseAndRemoveUnderscore(contract.cargoInsurance))}
+        {contractGroupWithoutBorder('Ship Insurance', firstCharUpperCaseAndRemoveUnderscore(contract.shipInsurance))}
+        {contractGroupWithoutBorder('Ship Agent', contract.shipAgent.type)}
+        {contractGroupWithoutBorder('Miscellaneous Fee', firstCharUpperCaseAndRemoveUnderscore(contract.miscellaneousFee))}
+        {contractGroupWithoutBorder('Demurrage', contract.demurrage, contract.demurrageUnit)}
 
-        <OpenSansBoldText>Laytime {contract.loadingLaytime} {contract.laytimeUnit}</OpenSansBoldText>
-        <OpenSansBoldText>{contract.dischargeLaytime} {contract.laytimeUnit}</OpenSansBoldText>
-        <OpenSansBoldText>{contract.totalLaytime} {contract.laytimeUnit}</OpenSansBoldText>
+        {loadLaytime(contract)}
 
-        {contractGroupWithoutBorder('Despatch Type',
-          <OpenSansBoldText>{contract.despatchType}</OpenSansBoldText>)}
-        {contractGroupWithoutBorder('Lay Days Type',
-          <OpenSansBoldText>{contract.layDaysType}</OpenSansBoldText>)}
+        {contractGroupWithoutBorder('Despatch Type', contract.despatchType)}
+        {contractGroupWithoutBorder('Lay Days Type', contract.layDaysType)}
 
         <View style={Style.emptySpace}/>
       </ScrollView>
@@ -170,28 +157,14 @@ const Bulk = (cargo) => {
     <View style={Style.contractInfoData}>
       <OpenSansBoldText>{cargo.bulkType.displayName}</OpenSansBoldText>
       <OpenSansBoldText>Quantity {cargo.quantity}</OpenSansBoldText>
-      <OpenSansBoldText>{ifExist(cargo.weight)} {ifExist(cargo.weightUnit)}</OpenSansBoldText>
-      <OpenSansBoldText>{ifExist(cargo.volume)} {ifExist(cargo.volumeUnit)}</OpenSansBoldText>
+      <OpenSansBoldText>{printNumber(cargo.weight, cargo.weightUnit)}</OpenSansBoldText>
+      <OpenSansBoldText>{printNumber(cargo.volume, cargo.volumeUnit)}</OpenSansBoldText>
     </View>
   )
 }
 
-const contractGroup = (title, data) => {
-  return (
-    <View style={Style.contractGroup}>
-      <View style={Style.contractInfo}>
-        <View style={Style.contractInfoTitle}>
-          <OpenSansLightText>{title}</OpenSansLightText>
-        </View>
-        <View style={Style.contractInfoData}>
-          {data}
-        </View>
-      </View>
-    </View>
-  )
-}
-
-const contractGroupWithoutBorder = (title, data) => {
+const contractGroupWithoutBorder = (title, data, unit=null) => {
+  if (!data || data === 'NOT_USED') return
   return (
     <View style={Style.contractGroupWithoutBorder}>
       <View style={Style.contractInfo}>
@@ -199,7 +172,26 @@ const contractGroupWithoutBorder = (title, data) => {
           <OpenSansLightText>{title}</OpenSansLightText>
         </View>
         <View style={Style.contractInfoData}>
-          {data}
+          <OpenSansBoldText>{data}</OpenSansBoldText>
+          {unit ? <OpenSansBoldText>{unit}</OpenSansBoldText> : null}
+        </View>
+      </View>
+    </View>
+  )
+}
+
+const loadLaytime = (contract) => {
+  if (contract.laytimeUnit === 'NOT_USED') return
+  return (
+    <View style={Style.contractGroupWithoutBorder}>
+      <View style={Style.contractInfo}>
+        <View style={Style.contractInfoTitle}>
+          <OpenSansLightText>Laytime</OpenSansLightText>
+        </View>
+        <View style={Style.contractInfoData}>
+          <OpenSansBoldText>{contract.loadingLaytime} {contract.laytimeUnit}</OpenSansBoldText>
+          <OpenSansBoldText>{contract.dischargeLaytime} {contract.laytimeUnit}</OpenSansBoldText>
+          <OpenSansBoldText>{contract.totalLaytime} {contract.laytimeUnit}</OpenSansBoldText>
         </View>
       </View>
     </View>
@@ -208,7 +200,6 @@ const contractGroupWithoutBorder = (title, data) => {
 
 ContractDetail.propTypes = {
   data: PropTypes.object,
-  yearBuilt: PropTypes.int,
   grossTonnage: PropTypes.number,
   despatchType: PropTypes.string,
   layDaysType: PropTypes.string,

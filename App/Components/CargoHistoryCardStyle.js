@@ -56,12 +56,12 @@ export default StyleSheet.create({
     justifyContent: 'flex-end',
   },
   button: {
+    flex: 1,
     borderRadius: 10,
     backgroundColor: Colors.greenButton,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
-    paddingHorizontal: 70,
   },
   buttonText: {
     color: 'white',

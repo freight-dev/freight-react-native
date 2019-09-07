@@ -202,7 +202,7 @@ class ShipmentDetailScreen extends Component {
     // this.props.getActiveCargos()
   }
 
-  _keyExtractor = (item) => item.id
+  _keyExtractor = (item) => item.id.toString()
 
   _renderItem = ({item}) => (
     {/*<CargoCard data={item} navigation={this.props.navigation} />*/}

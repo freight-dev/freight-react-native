@@ -29,10 +29,8 @@ const getToken = async () => {
   try {
     const value = await AsyncStorage.getItem('token')
     if(value !== null) {
-      console.log('getting token, with value: ' + value)
       return value
     }
-    console.log('getting token NULL , with value: ' + value)
 
   } catch(error) {
     console.error("Error in getting user's token, error=" + error)
@@ -57,7 +55,6 @@ function signIn(payload) {
   return authApiClient.post(Config.API_URL + '/authentication/authenticate', requestBody).then((response) => {
     if (in200s(response.status)) {
       return storeToken(response.data.token).then(() => {
-        console.log("token: " + JSON.stringify(response.data))
         return response.data
       })
     }

@@ -17,7 +17,7 @@ import {
   WAITING_REPLY,
 } from '../../Helper/ContractHelper'
 import { secondaryLocation } from '../../Helper/LocationHelper'
-import { ifExist } from '../../Helper/PrintHelper'
+import { printNumber } from '../../Helper/PrintHelper'
 
 class CargoContractScreen extends Component {
   componentDidMount() {
@@ -29,7 +29,7 @@ class CargoContractScreen extends Component {
     this.props.setContractsStatusSearch(ALL)
   }
 
-  _keyExtractor = (item) => item.id
+  _keyExtractor = (item) => item.id.toString()
 
   _renderItem = (contract, cargo) => (
     <ContractCard contract={contract} cargo={cargo} navigation={this.props.navigation} />
@@ -160,8 +160,8 @@ const Bulk = (cargo) => {
         <OpenSansBoldText style={{color: 'white'}}>{cargo.bulkType.displayName}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
-        <OpenSansText style={{color: 'white'}}>{ifExist(cargo.weight)} {ifExist(cargo.weightUnit)}</OpenSansText>
-        <OpenSansText style={{color: 'white'}}>{ifExist(cargo.volume)} {ifExist(cargo.volumeUnit)}</OpenSansText>
+        <OpenSansText style={{color: 'white'}}>{printNumber(cargo.weight, cargo.weightUnit)}</OpenSansText>
+        <OpenSansText style={{color: 'white'}}>{printNumber(cargo.volume, cargo.volumeUnit)}</OpenSansText>
       </View>
     </View>
   )
@@ -173,7 +173,7 @@ CargoContractScreen.propTypes = {
   contractsIsLoading: PropTypes.bool,
   contractsStart: PropTypes.number,
   setContractsStatusSearch: PropTypes.func,
-  contractsStatusSearch: PropTypes.array,
+  contractsStatusSearch: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
