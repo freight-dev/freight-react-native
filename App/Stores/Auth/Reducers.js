@@ -7,13 +7,20 @@ import { AuthTypes } from './Actions'
  */
 export const isSignedInLoading = (state) => ({
   ...state,
-  isSignedInLoading: true,
+  isSignedInIsLoading: true,
 })
 
-export const isSignedInSuccess = (state) => ({
+export const isSignedInSuccess = (state, { token }) => ({
   ...state,
-  signedIn: true,
-  isSignedInLoading: false,
+  token: token,
+  isSignedInIsLoading: false,
+})
+
+export const isSignedInFailure = (state, { error }) => ({
+  ...state,
+  token: null,
+  isSignedInIsLoading: false,
+  isSignedInErrorMessage: error,
 })
 
 /**
@@ -25,17 +32,18 @@ export const signInLoading = (state) => ({
   signInErrorMessage: null,
 })
 
-export const signInSuccess = (state) => ({
+export const signInSuccess = (state, { token }) => ({
   ...state,
-  signedIn: true,
+  token: token,
   signInIsLoading: false,
   signInErrorMessage: null,
 })
 
 export const signInFailure = (state, { error }) => ({
   ...state,
+  token: null,
   signInIsLoading: false,
-  signInErrorMessage: error.error.description,
+  signInErrorMessage: error,
 })
 
 /**
@@ -47,15 +55,17 @@ export const signUpLoading = (state) => ({
   signUpErrorMessage: null,
 })
 
-export const signUpSuccess = (state, { signedIn }) => ({
+export const signUpSuccess = (state, { token }) => ({
   ...state,
-  signedIn: signedIn,
+  token: 'sign up success',
   signUpIsLoading: false,
   signUpErrorMessage: null,
 })
 
 export const signUpFailure = (state, { error }) => ({
   ...state,
+  token: 'sign up failure',
+
   signUpIsLoading: false,
   signUpErrorMessage: error.error.description,
 })
@@ -84,6 +94,7 @@ export const verifyFailure = (state, { error }) => ({
 export const reducer = createReducer(INITIAL_STATE, {
   [AuthTypes.IS_SIGNED_IN_LOADING]: isSignedInLoading,
   [AuthTypes.IS_SIGNED_IN_SUCCESS]: isSignedInSuccess,
+  [AuthTypes.IS_SIGNED_IN_FAILURE]: isSignedInFailure,
   [AuthTypes.SIGN_UP_LOADING]: signUpLoading,
   [AuthTypes.SIGN_UP_SUCCESS]: signUpSuccess,
   [AuthTypes.SIGN_UP_FAILURE]: signUpFailure,

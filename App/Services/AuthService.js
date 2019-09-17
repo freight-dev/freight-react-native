@@ -17,23 +17,30 @@ const authApiClient = axios.create({
   timeout: 3000,
 })
 
-const storeToken = async (token) => {
+async function storeToken(token) {
+  AsyncStorage.setItem('token', token)
+}
+
+async function getToken() {
   try {
-    await AsyncStorage.setItem('token', token)
-  } catch (error) {
-    console.error("Error in storing user's token, error=" + error)
+    await AsyncStorage.getItem('token').then(value => {
+      if(value) {
+        console.log('getToken: ' + value)
+        return value
+      }
+      console.log('getToken NOT VALUE: ' + value + ' !!value: ' + !!value)
+      return value
+    })
+  } catch(error) {
+    console.error("Error in getting user's token, error=" + error)
   }
 }
 
-const getToken = async () => {
+async function clearToken() {
   try {
-    const value = await AsyncStorage.getItem('token')
-    if(value !== null) {
-      return value
-    }
-
+    await AsyncStorage.removeItem('token')
   } catch(error) {
-    console.error("Error in getting user's token, error=" + error)
+    console.error("Error in deleting user's token, error=" + error)
   }
 }
 
@@ -53,11 +60,12 @@ function signIn(payload) {
     password: payload.password,
   }
   return authApiClient.post(Config.API_URL + '/authentication/authenticate', requestBody).then((response) => {
+    console.log('response before storing token=' + JSON.stringify(response.data))
     if (in200s(response.status)) {
-      return storeToken(response.data.token).then(() => {
-        return response.data
-      })
+      console.log('response:' + JSON.stringify(response.data))
+      return response.data
     }
+
     return null
   })
 }
@@ -97,6 +105,7 @@ function verify(payload) {
 export const authService = {
   storeToken,
   getToken,
+  clearToken,
   signIn,
   signUp,
   verify,

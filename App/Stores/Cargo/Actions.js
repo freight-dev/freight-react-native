@@ -2,7 +2,7 @@ import { createActions } from 'reduxsauce'
 
 const { Types, Creators } = createActions({
   // Post cargo
-  postCargo: ['payload'],
+  postCargo: ['payload', 'token'],
   postCargoLoading: null,
   postCargoSuccess: ['cargo'],
   postCargoFailure: ['error'],

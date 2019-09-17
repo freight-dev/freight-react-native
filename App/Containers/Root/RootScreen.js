@@ -16,10 +16,12 @@ class RootScreen extends Component {
     this.props.isSignedIn()
 
     // When those operations are finished we redirect to the main screen
-    if (!this.props.configIsLoading && this.props.configErrorMessage === null && !this.props.isSignedInIsLoading) {
-      if (this.props.signedIn) {
+    if (!this.props.configIsLoading && !this.props.configErrorMessage && !this.props.isSignedInIsLoading) {
+      if (!!this.props.token && !this.props.isSignedInErrorMessage) {
+        console.log('Inside Root Screen, !!this.props.token:' + !!this.props.token + ' , this.props.token:' + this.props.token)
         NavigationService.navigateAndReset('CargoOwner')
       } else {
+        console.log('Inside Root Screen else statement, !!this.props.token:' + !!this.props.token)
         NavigationService.navigateAndReset('SignIn')
       }
     }
@@ -40,17 +42,19 @@ class RootScreen extends Component {
 }
 
 RootScreen.propTypes = {
-  signedIn: PropTypes.bool,
+  token: PropTypes.string,
   isSignedIn: PropTypes.func,
   isSignedInIsLoading: PropTypes.bool,
+  isSignedInErrorMessage: PropTypes.string,
   getConfig: PropTypes.func,
   configIsLoading: PropTypes.bool,
   configErrorMessage: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
-  signedIn: state.auth.signedIn,
+  token: state.auth.token,
   isSignedInIsLoading: state.auth.isSignedInIsLoading,
+  isSignedInErrorMessage: state.auth.isSignedInErrorMessage,
   configIsLoading: state.config.configIsLoading,
   configErrorMessage: state.config.configErrorMessage,
 })

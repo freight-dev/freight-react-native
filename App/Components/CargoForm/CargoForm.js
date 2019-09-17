@@ -154,6 +154,9 @@ class CargoForm extends Component {
           onSubmit={(
             isValid,
             values,
+            validationResults,
+            postSubmit = null,
+            modalNavigator = null
           ) => {
             if (isValid === true) {
               /* Implement the request to your server using values variable
