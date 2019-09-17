@@ -1,28 +1,57 @@
-import { put, call } from 'redux-saga/effects'
-import AuthActions from 'App/Stores/Auth/Actions'
+import { cancelled, take, fork, put, call, takeLatest } from 'redux-saga/effects'
+import AuthActions, { AuthTypes } from 'App/Stores/Auth/Actions'
 import { authService } from 'App/Services/AuthService'
-import NavigationService from '../Services/NavigationService'
+import AsyncStorage from '@react-native-community/async-storage'
+
+// export function* isSignedIn() {
+//   yield put(AuthActions.isSignedInLoading())
+//
+//   const token = yield call(authService.getToken)
+//   if (!!token) {
+//     yield put(AuthActions.isSignedInSuccess(token))
+//   } else {
+//     yield put(AuthActions.isSignedInFailure('There was an error while trying to sign in'))
+//   }
+// }
 
 export function* isSignedIn() {
-  yield put(AuthActions.isSignedInLoading())
+  while (true) {
+    const { payload } = yield take(AuthTypes.SIGN_IN)
 
-  const token = yield call(authService.getToken)
-  if (!token) {
-    yield put(AuthActions.isSignedInSuccess())
+    // fork return a Task object
+    const task = yield fork(signIn, payload)
+    const action = yield take([AuthTypes.SIGN_IN_FAILURE])
+    // if (action.type === 'LOGOUT')
+    //   yield cancel(task)
+    yield call(authService.clearToken)
   }
 }
 
-export function* signIn(action) {
-  yield put(AuthActions.signInLoading())
+export function* signIn(payload) {
+  try {
+    yield put(AuthActions.signInLoading())
+    console.log(JSON.stringify(payload))
+    const auth = yield call(authService.signIn, payload)
 
-  const auth = yield call(authService.signIn, action.payload)
+    if (!auth.error && !!auth.token) {
+      AsyncStorage.setItem('token', auth.token)
+      yield put(AuthActions.signInSuccess(auth.token))
 
-  if (!auth.error && !auth.token) {
-    yield put(AuthActions.signInSuccess())
-  } else if (auth.error) {
-    yield put(AuthActions.signInFailure(auth.error))
-  } else {
-    yield put(AuthActions.signInFailure('There was an error while trying to sign in'))
+    } else if (auth.error && auth.error.description) {
+      yield put(AuthActions.signInFailure(auth.error.description))
+    } else {
+      yield put(AuthActions.signInFailure('There was an error while trying to sign in'))
+    }
+
+  } catch (error) {
+    yield put(AuthActions.signInFailure('There was an error while trying to sign in, error=' + error))
+
+  } finally {
+    // No matter what, if our `forked` `task` was cancelled
+    // we will then just redirect them to sign page
+    if (yield cancelled()) {
+      // TODO: Navigate back to sign in page
+    }
   }
 }
 
@@ -30,10 +59,9 @@ export function* signUp(action) {
   yield put(AuthActions.signUpLoading())
 
   const auth = yield call(authService.signUp, action.payload)
-  const signedIn = !!auth.token
 
-  if (!auth.error) {
-    yield put(AuthActions.signUpSuccess(signedIn))
+  if (!auth.error && !!auth.token) {
+    yield put(AuthActions.signUpSuccess(auth.token))
   } else if (auth.error) {
     yield put(AuthActions.signUpFailure(auth.error))
   } else {

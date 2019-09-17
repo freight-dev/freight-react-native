@@ -29,30 +29,31 @@ class ContractDetailScreen extends Component {
           <OpenSansBoldText style={Style.headerTitle}>#{contract.id}</OpenSansBoldText>
         </View>
         <ContractDetail contract={contract} cargo={cargo}/>
-        {renderButton(contract)}
+        {renderButton(this.props, contract)}
       </View>
     )
   }
 }
 
-const renderButton = (contract) => {
+const renderButton = (props, contract) => {
   switch (contract.status) {
     case TRANSPORTER_OFFERED:
-      return renderActionButton(contract)
+      return renderActionButton(props, contract)
     case CUSTOMER_NEGOTIATE:
-      return renderStatus(contract, 'Waiting for Reply', Style.negotiate)
+      return renderStatus(props, contract, 'Waiting for Reply', Style.negotiate)
     case CUSTOMER_DECLINED:
     case CUSTOMER_ACCEPT_OTHER_CONTRACT:
-      return renderStatus(contract, 'Declined', Style.decline)
+      return renderStatus(props, contract, 'Declined', Style.decline)
     case CUSTOMER_EXPIRED:
     case TRANSPORTER_EXPIRED:
-      return renderStatus(contract, 'Expired', Style.decline)
+      return renderStatus(props, contract, 'Expired', Style.decline)
     default:
+      console.error("Unknown contract status detected")
       return null
   }
 }
 
-const renderActionButton = (contract) => {
+const renderActionButton = (props, contract) => {
   return (
     <View style={Style.buttonContainer}>
       <TouchableOpacity
@@ -62,7 +63,7 @@ const renderActionButton = (contract) => {
             contractId: contract.id,
             status: CUSTOMER_DECLINED,
           }
-          this.props.updateContractStatus(payload)
+          props.updateContractStatus(payload)
         }}
       >
         <OpenSansText style={Style.buttonText}>DECLINE</OpenSansText>
@@ -74,7 +75,7 @@ const renderActionButton = (contract) => {
             contractId: contract.id,
             status: CUSTOMER_NEGOTIATE,
           }
-          this.props.updateContractStatus(payload)
+          props.updateContractStatus(payload)
         }}
       >
         <OpenSansText style={Style.buttonText}>NEGOTIATE</OpenSansText>
@@ -86,7 +87,7 @@ const renderActionButton = (contract) => {
             contractId: contract.id,
             status: CUSTOMER_ACCEPTED,
           }
-          this.props.updateContractStatus(payload)
+          props.updateContractStatus(payload)
         }}
       >
         <OpenSansText style={Style.buttonText}>ACCEPT</OpenSansText>
@@ -95,7 +96,7 @@ const renderActionButton = (contract) => {
   )
 }
 
-const renderStatus = (contract, title, style) => {
+const renderStatus = (props, contract, title, style) => {
   return (
     <View style={[style, Style.statusContainer]}>
       <OpenSansText style={Style.statusText}>{title}</OpenSansText>

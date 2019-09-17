@@ -9,8 +9,8 @@ import { OpenSansLightText, OpenSansText } from '../../Components/StyledText'
 import Colors from '../../Theme/Colors'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { authService as AuthActions } from '../../Services/AuthService'
 import NavigationService from '../../Services/NavigationService'
+import AuthActions from 'App/Stores/Auth/Actions'
 
 
 class SignInScreen extends Component {
@@ -90,10 +90,14 @@ class SignInScreen extends Component {
                   phone: '62' + this.state.phone,
                   password: this.state.password,
                 }
+                console.log('calling this.props.signIn with payload:' + JSON.stringify(payload))
                 this.props.signIn(payload)
-                if (!this.props.signInIsLoading && this.props.signedIn) {
-                  NavigationService.navigateAndReset('CargoOwner')
+                if (!this.props.signInIsLoading && !this.props.signInErrorMessage && !!this.props.token) {
+                  console.log('inside SignInScreen, auth: ' + JSON.stringify(this.props.auth))
+                } else {
+                  console.log('inside SignInScreen outside if statement, auth: ' + JSON.stringify(this.props.auth))
                 }
+                NavigationService.navigateAndReset('CargoOwner')
               }}>
               <OpenSansText style={{fontSize: 18, color: 'white'}}>Sign in</OpenSansText>
             </TouchableOpacity>
@@ -114,22 +118,21 @@ class SignInScreen extends Component {
 }
 
 SignInScreen.propTypes = {
-
   navigation: PropTypes.object,
+  signInIsLoading: PropTypes.bool,
+  signInErrorMessage: PropTypes.string,
 }
 
 const mapStateToProps = (state) => ({
-  signedIn: state.auth.signedIn,
+  auth: state.auth,
+  token: state.auth.token,
   signInIsLoading: state.auth.signInIsLoading,
   signInErrorMessage: state.auth.signInErrorMessage,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   signIn: (payload) => {
-    return dispatch({
-      type: AuthActions.signIn(payload),
-      payload: payload,
-    })
+    return dispatch(AuthActions.signIn(payload))
   },
 })
 

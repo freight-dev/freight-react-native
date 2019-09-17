@@ -1,4 +1,4 @@
-import { takeLatest, all } from 'redux-saga/effects'
+import { fork, takeLatest, takeEvery, all } from 'redux-saga/effects'
 import { ExampleTypes } from 'App/Stores/Example/Actions'
 import { StartupTypes } from 'App/Stores/Startup/Actions'
 import { ConfigTypes } from '../Stores/Config/Actions'
@@ -10,17 +10,20 @@ import { AuthTypes } from '../Stores/Auth/Actions'
 import { fetchUser } from './ExampleSaga'
 import { getConfig } from './ConfigSaga'
 import { getPort } from './PortSaga'
-import { isSignedIn, signIn, signUp, verify } from './AuthSaga'
+import { isSignedIn, signIn, signInWatcher, signUp, verify } from './AuthSaga'
 import { postCargo, getActiveCargos, getHistoryCargos } from './CargoSaga'
 import { getContracts, setContractsStatusSearch, updateContractStatus } from './ContractSaga'
 import { startup } from './StartupSaga'
 import { getUpcomingShipments, getInProgressShipments, getCompletedShipments } from './ShipmentSaga'
+import { getLog } from './LoggingSaga'
 
 export default function* root() {
   yield all([
     /**
      * @see https://redux-saga.js.org/docs/basics/UsingSagaHelpers.html
      */
+    // Logging
+    takeEvery('*', getLog),
     // Run the startup saga when the application starts
     takeLatest(StartupTypes.STARTUP, startup),
     // Call `fetchUser()` when a `FETCH_USER` action is triggered
@@ -49,8 +52,8 @@ export default function* root() {
     takeLatest(ShipmentTypes.GET_COMPLETED_SHIPMENTS, getCompletedShipments),
     // Call `isSignedIn()`
     takeLatest(AuthTypes.IS_SIGNED_IN, isSignedIn),
-    // Call `signIn()`
-    takeLatest(AuthTypes.SIGN_IN, signIn),
+    // // // Call `signIn()`
+    // takeLatest(AuthTypes.SIGN_IN, signIn),
     // Call `signUp()`
     takeLatest(AuthTypes.SIGN_UP, signUp),
     // Call `verify()`

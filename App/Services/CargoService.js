@@ -2,7 +2,6 @@ import axios from 'axios'
 import { Config } from 'App/Config'
 import { is, curryN, gte } from 'ramda'
 import moment from 'moment'
-import { authService } from './AuthService'
 
 const isWithin = curryN(3, (min, max, value) => {
   const isNumber = is(Number)
@@ -42,16 +41,22 @@ function postCargo(payload, token) {
       payload.containerTypeId === undefined ? null : payload.containerTypeId,
     bulkTypeId: payload.bulkTypeId === undefined ? null : payload.bulkTypeId,
   }
+  console.log('token: ' + token)
+
   return cargoApiClient(token).post(Config.API_URL + '/cargo', requestBody).then((response) => {
     if (in200s(response.status)) {
+      console.log('response: ' + JSON.stringify(response))
+
       return response.data
     }
+    console.log('ERROR response: ' + JSON.stringify(response))
 
     return null
   })
 }
 
 function getActiveCargos(param, token) {
+  console.log('inside getActive Cargo Service, token: ' + token)
   return cargoApiClient(token).get(Config.API_URL + '/cargo?status=inquiry&start=' + param.start + '&limit=' + param.limit)
     .then((response) => {
       if (in200s(response.status)) {

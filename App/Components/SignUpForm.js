@@ -208,6 +208,9 @@ class SignUpForm extends Component {
           onSubmit={(
             isValid,
             values,
+            validationResults,
+            postSubmit = null,
+            modalNavigator = null
           ) => {
             if (isValid === true) {
               const payload = {
@@ -220,6 +223,7 @@ class SignUpForm extends Component {
 
               this.props.signUp(payload)
               if (!this.props.signUpIsLoading && !this.props.signUpErrorMessage) {
+                postSubmit()
                 GiftedFormManager.reset('signUp')
                 this.props.navigation.navigate('CargoOwner')
               } else {
