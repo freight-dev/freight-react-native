@@ -30,7 +30,6 @@ export function* isSignedIn() {
 export function* signIn(payload) {
   try {
     yield put(AuthActions.signInLoading())
-    console.log(JSON.stringify(payload))
     const auth = yield call(authService.signIn, payload)
 
     if (!auth.error && !!auth.token) {
