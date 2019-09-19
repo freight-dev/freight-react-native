@@ -20,11 +20,7 @@ export function* postCargo(action) {
 export function* getActiveCargos(action) {
   yield put(CargoActions.getActiveCargosLoading())
 
-  while(true) {
-    const state = yield select();
-    console.log("State: " + JSON.stringify(state.auth))
-  }
-
+  const state = yield select();
   const cargos = yield call(cargoService.getActiveCargos, action.param, state.auth.token)
   if (!cargos.error) {
     yield put(CargoActions.getActiveCargosSuccess(cargos, action.param.start))

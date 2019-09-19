@@ -1,4 +1,4 @@
-import { put, call } from 'redux-saga/effects'
+import { put, call, select } from 'redux-saga/effects'
 import ContractActions from 'App/Stores/Contract/Actions'
 import { contractService } from 'App/Services/ContractService'
 import { authService } from '../Services/AuthService'
@@ -6,8 +6,8 @@ import { authService } from '../Services/AuthService'
 export function* updateContractStatus(action) {
   yield put(ContractActions.updateContractStatusLoading())
 
-  const token = yield call(authService.getToken)
-  const cargoContract = yield call(contractService.updateContractStatus, action.param, token)
+  const state = yield select();
+  const cargoContract = yield call(contractService.updateContractStatus, action.param, state.auth.token)
   if (!cargoContract.error) {
     yield put(ContractActions.updateContractStatusSuccess(cargoContract))
   } else if (cargoContract.error) {
@@ -20,8 +20,8 @@ export function* updateContractStatus(action) {
 export function* getContracts(action) {
   yield put(ContractActions.getContractsLoading())
 
-  const token = yield call(authService.getToken)
-  const contracts = yield call(contractService.getContracts, action.param, token)
+  const state = yield select();
+  const contracts = yield call(contractService.getContracts, action.param, state.auth.token)
   if (!contracts.error) {
     yield put(ContractActions.getContractsSuccess(contracts, action.param.start))
   } else if (contracts.error) {
