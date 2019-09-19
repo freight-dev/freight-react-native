@@ -7,7 +7,9 @@ import AsyncStorage from 'react-native-web/src/exports/AsyncStorage'
 export function* postCargo(action) {
   yield put(CargoActions.postCargoLoading())
 
-  const cargo = yield call(cargoService.postCargo, action.payload, token)
+  const state = yield select();
+  console.log(JSON.stringify(state.auth))
+  const cargo = yield call(cargoService.postCargo, action.payload, state.auth.token)
   if (!cargo.error) {
     yield put(CargoActions.postCargoSuccess(cargo))
   } else if (cargo.error) {

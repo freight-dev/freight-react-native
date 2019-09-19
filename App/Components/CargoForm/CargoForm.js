@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 import DatePicker from 'react-native-datepicker'
 
-import { cargoService as CargoActions } from '../../Services/CargoService'
+import CargoActions from 'App/Stores/Cargo/Actions'
 import { FCL } from './FclForm'
 import { LCL } from './LclForm'
 import { Bulk } from './BulkForm'
@@ -257,10 +257,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   postCargo: (payload) => {
-    return dispatch({
-      type: CargoActions.postCargo(payload),
-      payload: payload,
-    })
+    return dispatch(CargoActions.postCargo(payload))
   },
 })
 
