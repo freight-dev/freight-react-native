@@ -25,7 +25,7 @@ class CargoForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      cargoTypeId: 0,
+      cargoTypeId: 2,
       departure: null,
     }
   }
@@ -45,7 +45,7 @@ class CargoForm extends Component {
         showsVerticalScrollIndicator={false}
         clearOnClose={true} // delete the values of the form when unmounted
         defaults={{
-          cargoTypeId: 0,
+          cargoTypeId: 2,
           // containerTypeId: '',
           // quantity: null,
           // weight: null,
@@ -130,13 +130,15 @@ class CargoForm extends Component {
           values={this.props.cargoTypes.map((cargoType) => cargoType.displayName)}
           selectedIndex={this.state.cargoTypeId}
           onTabPress={(index) => {
-            GiftedFormManager.updateValue('cargo', 'cargoTypeId', index)
-            this.setState({ ...this.state, cargoTypeId: index })
+            // TODO: Enable FCL and LCL
+            // GiftedFormManager.updateValue('cargo', 'cargoTypeId', index)
+            // this.setState({ ...this.state, cargoTypeId: index })
           }}
         />
 
-        {this.state.cargoTypeId === 0 && FCL(this.props.containerTypes)}
-        {this.state.cargoTypeId === 1 && LCL(this.props.weightUnits, this.props.dimensionUnits)}
+{/*        TODO: Enable FCL and LCL*/}
+        {/*{this.state.cargoTypeId === 0 && FCL(this.props.containerTypes)}*/}
+        {/*{this.state.cargoTypeId === 1 && LCL(this.props.weightUnits, this.props.dimensionUnits)}*/}
         {this.state.cargoTypeId === 2 && Bulk(this.props.weightUnits, this.props.volumeUnits, this.props.bulkTypes)}
 
         <GiftedForm.ErrorsWidget/>

@@ -1,4 +1,4 @@
-import { cancelled, take, fork, put, call, takeLatest } from 'redux-saga/effects'
+import { cancelled, take, fork, put, call, takeLatest, select } from 'redux-saga/effects'
 import AuthActions, { AuthTypes } from 'App/Stores/Auth/Actions'
 import { authService } from 'App/Services/AuthService'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -33,10 +33,9 @@ export function* signIn(payload) {
     const auth = yield call(authService.signIn, payload)
 
     if (!auth.error && !!auth.token) {
-      AsyncStorage.setItem('token', auth.token)
+      // AsyncStorage.setItem('token', auth.token)
       yield put(AuthActions.signInSuccess(auth.token))
-
-    } else if (auth.error && auth.error.description) {
+    } else if (auth.error) {
       yield put(AuthActions.signInFailure(auth.error.description))
     } else {
       yield put(AuthActions.signInFailure('There was an error while trying to sign in'))
@@ -58,7 +57,6 @@ export function* signUp(action) {
   yield put(AuthActions.signUpLoading())
 
   const auth = yield call(authService.signUp, action.payload)
-
   if (!auth.error && !!auth.token) {
     yield put(AuthActions.signUpSuccess(auth.token))
   } else if (auth.error) {

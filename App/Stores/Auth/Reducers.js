@@ -57,14 +57,14 @@ export const signUpLoading = (state) => ({
 
 export const signUpSuccess = (state, { token }) => ({
   ...state,
-  token: 'sign up success',
+  token: token,
   signUpIsLoading: false,
   signUpErrorMessage: null,
 })
 
 export const signUpFailure = (state, { error }) => ({
   ...state,
-  token: 'sign up failure',
+  token: null,
 
   signUpIsLoading: false,
   signUpErrorMessage: error.error.description,

@@ -75,9 +75,11 @@ export const validators = {
     validate: [
       {
         validator: (...args) => {
-          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))
-            && GiftedFormManager.getValue('cargo', 'volume') === undefined) {
-            return args[0] !== undefined && args[0] !== ''
+          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))) {
+            const volume = GiftedFormManager.getValue('cargo', 'volume')
+            if (!!!volume) {
+              return args[0] !== undefined && args[0] !== ''
+            }
           }
           return true
         },
@@ -100,9 +102,11 @@ export const validators = {
     validate: [
       {
         validator: (...args) => {
-          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))
-            && GiftedFormManager.getValue('cargo', 'volume') === undefined) {
-            return args[0] !== undefined && args[0] !== ''
+          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))) {
+            const weight = GiftedFormManager.getValue('cargo', 'weight')
+            if (weight) {
+              return args[0] !== undefined && args[0] !== ''
+            }
           }
           return true
         },
@@ -115,9 +119,11 @@ export const validators = {
     validate: [
       {
         validator: (...args) => {
-          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))
-            && GiftedFormManager.getValue('cargo', 'weight') === undefined) {
-            return args[0] !== undefined && args[0] !== ''
+          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))) {
+            const weight = GiftedFormManager.getValue('cargo', 'weight')
+            if (!!!weight) {
+              return args[0] !== undefined && args[0] !== ''
+            }
           }
           return true
         },
@@ -140,9 +146,11 @@ export const validators = {
     validate: [
       {
         validator: (...args) => {
-          if (GiftedFormManager.getValue('cargo', 'cargoTypeId') === 2
-            && GiftedFormManager.getValue('cargo', 'weight') === undefined) {
-            return args[0] !== undefined && args[0] !== ''
+          if ([1, 2].includes(GiftedFormManager.getValue('cargo', 'cargoTypeId'))) {
+            const volume = GiftedFormManager.getValue('cargo', 'volume')
+            if (volume) {
+              return args[0] !== undefined && args[0] !== ''
+            }
           }
           return true
         },
