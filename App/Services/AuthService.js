@@ -21,38 +21,38 @@ async function storeToken(token) {
   AsyncStorage.setItem('token', token)
 }
 
-async function getToken() {
-  try {
-    await AsyncStorage.getItem('token').then(value => {
-      if(value) {
-        console.log('getToken: ' + value)
-        return value
-      }
-      console.log('getToken NOT VALUE: ' + value + ' !!value: ' + !!value)
-      return value
-    })
-  } catch(error) {
-    console.error("Error in getting user's token, error=" + error)
-  }
-}
+// async function getToken() {
+//   try {
+//     await AsyncStorage.getItem('token').then(value => {
+//       if(value) {
+//         console.log('getToken: ' + value)
+//         return value
+//       }
+//       console.log('getToken NOT VALUE: ' + value + ' !!value: ' + !!value)
+//       return value
+//     })
+//   } catch(error) {
+//     console.error("Error in getting user's token, error=" + error)
+//   }
+// }
+//
+// async function clearToken() {
+//   try {
+//     await AsyncStorage.removeItem('token')
+//   } catch(error) {
+//     console.error("Error in deleting user's token, error=" + error)
+//   }
+// }
 
-async function clearToken() {
-  try {
-    await AsyncStorage.removeItem('token')
-  } catch(error) {
-    console.error("Error in deleting user's token, error=" + error)
-  }
-}
-
-const authApiClientWithToken = axios.create({
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-    Authorization:
-      'Bearer ' + getToken(),
-  },
-  timeout: 3000,
-})
+// const authApiClientWithToken = axios.create({
+//   headers: {
+//     Accept: 'application/json',
+//     'Content-Type': 'application/json',
+//     Authorization:
+//       'Bearer ' + getToken(),
+//   },
+//   timeout: 3000,
+// })
 
 function signIn(payload) {
   const requestBody = {
@@ -79,34 +79,34 @@ function signUp(payload) {
   }
   return authApiClient.post(Config.API_URL + '/authentication', requestBody).then((response) => {
     if (in200s(response.status)) {
-      return storeToken(response.data.token).then(() => {
-        return response.data
-      })
-    }
-    return null
-  })
-}
-
-function verify(payload) {
-  const requestBody = {
-    verificationCode: payload.verificationCode,
-  }
-  return authApiClientWithToken.post(Config.API_URL + '/verify', requestBody).then((response) => {
-    if (in200s(response.status)) {
-      return storeToken(response.data.token).then(() => {
-        return response.data
-      })
+      console.log(JSON.stringify(response.data.token))
+      return response.data
     }
 
     return null
   })
 }
+
+// function verify(payload) {
+//   const requestBody = {
+//     verificationCode: payload.verificationCode,
+//   }
+//   return authApiClientWithToken.post(Config.API_URL + '/verify', requestBody).then((response) => {
+//     if (in200s(response.status)) {
+//       return storeToken(response.data.token).then(() => {
+//         return response.data
+//       })
+//     }
+//
+//     return null
+//   })
+// }
 
 export const authService = {
   storeToken,
-  getToken,
-  clearToken,
+  // getToken,
+  // clearToken,
   signIn,
   signUp,
-  verify,
+  // verify,
 }

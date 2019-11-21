@@ -10,7 +10,7 @@ import Colors from '../../Theme/Colors'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import NavigationService from '../../Services/NavigationService'
-import AuthActions from 'App/Stores/Auth/Actions'
+import AuthActions, { AuthTypes } from 'App/Stores/Auth/Actions'
 
 
 class SignInScreen extends Component {
@@ -131,9 +131,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  signIn: (payload) => {
-    return dispatch(AuthActions.signIn(payload))
-  },
+  signIn: (payload) => dispatch(AuthActions.signIn(payload)),
 })
 
 export default connect(
