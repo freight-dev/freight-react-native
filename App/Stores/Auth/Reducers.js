@@ -32,9 +32,10 @@ export const signInLoading = (state) => ({
   signInErrorMessage: null,
 })
 
-export const signInSuccess = (state, { token }) => ({
+export const signInSuccess = (state, { auth }) => ({
   ...state,
-  token: token,
+  token: auth.token,
+  type: auth.type,
   signInIsLoading: false,
   signInErrorMessage: null,
 })
@@ -42,6 +43,7 @@ export const signInSuccess = (state, { token }) => ({
 export const signInFailure = (state, { error }) => ({
   ...state,
   token: null,
+  type: null,
   signInIsLoading: false,
   signInErrorMessage: error,
 })
@@ -55,9 +57,10 @@ export const signUpLoading = (state) => ({
   signUpErrorMessage: null,
 })
 
-export const signUpSuccess = (state, { token }) => ({
+export const signUpSuccess = (state, { auth }) => ({
   ...state,
-  token: token,
+  token: auth.token,
+  type: auth.type,
   signUpIsLoading: false,
   signUpErrorMessage: null,
 })
@@ -65,7 +68,7 @@ export const signUpSuccess = (state, { token }) => ({
 export const signUpFailure = (state, { error }) => ({
   ...state,
   token: null,
-
+  type: null,
   signUpIsLoading: false,
   signUpErrorMessage: error.error.description,
 })

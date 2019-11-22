@@ -1,7 +1,9 @@
 import { put, call, select } from 'redux-saga/effects'
 import ContractActions from 'App/Stores/Contract/Actions'
 import { contractService } from 'App/Services/ContractService'
-import { authService } from '../Services/AuthService'
+import { CUSTOMER_ACCEPTED, CUSTOMER_DECLINED } from '../Helper/ContractHelper'
+import ShipmentActions from '../Stores/Shipment/Actions'
+import NavigationService from '../Services/NavigationService'
 
 export function* updateContractStatus(action) {
   yield put(ContractActions.updateContractStatusLoading())
@@ -10,6 +12,22 @@ export function* updateContractStatus(action) {
   const cargoContract = yield call(contractService.updateContractStatus, action.param, state.auth.token)
   if (!cargoContract.error) {
     yield put(ContractActions.updateContractStatusSuccess(cargoContract))
+    if (action.param.status === CUSTOMER_DECLINED) {
+      const payload = {
+        cargoId: action.cargoId,
+        start: 0,
+        limit: 20,
+      }
+      yield put(ContractActions.getContracts(payload))
+      NavigationService.navigate('CargoContractScreen')
+    } else if (action.param.status === CUSTOMER_ACCEPTED) {
+      const payload = {
+        start: 0,
+        limit: 20,
+      }
+      yield put(ShipmentActions.getUpcomingShipments(payload))
+      NavigationService.navigate('ShipmentUpcomingScreen')
+    }
   } else if (cargoContract.error) {
     yield put(ContractActions.updateContractStatusFailure(cargoContract.error))
   } else {

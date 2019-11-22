@@ -29,16 +29,16 @@ class ContractDetailScreen extends Component {
           <OpenSansBoldText style={Style.headerTitle}>#{contract.id}</OpenSansBoldText>
         </View>
         <ContractDetail contract={contract} cargo={cargo}/>
-        {renderButton(this.props, contract)}
+        {renderButton(this.props, contract, cargo)}
       </View>
     )
   }
 }
 
-const renderButton = (props, contract) => {
+const renderButton = (props, contract, cargo) => {
   switch (contract.status) {
     case TRANSPORTER_OFFERED:
-      return renderActionButton(props, contract)
+      return renderActionButton(props, contract, cargo)
     case CUSTOMER_NEGOTIATE:
       return renderStatus(props, contract, 'Waiting for Reply', Style.negotiate)
     case CUSTOMER_DECLINED:
@@ -53,7 +53,7 @@ const renderButton = (props, contract) => {
   }
 }
 
-const renderActionButton = (props, contract) => {
+const renderActionButton = (props, contract, cargo) => {
   return (
     <View style={Style.buttonContainer}>
       <TouchableOpacity
@@ -63,23 +63,23 @@ const renderActionButton = (props, contract) => {
             contractId: contract.id,
             status: CUSTOMER_DECLINED,
           }
-          props.updateContractStatus(payload)
+          props.updateContractStatus(payload, cargo.id)
         }}
       >
         <OpenSansText style={Style.buttonText}>DECLINE</OpenSansText>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={[Style.negotiate, Style.button]}
-        onPress={() => {
-          const payload = {
-            contractId: contract.id,
-            status: CUSTOMER_NEGOTIATE,
-          }
-          props.updateContractStatus(payload)
-        }}
-      >
-        <OpenSansText style={Style.buttonText}>NEGOTIATE</OpenSansText>
-      </TouchableOpacity>
+      {/*<TouchableOpacity*/}
+      {/*  style={[Style.negotiate, Style.button]}*/}
+      {/*  onPress={() => {*/}
+      {/*    const payload = {*/}
+      {/*      contractId: contract.id,*/}
+      {/*      status: CUSTOMER_NEGOTIATE,*/}
+      {/*    }*/}
+      {/*    props.updateContractStatus(payload)*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <OpenSansText style={Style.buttonText}>NEGOTIATE</OpenSansText>*/}
+      {/*</TouchableOpacity>*/}
       <TouchableOpacity
         style={[Style.accept, Style.button]}
         onPress={() => {
@@ -87,7 +87,7 @@ const renderActionButton = (props, contract) => {
             contractId: contract.id,
             status: CUSTOMER_ACCEPTED,
           }
-          props.updateContractStatus(payload)
+          props.updateContractStatus(payload, cargo.id)
         }}
       >
         <OpenSansText style={Style.buttonText}>ACCEPT</OpenSansText>
@@ -116,7 +116,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updateContractStatus: (param) => dispatch(ContractActions.updateContractStatus(param)),
+  updateContractStatus: (param, cargoId) => dispatch(ContractActions.updateContractStatus(param, cargoId)),
 })
 
 export default connect(

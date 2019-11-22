@@ -3,6 +3,7 @@
  */
 export const INITIAL_STATE = {
   token: null,
+  type: null,
   isSignedInIsLoading: false,
   isSignedInIsLoadingErrorMessage: null,
   signInIsLoading: false,

@@ -4,12 +4,13 @@ import { GiftedForm, GiftedFormManager } from 'react-native-gifted-form'
 import { connect } from 'react-redux'
 import { PropTypes } from 'prop-types'
 
-import { COMPANY, CUSTOMER, INDIVIDUAL, TRANSPORTER, validators } from '../Helper/SignUpFormHelper'
 import Styles from './SignUpFormStyle'
 import { Images } from '../Theme'
 import { OpenSansText } from './StyledText'
 import AuthActions from 'App/Stores/Auth/Actions'
 import Style from './CargoForm/CargoFormStyle'
+import { COMPANY, CUSTOMER, INDIVIDUAL, TRANSPORTER } from '../Helper/AuthHelper'
+import { validators } from '../Helper/SignUpFormHelper'
 
 
 class SignUpForm extends Component {

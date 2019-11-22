@@ -11,6 +11,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import NavigationService from '../../Services/NavigationService'
 import AuthActions, { AuthTypes } from 'App/Stores/Auth/Actions'
+import CargoActions from '../../Stores/Cargo/Actions'
 
 
 class SignInScreen extends Component {
@@ -90,14 +91,7 @@ class SignInScreen extends Component {
                   phone: '62' + this.state.phone,
                   password: this.state.password,
                 }
-                console.log('calling this.props.signIn with payload:' + JSON.stringify(payload))
                 this.props.signIn(payload)
-                if (!this.props.signInIsLoading && !this.props.signInErrorMessage && !!this.props.token) {
-                  console.log('inside SignInScreen, auth: ' + JSON.stringify(this.props.auth))
-                } else {
-                  console.log('inside SignInScreen outside if statement, auth: ' + JSON.stringify(this.props.auth))
-                }
-                NavigationService.navigateAndReset('CargoOwner')
               }}>
               <OpenSansText style={{fontSize: 18, color: 'white'}}>Sign in</OpenSansText>
             </TouchableOpacity>
@@ -132,6 +126,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   signIn: (payload) => dispatch(AuthActions.signIn(payload)),
+  getActiveCargos: (param) => dispatch(CargoActions.getActiveCargos(param)),
 })
 
 export default connect(

@@ -6,13 +6,6 @@ import { authService as AuthActions } from '../../Services/AuthService'
 import SignUpForm from '../../Components/SignUpForm'
 import Styles from './SignUpScreenStyle'
 
-const payload = {
-  "phone": 4086919384,
-  "password": "tos",
-  "type": "CUSTOMER",
-  "companyName": "Toshiki's company name"
-}
-
 class SignUpScreen extends React.Component {
 
   render() {
