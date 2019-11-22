@@ -3,6 +3,7 @@ import CargoActions from 'App/Stores/Cargo/Actions'
 import { cargoService } from 'App/Services/CargoService'
 import { authService } from '../Services/AuthService'
 import AsyncStorage from 'react-native-web/src/exports/AsyncStorage'
+import NavigationService from '../Services/NavigationService'
 
 export function* postCargo(action) {
   yield put(CargoActions.postCargoLoading())
@@ -12,6 +13,12 @@ export function* postCargo(action) {
   const cargo = yield call(cargoService.postCargo, action.payload, state.auth.token)
   if (!cargo.error) {
     yield put(CargoActions.postCargoSuccess(cargo))
+    const payload = {
+      start: 0,
+      limit: 20,
+    }
+    yield put(CargoActions.getActiveCargos(payload))
+    NavigationService.navigate('InquiryScreen')
   } else if (cargo.error) {
     yield put(CargoActions.postCargoFailure(cargo.error))
   } else {

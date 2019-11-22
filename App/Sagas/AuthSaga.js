@@ -2,6 +2,9 @@ import { cancelled, take, fork, put, call, takeLatest, select } from 'redux-saga
 import AuthActions, { AuthTypes } from 'App/Stores/Auth/Actions'
 import { authService } from 'App/Services/AuthService'
 import AsyncStorage from '@react-native-community/async-storage'
+import NavigationService from '../Services/NavigationService'
+import CargoActions from '../Stores/Cargo/Actions'
+import { CUSTOMER, TRANSPORTER } from '../Helper/AuthHelper'
 
 // export function* isSignedIn() {
 //   yield put(AuthActions.isSignedInLoading())
@@ -32,9 +35,17 @@ export function* signIn(payload) {
     yield put(AuthActions.signInLoading())
     const auth = yield call(authService.signIn, payload)
 
-    if (!auth.error && !!auth.token) {
+    if (!auth.error && !!auth.token && !!auth.type) {
       // AsyncStorage.setItem('token', auth.token)
-      yield put(AuthActions.signInSuccess(auth.token))
+      yield put(AuthActions.signInSuccess(auth))
+      if (auth.type === CUSTOMER) {
+        NavigationService.navigateAndReset('CargoOwner')
+      } else if (auth.type === TRANSPORTER) {
+        NavigationService.navigateAndReset('ShipOwner')
+      } else {
+        console.error('auth.type is not recognized')
+        NavigationService.navigateAndReset('SignIn')
+      }
     } else if (auth.error) {
       yield put(AuthActions.signInFailure(auth.error.description))
     } else {
@@ -48,7 +59,7 @@ export function* signIn(payload) {
     // No matter what, if our `forked` `task` was cancelled
     // we will then just redirect them to sign page
     if (yield cancelled()) {
-      // TODO: Navigate back to sign in page
+      NavigationService.navigateAndReset('SignIn')
     }
   }
 }
@@ -57,8 +68,16 @@ export function* signUp(action) {
   yield put(AuthActions.signUpLoading())
 
   const auth = yield call(authService.signUp, action.payload)
-  if (!auth.error && !!auth.token) {
-    yield put(AuthActions.signUpSuccess(auth.token))
+  if (!auth.error && !!auth.token && !!auth.type) {
+    yield put(AuthActions.signUpSuccess(auth))
+    if (auth.type === CUSTOMER) {
+      NavigationService.navigateAndReset('CargoOwner')
+    } else if (auth.type === TRANSPORTER) {
+      NavigationService.navigateAndReset('ShipOwner')
+    } else {
+      console.error('auth.type is not recognized')
+      NavigationService.navigateAndReset('SignIn')
+    }
   } else if (auth.error) {
     yield put(AuthActions.signUpFailure(auth.error))
   } else {

@@ -1,10 +1,6 @@
 import React from 'react'
 import { GiftedFormManager } from 'react-native-gifted-form'
-
-export const INDIVIDUAL = 'INDIVIDUAL'
-export const COMPANY = 'COMPANY'
-export const CUSTOMER = 'CUSTOMER'
-export const TRANSPORTER = 'TRANSPORTER'
+import { COMPANY } from './AuthHelper'
 
 export const validators = {
   phone: {
@@ -82,7 +78,7 @@ export const validators = {
       {
         validator: (...args) => {
           const owner = GiftedFormManager.getValue('signUp', 'owner')
-          if (owner === 'company') {
+          if (owner === COMPANY) {
             return args[0] !== undefined && args[0] !== ''
           }
           return true
@@ -92,8 +88,8 @@ export const validators = {
       {
         validator: (...args) => {
           const owner = GiftedFormManager.getValue('signUp', 'owner')
-          if (owner === 'company') {
-            return args[0].length >= 3 && args[0] <= 150
+          if (owner === COMPANY) {
+            return args[0].length >= 3 && args[0].length <= 150
           }
           return true
         },

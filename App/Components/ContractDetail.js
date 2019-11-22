@@ -2,9 +2,10 @@ import React from 'react'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { PropTypes } from 'prop-types'
 import Style from './ContractDetailStyle'
-import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText } from './StyledText'
+import { OpenSansBoldText, OpenSansItalicText, OpenSansLightText, OpenSansText } from './StyledText'
 import moment from 'moment'
 import {
+  firstCharUpperCase,
   firstCharUpperCaseAndRemoveUnderscore,
   formatCurrency,
   printNumber,
@@ -86,7 +87,6 @@ export const ContractDetail = (props) => {
                       <OpenSansLightText> </OpenSansLightText>
                       <OpenSansLightText>{shipFacility.description}</OpenSansLightText>
                     </View>
-
                   )
                 }
                 return (
@@ -172,8 +172,7 @@ const contractGroupWithoutBorder = (title, data, unit=null) => {
           <OpenSansLightText>{title}</OpenSansLightText>
         </View>
         <View style={Style.contractInfoData}>
-          <OpenSansBoldText>{data}</OpenSansBoldText>
-          {unit ? <OpenSansBoldText>{unit}</OpenSansBoldText> : null}
+            <OpenSansBoldText>{printNumber(data, unit)}</OpenSansBoldText>
         </View>
       </View>
     </View>
@@ -189,11 +188,21 @@ const loadLaytime = (contract) => {
           <OpenSansLightText>Laytime</OpenSansLightText>
         </View>
         <View style={Style.contractInfoData}>
-          <OpenSansBoldText>{contract.loadingLaytime} {contract.laytimeUnit}</OpenSansBoldText>
-          <OpenSansBoldText>{contract.dischargeLaytime} {contract.laytimeUnit}</OpenSansBoldText>
-          <OpenSansBoldText>{contract.totalLaytime} {contract.laytimeUnit}</OpenSansBoldText>
+          {laytimeHelper('Loading Laytime', contract.loadingLaytime, contract.laytimeUnit)}
+          {laytimeHelper('Discharge Laytime', contract.dischargeLaytime, contract.laytimeUnit)}
+          {laytimeHelper('Total Laytime', contract.totalLaytime, contract.laytimeUnit)}
         </View>
       </View>
+    </View>
+  )
+}
+
+const laytimeHelper = (title, data, unit) => {
+  if (!data || data === 'NOT_USED') return
+  return (
+    <View style={Style.laytime}>
+      <OpenSansText style={Style.laytimeTitle}>{title}</OpenSansText>
+      <OpenSansBoldText style={Style.laytimeData}>{printNumber(data, unit)}</OpenSansBoldText>
     </View>
   )
 }

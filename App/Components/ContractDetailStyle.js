@@ -40,6 +40,15 @@ export default StyleSheet.create({
   contractInfoDataInline: {
     flexDirection: 'row',
   },
+  laytime: {
+    flexDirection: 'row',
+  },
+  laytimeTitle: {
+    flex: 4
+  },
+  laytimeData: {
+    flex: 5
+  },
   emptySpace: {
     height: 70,
   },
