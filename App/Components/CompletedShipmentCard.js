@@ -11,8 +11,9 @@ import { printNumber } from '../Helper/PrintHelper'
 export const CompletedShipmentCard = (props) => {
   const shipment = props.shipment
   const cargo = props.cargo
+  const ship = props.ship
   return (
-    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, shipment, cargo)}>
+    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, shipment, cargo, ship)}>
       <View style={Style.card}>
         <View style={Style.cargo}>
           <View style={Style.cargoOriginDestination}>
@@ -29,7 +30,7 @@ export const CompletedShipmentCard = (props) => {
               </View>
             </View>
           </View>
-          <View>{renderCargoInformation(cargo)}</View>
+          <View>{renderCargoInformation(shipment, cargo)}</View>
         </View>
         <View style={Style.bottomCardContainer}>
           <View style={Style.statusContainer}>
@@ -58,33 +59,33 @@ const navigateToShipmentDetail = (navigation, shipment, cargo) => {
   })
 }
 
-const renderCargoInformation = (cargo) => {
+const renderCargoInformation = (shipment, cargo) => {
   switch (cargo.cargoType.type) {
     case 'FCL':
-      return FCL(cargo)
+      return FCL(shipment, cargo)
     case 'LCL':
-      return LCL(cargo)
+      return LCL(shipment, cargo)
     case 'Bulk':
-      return Bulk(cargo)
+      return Bulk(shipment, cargo)
     default:
       return null
   }
 }
 
-const FCL = (cargo) => {
+const FCL = (shipment, cargo) => {
   return <Text>{cargo.containerType.displayName}</Text>
 }
 
-const LCL = (cargo) => {
+const LCL = (shipment, cargo) => {
   return <Text>{cargo.quantity}</Text>
 }
 
-const Bulk = (cargo) => {
+const Bulk = (shipment, cargo) => {
   return (
     <View style={Style.cargoInfo}>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText>Departure</OpenSansLightText>
-        <OpenSansBoldText>{moment(cargo.departure).format('D MMM YY')}</OpenSansBoldText>
+        <OpenSansBoldText>{moment(shipment.departure).format('D MMM YY')}</OpenSansBoldText>
       </View>
       <View style={Style.cargoInfoField}>
         <OpenSansLightText>Type</OpenSansLightText>

@@ -13,4 +13,8 @@ export const INITIAL_STATE = {
   historyCargosStart: 0,
   historyCargosIsLoading: false,
   historyCargosErrorMessage: null,
+  searchedCargos: [],
+  searchCargosStart: 0,
+  searchCargosIsLoading: false,
+  searchCargosErrorMessage: null,
 }

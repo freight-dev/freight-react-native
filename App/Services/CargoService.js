@@ -77,8 +77,19 @@ function getHistoryCargos(param, token) {
   })
 }
 
+function searchCargos(param, token) {
+  return cargoApiClient(token).get(Config.API_URL + '/cargo/search?start=' + param.start + '&limit=' + param.limit)
+    .then((response) => {
+      if (in200s(response.status)) {
+        return response.data
+      }
+      return null
+    })
+}
+
 export const cargoService = {
   postCargo,
   getActiveCargos,
   getHistoryCargos,
+  searchCargos,
 }

@@ -18,6 +18,12 @@ const { Types, Creators } = createActions({
   getHistoryCargosLoading: null,
   getHistoryCargosSuccess: ['cargos', 'start'],
   getHistoryCargosFailure: ['error'],
+
+  // Search cargo
+  searchCargos: ['param', 'token'],
+  searchCargosLoading: null,
+  searchCargosSuccess: ['cargos', 'start'],
+  searchCargosFailure: ['error'],
 })
 
 export const CargoTypes = Types

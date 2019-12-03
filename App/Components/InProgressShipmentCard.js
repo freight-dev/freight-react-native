@@ -37,8 +37,9 @@ const shipStatusStyle = {
 export const InProgressShipmentCard = (props) => {
   const cargo = props.cargo
   const shipment = props.shipment
+  const ship = props.ship
   return (
-    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, shipment, cargo)}>
+    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, shipment, cargo, ship)}>
       <View style={Style.card}>
         <View style={Style.topCard}>
           <View style={Style.shipmentOriginDestinationContainer}>
@@ -70,10 +71,11 @@ export const InProgressShipmentCard = (props) => {
   )
 }
 
-const navigateToShipmentDetail = (navigation, shipment, cargo) => {
+const navigateToShipmentDetail = (navigation, shipment, cargo, ship) => {
   navigation.navigate('ShipmentDetailScreen', {
     shipment: shipment,
     cargo: cargo,
+    ship: ship,
   })
 }
 

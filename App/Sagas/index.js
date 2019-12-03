@@ -11,7 +11,7 @@ import { fetchUser } from './ExampleSaga'
 import { getConfig } from './ConfigSaga'
 import { getPort } from './PortSaga'
 import { isSignedIn, signUp, verify } from './AuthSaga'
-import { postCargo, getActiveCargos, getHistoryCargos } from './CargoSaga'
+import { postCargo, getActiveCargos, getHistoryCargos, searchCargos } from './CargoSaga'
 import { getContracts, setContractsStatusSearch, updateContractStatus } from './ContractSaga'
 import { startup } from './StartupSaga'
 import { getUpcomingShipments, getInProgressShipments, getCompletedShipments } from './ShipmentSaga'
@@ -38,6 +38,8 @@ export default function* root() {
     takeLatest(CargoTypes.GET_ACTIVE_CARGOS, getActiveCargos),
     // Call `getHistoryCargos()`
     takeLatest(CargoTypes.GET_HISTORY_CARGOS, getHistoryCargos),
+    // Call `searchCargos()`
+    takeLatest(CargoTypes.SEARCH_CARGOS, searchCargos),
     // Call `updateContractStatus()`
     takeLatest(ContractTypes.UPDATE_CONTRACT_STATUS, updateContractStatus),
     // Call `getContracts()`

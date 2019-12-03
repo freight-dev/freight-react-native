@@ -46,6 +46,7 @@ const shipStatusStyle = {
 export const ShipmentDetailCard = (props) => {
   const cargo = props.cargo
   const shipment = props.shipment
+  const ship = props.ship
 
   return (
     <View style={Style.card}>
@@ -61,14 +62,14 @@ export const ShipmentDetailCard = (props) => {
       <View style={Style.line} />
       <View style={Style.ship}>
         <View style={Style.shipInfoLeft}>
-          <OpenSansText>{shipment.ship.name}</OpenSansText>
-          <OpenSansLightItalicText>{shipment.ship.company.name}</OpenSansLightItalicText>
+          <OpenSansText>{ship.name}</OpenSansText>
+          <OpenSansLightItalicText>{ship.company.name}</OpenSansLightItalicText>
         </View>
         <View style={Style.shipInfoCenter}>
-          <OpenSansText>{shipment.ship.type.displayName}</OpenSansText>
+          <OpenSansText>{ship.type.displayName}</OpenSansText>
           <View style={Style.shipInfoDetail}>
-            <OpenSansLightItalicText>{shipment.ship.yearBuilt}, </OpenSansLightItalicText>
-            <OpenSansLightItalicText>{shipment.ship.grossTonnage} GT</OpenSansLightItalicText>
+            <OpenSansLightItalicText>{ship.yearBuilt}, </OpenSansLightItalicText>
+            <OpenSansLightItalicText>{ship.grossTonnage} GT</OpenSansLightItalicText>
           </View>
         </View>
         <View style={Style.shipInfoRight}>

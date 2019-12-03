@@ -11,8 +11,9 @@ import { secondaryLocation } from '../Helper/LocationHelper'
 export const UpcomingShipmentCard = (props) => {
   const shipment = props.shipment
   const cargo = props.cargo
+  const ship = props.ship
   return (
-    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, shipment, cargo)}>
+    <TouchableHighlight onPress={() => navigateToShipmentDetail(props.navigation, shipment, cargo, ship)}>
       <View style={Style.card}>
         <View style={Style.shipmentOriginDestination}>
           {/*<View style={Style.flowLineIcon}>*/}
@@ -35,10 +36,11 @@ export const UpcomingShipmentCard = (props) => {
   )
 }
 
-const navigateToShipmentDetail = (navigation, shipment, cargo) => {
+const navigateToShipmentDetail = (navigation, shipment, cargo, ship) => {
   navigation.navigate('ShipmentDetailScreen', {
     shipment: shipment,
     cargo: cargo,
+    ship: ship,
   })
 }
 
