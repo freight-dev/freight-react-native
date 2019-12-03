@@ -73,6 +73,30 @@ export const getHistoryCargosFailure = (state, { error }) => ({
   historyCargosErrorMessage: error.error.description,
 })
 
+/**
+ * Search cargo list
+ */
+export const searchCargosLoading = (state) => ({
+  ...state,
+  searchCargosIsLoading: true,
+  searchCargosErrorMessage: null,
+})
+
+export const searchCargosSuccess = (state, { cargos, start }) => ({
+  ...state,
+  searchedCargos: cargos.cargos,
+  searchCargosStart: start,
+  searchCargosIsLoading: false,
+  searchCargosErrorMessage: null,
+})
+
+export const searchCargosFailure = (state, { error }) => ({
+  ...state,
+  searchedCargos: [],
+  searchCargosIsLoading: false,
+  searchCargosErrorMessage: error.error.description,
+})
+
 export const reducer = createReducer(INITIAL_STATE, {
   [CargoTypes.POST_CARGO_LOADING]: postCargoLoading,
   [CargoTypes.POST_CARGO_SUCCESS]: postCargoSuccess,
@@ -83,4 +107,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [CargoTypes.GET_HISTORY_CARGOS_LOADING]: getHistoryCargosLoading,
   [CargoTypes.GET_HISTORY_CARGOS_SUCCESS]: getHistoryCargosSuccess,
   [CargoTypes.GET_HISTORY_CARGOS_FAILURE]: getHistoryCargosFailure,
+  [CargoTypes.SEARCH_CARGOS_LOADING]: searchCargosLoading,
+  [CargoTypes.SEARCH_CARGOS_SUCCESS]: searchCargosSuccess,
+  [CargoTypes.SEARCH_CARGOS_FAILURE]: searchCargosFailure,
 })

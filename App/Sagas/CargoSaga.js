@@ -1,8 +1,6 @@
 import { select, put, call } from 'redux-saga/effects'
 import CargoActions from 'App/Stores/Cargo/Actions'
 import { cargoService } from 'App/Services/CargoService'
-import { authService } from '../Services/AuthService'
-import AsyncStorage from 'react-native-web/src/exports/AsyncStorage'
 import NavigationService from '../Services/NavigationService'
 
 export function* postCargo(action) {
@@ -51,5 +49,19 @@ export function* getHistoryCargos(action) {
     yield put(CargoActions.getHistoryCargosFailure(cargos.error))
   } else {
     yield put(CargoActions.getHistoryCargosFailure('There was an error while getting cargos history'))
+  }
+}
+
+export function* searchCargos(action) {
+  yield put(CargoActions.searchCargosLoading())
+
+  const state = yield select();
+  const cargos = yield call(cargoService.searchCargos, action.param, state.auth.token)
+  if (!cargos.error) {
+    yield put(CargoActions.searchCargosSuccess(cargos, action.param.start))
+  } else if (cargos.error) {
+    yield put(CargoActions.searchCargosFailure(cargos.error))
+  } else {
+    yield put(CargoActions.searchCargosFailure('There was an error while searching cargos'))
   }
 }

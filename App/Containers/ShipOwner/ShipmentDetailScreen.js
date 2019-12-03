@@ -248,7 +248,7 @@ class ShipmentDetailScreen extends Component {
             navigation={this.props.navigation}
             cargo={cargo}
             shipment={shipment}
-            ship={ship}/>
+            ship={ship} />
         </View>
       </View>
     )
