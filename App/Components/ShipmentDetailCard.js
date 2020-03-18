@@ -55,7 +55,7 @@ export const ShipmentDetailCard = (props) => {
           direction='vertical'
           stepCount={shipStatus.length}
           customStyles={shipStatusStyle}
-          currentPosition={mapShipStatus(props.shipment.shipStatus)}
+          currentPosition={mapShipStatus(props.ship.status)}
           labels={[shipment.origin.mainName, 'Loading', 'At sea', 'Discharge', shipment.destination.mainName]}
         />
       </View>

@@ -62,7 +62,7 @@ export const InProgressShipmentCard = (props) => {
           <StepIndicator
             stepCount={shipStatus.length}
             customStyles={shipStatusStyle}
-            currentPosition={mapShipStatus(shipment.shipStatus)}
+            currentPosition={mapShipStatus(ship.status)}
             labels={shipStatus}
           />
         </View>
