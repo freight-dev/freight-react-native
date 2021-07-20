@@ -21,7 +21,7 @@
     "react": "16.8.3",
     "react-bootstrap-typeahead": "^3.4.5",
     "react-dom": "^16.8.6",
-    "react-native": "0.59.9",
+    "react-native": "0.62.3",
     "react-native-calendars": "^1.192.0",
     "react-native-clean-form": "^0.5.0",
     "react-native-datepicker": "^1.7.2",
