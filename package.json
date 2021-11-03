@@ -45,7 +45,7 @@
     "redux-saga": "^1.0.2",
     "reduxsauce": "^1.0.1",
     "styled-components": "^4.3.2",
-    "validator": "^11.1.0"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
